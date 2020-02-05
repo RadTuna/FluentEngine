@@ -1,0 +1,7 @@
+##### FluentEngine gitignore #####
+
+/.vs
+/Binaries
+/Intermediate
+
+*.sln
