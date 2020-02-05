@@ -27,8 +27,8 @@ TARGET_NAME			= "FluentEngine" -- Name of executable
 DEBUG_FORMAT			= "c7"
 EDITOR_DIR			= ROOT_DIR .. "/Source/" .. EDITOR_NAME
 RUNTIME_DIR			= ROOT_DIR .. "/Source/" .. RUNTIME_NAME
-PROJECT_DIR			= ROOT_DIR .. "/Intermediate/Projects"
 INTERMEDIATE_DIR			= ROOT_DIR .. "/Intermediate"
+PROJECT_DIR			= INTERMEDIATE_DIR .. "/Projects"
 TARGET_DIR_RELEASE  		= ROOT_DIR .. "/Binaries/Release"
 TARGET_DIR_DEBUG   		= ROOT_DIR .. "/Binaries/Debug"
 
@@ -75,6 +75,8 @@ project (RUNTIME_NAME)
 	}
 
 	-- Includes
+	includedirs { (RUNTIME_DIR) }
+	includedirs { (RUNTIME_DIR) .. "/Public" }
 	
 	-- Libraries
 	libdirs (LIBRARY_DIR)
@@ -113,7 +115,10 @@ project (EDITOR_NAME)
 	}
 	
 	-- Includes
-	includedirs { "../" .. RUNTIME_NAME }
+	includedirs { (EDITOR_DIR) }
+	includedirs { (EDITOR_DIR) .. "/Public" }
+	includedirs { (RUNTIME_DIR) }
+	includedirs { (RUNTIME_DIR) .. "/Public" }
 	
 	-- Libraries
 	libdirs (LIBRARY_DIR)
