@@ -3,6 +3,8 @@
 #include "Window.h"
 #include "Editor.h"
 
+#include "Core/Allocator.h"
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     // Create editor
@@ -11,7 +13,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     // Create window
     Window::Create(hInstance, TEXT("FluentEngine"));
     Window::Show();
-
+	
     // Tick
     while (Window::Tick())
     {

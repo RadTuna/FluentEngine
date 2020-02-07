@@ -6,7 +6,7 @@
 
 #define FORCEINLINE __forceinline
 
-namespace FluentEngine
+namespace Fluent
 {
 	FORCEINLINE void Assert(bool expression)
 	{
@@ -85,6 +85,25 @@ namespace FluentEngine
 		#else
 		retrun new T(args...);
 		#endif
+	}
+
+	template<typename T>
+	T* NewByArray(int32 size)
+	{
+#ifdef DEBUG
+		T* const NewObject = new T[size];
+		if (NewObject != nullptr)
+		{
+			return NewObject;
+		}
+		else
+		{
+			Assert(false);
+			return nullptr;
+		}
+#else
+		retrun new T[size];
+#endif
 	}
 
 	template<typename T>
