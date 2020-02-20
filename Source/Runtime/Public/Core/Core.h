@@ -2,25 +2,28 @@
 
 #include <cassert>
 #include <cstring>
+#include <utility>
 #include "DataTypeDefinition.h"
 
 #define FORCEINLINE __forceinline
+#define SWITCH_FALLTHROUGH
 
 namespace Fluent
 {
+
 	FORCEINLINE void Assert(bool expression)
 	{
-		#ifdef DEBUG
+#ifdef DEBUG
 		assert(expression);
-		#else
+#else
 		__assume(expression);
-		#endif
+#endif
 	}
 
 	template<typename T>
 	FORCEINLINE void MemSet(T* const dest, int value, uint64 size)
 	{
-		#ifdef DEBUG
+#ifdef DEBUG
 		if (dest != nullptr)
 		{
 			memset(dest, value, size);
@@ -29,15 +32,15 @@ namespace Fluent
 		{
 			Assert(false);
 		}
-		#else
+#else
 		memset(dest, value, size);
-		#endif
+#endif
 	}
 
 	template<typename T, typename U>
 	FORCEINLINE void MemCpy(T* const dest, U* const source, uint64 size)
 	{
-		#ifdef DEBUG
+#ifdef DEBUG
 		if (dest != nullptr && source != nullptr)
 		{
 			memcpy(dest, source, size);
@@ -46,15 +49,15 @@ namespace Fluent
 		{
 			Assert(false);
 		}
-		#else
+#else
 		mempy(dest, source, size);
-		#endif
+#endif
 	}
 
 	template<typename T, typename U>
 	FORCEINLINE void MemMove(T* const dest, U* const source, uint64 size)
 	{
-		#ifdef DEBUG
+#ifdef DEBUG
 		if (dest != nullptr && source != nullptr)
 		{
 			memmove(dest, source, size);
@@ -63,15 +66,15 @@ namespace Fluent
 		{
 			Assert(false);
 		}
-		#else
+#else
 		mempy(dest, source, size);
-		#endif
+#endif
 	}
 
 	template<typename T, typename ...Args>
-	T* New(Args... args)
+	T* New(Args&&... args)
 	{
-		#ifdef DEBUG
+#ifdef DEBUG
 		T* const NewObject = new T(args...);
 		if (NewObject != nullptr)
 		{
@@ -82,9 +85,9 @@ namespace Fluent
 			Assert(false);
 			return nullptr;
 		}
-		#else
+#else
 		retrun new T(args...);
-		#endif
+#endif
 	}
 
 	template<typename T>
@@ -109,7 +112,7 @@ namespace Fluent
 	template<typename T>
 	void Delete(T* const object)
 	{
-		#ifdef DEBUG
+#ifdef DEBUG
 		if (object != nullptr)
 		{
 			delete object;
@@ -118,15 +121,15 @@ namespace Fluent
 		{
 			Assert(false);
 		}
-		#else
+#else
 		delete object;
-		#endif
+#endif
 	}
 
 	template<typename T>
 	void DeleteByArray(T* const object)
 	{
-		#ifdef DEBUG
+#ifdef DEBUG
 		if (object != nullptr)
 		{
 			delete[] object;
@@ -135,10 +138,10 @@ namespace Fluent
 		{
 			Assert(false);
 		}
-		#else
+#else
 		delete[] object;
-		#endif
+#endif
 	}
-}
 
+}
 

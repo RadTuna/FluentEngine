@@ -1,14 +1,22 @@
 
+#include "Window.h"
 
-class Editor
+namespace Fluent
 {
-public:
 
-	Editor() = default;
-	~Editor() = default;
+	class Editor
+	{
+	public:
 
-	void Update();
+		Editor() = default;
+		~Editor() = default;
 
-private:
-};
+		void OnWindowMessage(Window::WindowData& windowData);
+		
+		void Update();
+
+	private:
+	};
+
+}
 

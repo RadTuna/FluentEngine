@@ -1,27 +1,24 @@
 #pragma once
 
+
+// External Include
 #include <Windows.h>
+
+// Editor Include
 #include "Core/Core.h"
+
+// Runtime Include
+#include "Core/Runtime.h"
+#include "Core/Functor.h"
+
 
 namespace Window
 {
+	using namespace Fluent;
+	
 	static HINSTANCE gInstance;
 	static HWND gHandle;
-
-	struct WindowData
-	{
-		void* Handle = nullptr;
-		void* Instance = nullptr;
-		uint32 Message = 0;
-		float Width = 0;
-		float Height = 0;
-		uint32 MonitorWidth = 0;
-		uint32 MonitorHeight = 0;
-		uint32 MonitorVirtualWidth = 0; // multi-monitor setup
-		uint32 MonitorVirtualHeight = 0; // multi-monitor setup
-		uint64 WParam = 0;
-		int64 LParam = 0;
-	};
+	static Functor<void(WindowData&)> gWindowMessage;
 
 	inline void GetWindowSize(float* width, float* height)
 	{
@@ -58,14 +55,12 @@ namespace Window
 		windowData.LParam = static_cast<int64>(lParam);
 		windowData.MonitorWidth = GetSystemMetrics(SM_CXSCREEN);
 		windowData.MonitorHeight = GetSystemMetrics(SM_CYSCREEN);
-		windowData.MonitorVirtualWidth = GetSystemMetrics(SM_CXVIRTUALSCREEN);
-		windowData.MonitorVirtualHeight = GetSystemMetrics(SM_CYVIRTUALSCREEN);
-		GetWindowSize(&windowData.Width, &windowData.Height);
+		GetWindowSize(&windowData.ScreenWidth, &windowData.ScreenHeight);
 
 		if (msg == WM_DISPLAYCHANGE || msg == WM_SIZE)
 		{
-			windowData.Width = static_cast<float>(lParam & 0xffff);
-			windowData.Height = static_cast<float>((lParam >> 16) & 0xffff);
+			windowData.ScreenWidth = static_cast<float>(lParam & 0xffff);
+			windowData.ScreenHeight = static_cast<float>((lParam >> 16) & 0xffff);
 		}
 		else if (msg == WM_CLOSE)
 		{
@@ -74,6 +69,11 @@ namespace Window
 		else
 		{
 			result = DefWindowProc(hwnd, msg, wParam, lParam);
+		}
+
+		if (gWindowMessage.IsValid())
+		{
+			gWindowMessage(windowData);
 		}
 
 		return result;
@@ -156,4 +156,5 @@ namespace Window
 	{
 		DestroyWindow(gHandle);
 	}
+	
 }
