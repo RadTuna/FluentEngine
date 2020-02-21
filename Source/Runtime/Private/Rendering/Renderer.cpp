@@ -3,16 +3,16 @@
 
 using namespace Fluent;
 
-Renderer::Renderer(HWND winHandle)
+Renderer::Renderer(RuntimeStorage* inStorage) noexcept
+    : Super(inStorage)
 {
-	mWindowHandle = winHandle;
 }
 
 Renderer::~Renderer()
 {
 }
 
-void Renderer::Initialize()
+bool Renderer::Initialize()
 {
     HRESULT handleResult = S_OK;
 
@@ -51,7 +51,7 @@ void Renderer::Initialize()
         &mDeviceContext);
 	if (FAILED(handleResult))
 	{
-        return;
+        return false;
 	}
 
     IDXGIFactory* dxgiFactory = nullptr;
@@ -71,7 +71,7 @@ void Renderer::Initialize()
 	}
     if (FAILED(handleResult))
     {
-        return;
+        return false;
     }
 
     DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
@@ -91,21 +91,21 @@ void Renderer::Initialize()
     dxgiFactory->Release();
 	if (FAILED(handleResult))
 	{
-        return;
+        return false;
 	}
 
     ID3D11Texture2D* backBuffer = nullptr;
     handleResult = mSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer));
 	if (FAILED(handleResult))
 	{
-        return;
+        return false;
 	}
 
     handleResult = mDevice->CreateRenderTargetView(backBuffer, nullptr, &mRenderTargetView);
     backBuffer->Release();
 	if (FAILED(handleResult))
 	{
-        return;
+        return false;
 	}
 
     mDeviceContext->OMSetRenderTargets(1, &mRenderTargetView, nullptr);
@@ -115,9 +115,11 @@ void Renderer::Initialize()
     CreateDepthStencilStates();
     CreateRasterizerStates();
     CreateRenderTargets();
+
+    return true;
 }
 
-void Renderer::Tick()
+void Renderer::Update(float deltaTime)
 {
 }
 

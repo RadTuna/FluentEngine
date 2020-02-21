@@ -73,7 +73,7 @@ namespace Fluent
 	{
 		mConvertedFunction = (void*)&function;
 		using DecayedFuncType = typename PointerRemover<decltype(&function)>::Type;
-
+		
 		if (mConvertedFunction != nullptr)
 		{ 
 			mFunction = FunctionCaller<DecayedFuncType, R(Params...)>::Call;
@@ -124,5 +124,6 @@ namespace Fluent
 	{
 		return mFunction != nullptr ? true : false;
 	}
+	
 }
 

@@ -1,27 +1,36 @@
 #pragma once
 
+// Additional dependencies
 #pragma comment (lib, "d3d11.lib")
 #pragma comment (lib, "d3dcompiler.lib")
 #pragma comment (lib, "dxguid.lib")
 #pragma comment (lib, "winmm.lib")
 #pragma comment (lib, "comctl32.lib")
 
+// External Include
 #include <Windows.h>
 #include <d3d11.h>
+
+// Engine Include
 #include "Core/Core.h"
+#include "Core/ISubSystem.h"
+
 
 namespace Fluent
 {
 
-	class Renderer
+	class Renderer : public ISubSystem
 	{
 	public:
 
-		Renderer(HWND winHandle);
-		~Renderer();
+		using Super = ISubSystem;
+		
+		explicit Renderer(class RuntimeStorage* inStorage) noexcept;
+		virtual ~Renderer() noexcept;
 
-		void Initialize();
-		void Tick();
+		// ISubSystem functions
+		bool Initialize() override;
+		void Update(float deltaTime) override;
 
 		void CreateConstantBuffers();
 		void CreateShaders();

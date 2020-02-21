@@ -1,8 +1,7 @@
 
-
+// Editor Include
 #include "Window.h"
 #include "Editor.h"
-#include <functional>
 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -16,11 +15,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     Window::Create(hInstance, TEXT("FluentEngine"));
     Window::Show();
 
-    Window::gWindowMessage = [&editor](Window::WindowData& windowData) -> void
+    Window::gWindowMessage = [&editor](const WindowData& windowData) -> void
     {
         editor.OnWindowMessage(windowData);
     };
-
+	
     // Tick
     while (Window::Tick())
     {
