@@ -8,6 +8,11 @@
 #include "Core/Core.h"
 #include "Core/TypeDefinition.h"
 
+// Engine Include
+#include "Core/ISubSystem.h"
+#include "Core/RuntimeStorage.h"
+#include "Core/TimeCounter.h"
+
 
 namespace Fluent
 {
@@ -26,10 +31,10 @@ namespace Fluent
 
 	private:
 
-		std::unique_ptr<class RuntimeStorage> mStorage = nullptr;
-		std::unique_ptr<class TimeCounter> mTimeCounter = nullptr;
+		std::unique_ptr<RuntimeStorage> mStorage = nullptr;
+		std::unique_ptr<TimeCounter> mTimeCounter = nullptr;
 		
-		std::vector<std::unique_ptr<class ISubSystem>> mSubSystems;
+		std::vector<std::unique_ptr<ISubSystem>> mSubSystems;
 		
 	};
 	

@@ -1,22 +1,20 @@
 
 #include "Core/Runtime.h"
-#include "Core/RuntimeStorage.h"
-#include "Core/TimeCounter.h"
 #include "Engine/World.h"
 #include "Rendering/Renderer.h"
 
 using namespace Fluent;
 
-Runtime::Runtime(const WindowData& windowData)
+Runtime::Runtime(const WindowData& windowData) noexcept
 {
 	mStorage = std::make_unique<RuntimeStorage>();
 	mStorage->mWindowData = windowData;
 	
-	mTimeCounter = std::make_unique<TimeCounter>();
+	mTimeCounter = std::make_unique<TimeCounter>(mStorage.get());
 
 	mSubSystems.reserve(8);
-	mSubSystems.emplace_back(std::make_unique<World>());
-	mSubSystems.emplace_back(std::make_unique<Renderer>());
+	mSubSystems.emplace_back(std::make_unique<World>(mStorage.get()));
+	mSubSystems.emplace_back(std::make_unique<Renderer>(mStorage.get()));
 }
 
 bool Runtime::Initialize()

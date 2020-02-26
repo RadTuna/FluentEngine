@@ -1,6 +1,5 @@
 
 #include "Editor.h"
-#include "Core/Runtime.h"
 
 using namespace Fluent;
 

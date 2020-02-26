@@ -17,6 +17,9 @@ namespace Fluent
 		explicit World(class RuntimeStorage* inStorage) noexcept;
 		virtual ~World() = default;
 
+		bool Initialize() override;
+		void Update(float deltaTime) override;
+
 	private:
 	};
 

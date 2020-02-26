@@ -6,6 +6,9 @@
 // Editor Include
 #include "Window.h"
 
+// Engine Include
+#include "Core/Runtime.h"
+
 
 namespace Fluent
 {
@@ -22,7 +25,7 @@ namespace Fluent
 
 	private:
 
-		std::unique_ptr<class Runtime> mRuntime;
+		std::unique_ptr<Runtime> mRuntime;
 		bool mEditorInitialized = false;
 		
 	};
