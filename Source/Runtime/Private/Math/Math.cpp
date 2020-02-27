@@ -32,3 +32,4 @@ float Math::Signf(float value, float epsilon)
 		return 0.0f;
 	}
 }
+

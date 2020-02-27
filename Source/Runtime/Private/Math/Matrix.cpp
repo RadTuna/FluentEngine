@@ -1,6 +1,7 @@
 
 #include "Math/Matrix.h"
 #include "Math/Vector.h"
+#include "Math/Matrix4x4.h"
 
 
 using namespace Fluent;
@@ -134,10 +135,44 @@ void Matrix::Transpose()
 
 Matrix Matrix::LoadMatrix4X4(const Matrix4x4& inMatrix)
 {
+	return Matrix(
+		_mm_setr_ps(inMatrix.m11, inMatrix.m12, inMatrix.m13, inMatrix.m14),
+		_mm_setr_ps(inMatrix.m21, inMatrix.m22, inMatrix.m23, inMatrix.m24),
+		_mm_setr_ps(inMatrix.m31, inMatrix.m32, inMatrix.m33, inMatrix.m34),
+		_mm_setr_ps(inMatrix.m41, inMatrix.m42, inMatrix.m43, inMatrix.m44));
 }
 
 void Matrix::StoreMatrix4X4(Matrix inMatrix, Matrix4x4* outMatrix)
 {
+	FloatVector tempVector1 = {};
+	FloatVector tempVector2 = {};
+	FloatVector tempVector3 = {};
+	FloatVector tempVector4 = {};
+	
+	_mm_store_ps(tempVector1.Data, inMatrix.mRow1);
+	_mm_store_ps(tempVector2.Data, inMatrix.mRow2);
+	_mm_store_ps(tempVector3.Data, inMatrix.mRow3);
+	_mm_store_ps(tempVector4.Data, inMatrix.mRow4);
+
+	outMatrix->m11 = tempVector1.X;
+	outMatrix->m12 = tempVector1.Y;
+	outMatrix->m13 = tempVector1.Z;
+	outMatrix->m14 = tempVector1.W;
+
+	outMatrix->m21 = tempVector2.X;
+	outMatrix->m22 = tempVector2.Y;
+	outMatrix->m23 = tempVector2.Z;
+	outMatrix->m24 = tempVector2.W;
+
+	outMatrix->m31 = tempVector3.X;
+	outMatrix->m32 = tempVector3.Y;
+	outMatrix->m33 = tempVector3.Z;
+	outMatrix->m34 = tempVector3.W;
+
+	outMatrix->m41 = tempVector4.X;
+	outMatrix->m42 = tempVector4.Y;
+	outMatrix->m43 = tempVector4.Z;
+	outMatrix->m44 = tempVector4.W;
 }
 
 float Matrix::DotSIMD(__m128 vector1, __m128 vector2)
