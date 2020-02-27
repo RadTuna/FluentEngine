@@ -31,7 +31,7 @@ namespace Fluent
 
 	private:
 
-		std::unique_ptr<RuntimeStorage> mStorage = nullptr;
+		std::shared_ptr<RuntimeStorage> mStorage = nullptr;
 		std::unique_ptr<TimeCounter> mTimeCounter = nullptr;
 		
 		std::vector<std::unique_ptr<ISubSystem>> mSubSystems;

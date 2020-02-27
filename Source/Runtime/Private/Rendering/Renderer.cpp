@@ -3,7 +3,7 @@
 
 using namespace Fluent;
 
-Renderer::Renderer(RuntimeStorage* inStorage) noexcept
+Renderer::Renderer(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept
     : Super(inStorage)
 {
 }

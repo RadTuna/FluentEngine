@@ -3,7 +3,7 @@
 
 using namespace Fluent;
 
-TimeCounter::TimeCounter(RuntimeStorage* inStorage) noexcept
+TimeCounter::TimeCounter(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept
 	: Super(inStorage)
 {
 }

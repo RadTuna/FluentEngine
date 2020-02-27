@@ -3,7 +3,7 @@
 
 using namespace Fluent;
 
-World::World(RuntimeStorage* inStorage) noexcept
+World::World(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept
 	: Super(inStorage)
 {
 }

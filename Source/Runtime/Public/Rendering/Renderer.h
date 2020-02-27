@@ -26,7 +26,7 @@ namespace Fluent
 
 		using Super = ISubSystem;
 		
-		explicit Renderer(class RuntimeStorage* inStorage) noexcept;
+		explicit Renderer(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept;
 		virtual ~Renderer() noexcept;
 
 		// ISubSystem functions

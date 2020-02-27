@@ -14,7 +14,7 @@ namespace Fluent
 
 		using Super = ISubSystem;
 
-		explicit World(class RuntimeStorage* inStorage) noexcept;
+		explicit World(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept;
 		virtual ~World() = default;
 
 		bool Initialize() override;

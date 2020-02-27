@@ -2,20 +2,14 @@
 #include "Math/Vector.h"
 #include "Math/Vector3.h"
 #include "Math/Vector4.h"
+#include "Math/Matrix.h"
 
 
 using namespace Fluent;
 
-const Vector Vector::ZeroVector(_mm_setzero_ps());
-const Vector Vector::OneVector(_mm_set_ps1(1.0f));
-const Vector Vector::UnitX = SetVector3(1.0f, 0.0f, 0.0f);
-const Vector Vector::UnitY = SetVector3(0.0f, 1.0f, 0.0f);
-const Vector Vector::UnitZ = SetVector3(0.0f, 0.0f, 1.0f);
-
 Vector::Vector() noexcept
 {
 	mData = _mm_setzero_ps();
-
 }
 
 Vector __vectorcall Vector::operator=(Vector other)
@@ -65,13 +59,39 @@ Vector __vectorcall Vector::operator*=(float other)
 	return Vector(mData);
 }
 
-Vector __vectorcall Vector::operator*(Vector other) const
+float __vectorcall Vector::operator*(Vector other) const
 {
 	const __m128 mulData = _mm_mul_ps(mData, other.mData);
 	const __m128 tempAddData = _mm_hadd_ps(mulData, mulData);
 	const __m128 outData = _mm_hadd_ps(tempAddData, tempAddData);
 	
+	return _mm_cvtss_f32(outData);
+}
+
+Vector Vector::operator*(Matrix other) const
+{
+	other.Transpose();
+
+	const float tempX = Matrix::DotSIMD(other.mRow1, mData);
+	const float tempY = Matrix::DotSIMD(other.mRow2, mData);
+	const float tempZ = Matrix::DotSIMD(other.mRow3, mData);
+	const float tempW = Matrix::DotSIMD(other.mRow4, mData);
+	const __m128 outData = _mm_set_ps(tempX, tempY, tempZ, tempW);
+
 	return Vector(outData);
+}
+
+Vector Vector::operator*=(Matrix other)
+{
+	other.Transpose();
+
+	const float tempX = Matrix::DotSIMD(other.mRow1, mData);
+	const float tempY = Matrix::DotSIMD(other.mRow2, mData);
+	const float tempZ = Matrix::DotSIMD(other.mRow3, mData);
+	const float tempW = Matrix::DotSIMD(other.mRow4, mData);
+	mData = _mm_set_ps(tempX, tempY, tempZ, tempW);
+
+	return Vector(mData);
 }
 
 Vector __vectorcall Vector::operator^(Vector other) const
@@ -86,7 +106,7 @@ Vector __vectorcall Vector::operator^(Vector other) const
 	return Vector(outData);
 }
 
-Vector Vector::DotProduct(Vector vectorA, Vector vectorB)
+float Vector::DotProduct(Vector vectorA, Vector vectorB)
 {
 	return vectorA * vectorB;
 }
@@ -96,14 +116,14 @@ Vector Vector::CrossProduct(Vector vectorA, Vector vectorB)
 	return vectorA ^ vectorB;
 }
 
-Vector __vectorcall Vector::Size() const
+float __vectorcall Vector::Length() const
 {
 	const __m128 tempMulData = _mm_mul_ps(mData, mData);
 	__m128 tempAddData = _mm_hadd_ps(tempMulData, tempMulData);
 	tempAddData = _mm_hadd_ps(tempAddData, tempAddData);
 	const __m128 outData = _mm_sqrt_ps(tempAddData);
 
-	return Vector(outData);
+	return _mm_cvtss_f32(outData);
 }
 
 Vector __vectorcall Vector::Normalize(Vector other)
@@ -129,12 +149,12 @@ void Vector::Normalize()
 
 Vector __vectorcall Vector::LoadVector3(const Vector3& inVector)
 {
-	return Vector(_mm_set_ps(0.0f, inVector.mZ, inVector.mY, inVector.mX));
+	return Vector(_mm_setr_ps(inVector.mX, inVector.mY, inVector.mZ, 0.0f));
 }
 
 Vector __vectorcall Vector::LoadVector4(const Vector4& inVector)
 {
-	return Vector(_mm_set_ps(inVector.mW, inVector.mZ, inVector.mY, inVector.mX));
+	return Vector(_mm_setr_ps(inVector.mX, inVector.mY, inVector.mZ, inVector.mW));
 }
 
 void __vectorcall Vector::StoreVector3(Vector inVector, Vector3* outVector)
@@ -160,10 +180,17 @@ void __vectorcall Vector::StoreVector4(Vector inVector, Vector4* outVector)
 
 Vector Vector::SetVector3(float x, float y, float z)
 {
-	return Vector(_mm_set_ps(0.0f, z, y, x));
+	return Vector(_mm_setr_ps(x, y, z, 0.0f));
 }
 
 Vector Vector::SetVector4(float x, float y, float z, float w)
 {
-	return Vector(_mm_set_ps(w, z, y, x));
+	return Vector(_mm_setr_ps(x, y, z, w));
 }
+
+Vector __vectorcall Fluent::operator*(float other, Vector thisVector)
+{
+	const __m128 multiplier = _mm_set_ps1(other);
+	return Vector(_mm_mul_ps(thisVector.mData, multiplier));
+}
+

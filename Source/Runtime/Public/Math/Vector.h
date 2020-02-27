@@ -23,6 +23,8 @@ namespace Fluent
 		float Data[4];
 	};
 
+	class Matrix;
+	
 	class Vector
 	{
 	public:
@@ -32,7 +34,7 @@ namespace Fluent
 	public:
 
 		explicit Vector() noexcept;
-		explicit constexpr __fastcall Vector(__m128 initData) noexcept : mData(initData) {}
+		explicit constexpr Vector(const __m128& initData) noexcept : mData(initData) {}
 
 		~Vector() = default;
 
@@ -48,16 +50,21 @@ namespace Fluent
 
 		Vector __vectorcall operator*(float other) const;
 		Vector __vectorcall operator*=(float other);
+		friend Vector __vectorcall operator*(float other, Vector thisVector);
 
-		Vector __vectorcall operator*(Vector other) const;
+		float __vectorcall operator*(Vector other) const;
+		
+		Vector __vectorcall operator*(Matrix other) const;
+		Vector __vectorcall operator*=(Matrix other);
 
 		Vector __vectorcall operator^(Vector other) const;
 
-		static Vector __vectorcall DotProduct(Vector vectorA, Vector vectorB);
+		static float __vectorcall DotProduct(Vector vectorA, Vector vectorB);
 
 		static Vector __vectorcall CrossProduct(Vector vectorA, Vector vectorB);
 
-		Vector __vectorcall Size() const;
+		[[nodiscard]]
+		float __vectorcall Length() const;
 
 		static Vector __vectorcall Normalize(Vector other);
 		void Normalize();
@@ -70,12 +77,6 @@ namespace Fluent
 
 		static Vector __vectorcall SetVector3(float x, float y, float z);
 		static Vector __vectorcall SetVector4(float x, float y, float z, float w);
-
-		static const Vector ZeroVector;
-		static const Vector OneVector;
-		static const Vector UnitX;
-		static const Vector UnitY;
-		static const Vector UnitZ;
 
 	};
 

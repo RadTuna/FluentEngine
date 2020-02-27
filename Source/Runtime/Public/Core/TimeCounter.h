@@ -17,7 +17,7 @@ namespace Fluent
 
 		using Super = ISubSystem;
 
-		explicit TimeCounter(class RuntimeStorage* inStorage) noexcept;
+		explicit TimeCounter(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept;
 		virtual ~TimeCounter() = default;
 
 		bool Initialize() override;

@@ -1,7 +1,10 @@
 #pragma once
 
+#include <memory>
+
 // Engine Include
 #include "Core/Core.h"
+#include "RuntimeStorage.h"
 
 namespace Fluent
 {
@@ -9,8 +12,12 @@ namespace Fluent
 	class ISubSystem
 	{
 	public:
-
-		explicit ISubSystem(class RuntimeStorage* inStorage) : mStorage(inStorage) {}
+		
+		explicit ISubSystem(const std::shared_ptr<RuntimeStorage>& inStorage)
+		{
+			mStorage = inStorage;
+		}
+		
 		virtual ~ISubSystem() = default;
 
 		virtual bool Initialize() = 0;
@@ -18,7 +25,7 @@ namespace Fluent
 
 	protected:
 
-		class RuntimeStorage* mStorage;
+		std::shared_ptr<RuntimeStorage> mStorage;
 
 	};
 
