@@ -23,8 +23,8 @@ namespace Fluent
 
 		explicit Quaternion() = default;
 		explicit constexpr Quaternion(float r, float i, float j, float k) noexcept;
-		explicit Quaternion(const Vector3& rotateAxis, float rotateAngle) noexcept;
-		explicit Quaternion(const Vector4& rotateAxis, float rotateAngle) noexcept;
+		explicit Quaternion(const Vector3& eulerAngle) noexcept;
+		explicit Quaternion(const Vector4& eulerAngle) noexcept;
 
 		Quaternion operator+(const Quaternion& other) const;
 		Quaternion operator+=(const Quaternion& other);

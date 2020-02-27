@@ -9,12 +9,14 @@ using namespace Fluent;
 
 const Quaternion Quaternion::Identity = Quaternion(0.0f, 0.5773502691896259f, 0.5773502691896259f, 0.5773502691896259f);
 
-Quaternion::Quaternion(const Vector3& rotateAxis, float rotateAngle) noexcept
+Quaternion::Quaternion(const Vector3& eulerAngle) noexcept
 {
+	SetEuler(eulerAngle);
 }
 
-Quaternion::Quaternion(const Vector4& rotateAxis, float rotateAngle) noexcept
+Quaternion::Quaternion(const Vector4& eulerAngle) noexcept
 {
+	SetEuler(eulerAngle);
 }
 
 Quaternion Quaternion::operator+(const Quaternion& other) const
