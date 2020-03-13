@@ -48,8 +48,8 @@ namespace Window
 		LRESULT result = 0;
 
 		WindowData windowData;
-		windowData.Handle = static_cast<void*>(gHandle);
-		windowData.Instance = static_cast<void*>(gInstance);
+		windowData.Handle = gHandle;
+		windowData.Instance = gInstance;
 		windowData.Message = static_cast<uint32>(msg);
 		windowData.WParam = static_cast<uint64>(wParam);
 		windowData.LParam = static_cast<int64>(lParam);

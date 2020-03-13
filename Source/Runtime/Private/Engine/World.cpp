@@ -10,7 +10,7 @@ World::World(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept
 
 bool World::Initialize()
 {
-	return false;
+	return true;
 }
 
 void World::Update(float deltaTime)

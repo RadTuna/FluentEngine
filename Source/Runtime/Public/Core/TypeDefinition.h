@@ -1,13 +1,15 @@
 #pragma once
 
+#include <Windows.h>
+
 // Engine Include
 #include "Core/Core.h"
 
 
 struct WindowData
 {
-	void* Handle = nullptr;
-	void* Instance = nullptr;
+	HWND Handle = nullptr;
+	HINSTANCE Instance = nullptr;
 	uint32 Message = 0;
 	float ScreenWidth = 0;
 	float ScreenHeight = 0;
