@@ -7,12 +7,10 @@
 
 namespace Fluent
 {
-
-	class World : public ISubSystem
+	
+	class World final : public ISubSystem
 	{
 	public:
-
-		using Super = ISubSystem;
 
 		explicit World(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept;
 		virtual ~World() = default;

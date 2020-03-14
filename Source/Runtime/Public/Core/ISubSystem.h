@@ -4,10 +4,10 @@
 
 // Engine Include
 #include "Core/Core.h"
-#include "RuntimeStorage.h"
 
 namespace Fluent
 {
+	class RuntimeStorage;
 	
 	class ISubSystem
 	{

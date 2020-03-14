@@ -1,15 +1,17 @@
 #pragma once
 
+// Engine Include
 #include "D3D11/D3DViewport.h"
+#include "Core/Core.h"
 
-#ifdef API_GRAPHICS_D3D11
-using SuperClass = Fluent::D3DViewport;
-#endif
 
 namespace Fluent
 {
-
-	class Viewport : public SuperClass
+	
+	class Viewport final :
+#ifdef API_GRAPHICS_D3D11
+		public D3DViewport
+#endif
 	{
 	public:
 

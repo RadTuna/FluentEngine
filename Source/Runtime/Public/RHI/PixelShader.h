@@ -1,15 +1,17 @@
 #pragma once
 
+// Engine Include
 #include "D3D11/D3DPixelShader.h"
+#include "Core/Core.h"
 
-#ifdef API_GRAPHICS_D3D11
-using SuperClass = Fluent::D3DPixelShader;
-#endif
 
 namespace Fluent
 {
-
-	class PixelShader : public SuperClass
+	
+	class PixelShader final :
+#ifdef API_GRAPHICS_D3D11
+		public D3DPixelShader
+#endif
 	{
 	public:
 

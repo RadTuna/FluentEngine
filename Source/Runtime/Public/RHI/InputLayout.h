@@ -1,15 +1,17 @@
 #pragma once
 
+// Engine Include
 #include "D3D11/D3DInputLayout.h"
+#include "Core/Core.h"
 
-#ifdef API_GRAPHICS_D3D11
-using SuperClass = Fluent::D3DInputLayout;
-#endif
 
 namespace Fluent
 {
-
-	class InputLayout : public SuperClass
+	
+	class InputLayout final :
+#ifdef API_GRAPHICS_D3D11
+		public D3DInputLayout
+#endif
 	{
 	public:
 

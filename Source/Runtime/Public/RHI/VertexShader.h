@@ -1,15 +1,17 @@
 #pragma once
 
+// Engine Include
 #include "D3D11/D3DVertexShader.h"
+#include "Core/Core.h"
 
-#ifdef API_GRAPHICS_D3D11
-using SuperClass = Fluent::D3DVertexShader;
-#endif
 
 namespace Fluent
 {
-
-	class VertexShader : public SuperClass
+	
+	class VertexShader final :
+#ifdef API_GRAPHICS_D3D11
+		public D3DVertexShader
+#endif
 	{
 	public:
 

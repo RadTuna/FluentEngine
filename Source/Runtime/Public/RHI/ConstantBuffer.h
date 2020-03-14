@@ -2,15 +2,16 @@
 
 // Engine Include
 #include "D3D11/D3DConstantBuffer.h"
+#include "Core/Core.h"
 
-#ifdef API_GRAPHICS_D3D11
-using SuperClass = Fluent::D3DConstantBuffer;
-#endif
 
 namespace Fluent
 {
-
-	class ConstantBuffer : public SuperClass
+	
+	class ConstantBuffer :
+#ifdef API_GRAPHICS_D3D11
+		public D3DConstantBuffer
+#endif
 	{
 	public:
 

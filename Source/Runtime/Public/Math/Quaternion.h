@@ -7,7 +7,7 @@ namespace Fluent
 	class Vector4;
 	class Matrix4x4;
 	
-	class Quaternion
+	class Quaternion final
 	{
 	public:
 

@@ -7,11 +7,6 @@
 #include "Window.h"
 #include "Editor.h"
 
-// Engine Include
-#include "Math/Vector4.h"
-#include "Math/Vector3.h"
-#include "Math/Vector.h"
-
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {

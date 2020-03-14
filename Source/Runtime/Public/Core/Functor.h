@@ -12,7 +12,7 @@ namespace Fluent
 	class FunctionCaller;
 	
 	template<typename Fn, typename R, typename ...Params>
-	class FunctionCaller<Fn, R(Params...)>
+	class FunctionCaller<Fn, R(Params...)> final
 	{
 	public:
 		
@@ -27,7 +27,7 @@ namespace Fluent
 	class Functor;
 
 	template<typename R, typename ...Params>
-	class Functor<R(Params...)>
+	class Functor<R(Params...)> final
 	{
 	public:
 

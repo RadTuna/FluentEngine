@@ -1,15 +1,17 @@
 #pragma once
 
+// Engine Include
 #include "D3D11/D3DIndexBuffer.h"
+#include "Core/Core.h"
 
-#ifdef API_GRAPHICS_D3D11
-using SuperClass = Fluent::D3DIndexBuffer;
-#endif
 
 namespace Fluent
 {
-
-	class IndexBuffer : public SuperClass
+	
+	class IndexBuffer final :
+#ifdef API_GRAPHICS_D3D11
+		public D3DIndexBuffer
+#endif
 	{
 	public:
 

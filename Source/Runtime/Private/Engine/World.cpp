@@ -1,19 +1,23 @@
 
 #include "Engine/World.h"
 
-using namespace Fluent;
 
-World::World(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept
-	: Super(inStorage)
+namespace Fluent
 {
-}
 
-bool World::Initialize()
-{
-	return true;
-}
+	World::World(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept
+		: ISubSystem(inStorage)
+	{
+	}
 
-void World::Update(float deltaTime)
-{
-	return;
+	bool World::Initialize()
+	{
+		return true;
+	}
+
+	void World::Update(float deltaTime)
+	{
+		return;
+	}
+
 }

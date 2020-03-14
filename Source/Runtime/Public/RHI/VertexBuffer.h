@@ -1,15 +1,17 @@
 #pragma once
 
+// Engine Include
 #include "D3D11/D3DVertexBuffer.h"
+#include "Core/Core.h"
 
-#ifdef API_GRAPHICS_D3D11
-using SuperClass = Fluent::D3DVertexBuffer;
-#endif
 
 namespace Fluent
 {
-
-	class VertexBuffer : public SuperClass
+	
+	class VertexBuffer final :
+#ifdef API_GRAPHICS_D3D11
+		public D3DVertexBuffer
+#endif
 	{
 	public:
 

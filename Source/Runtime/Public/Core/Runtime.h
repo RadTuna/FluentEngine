@@ -6,18 +6,21 @@
 
 // Runtime Include
 #include "Core/Core.h"
-#include "Core/TypeDefinition.h"
 
 // Engine Include
-#include "Core/ISubSystem.h"
-#include "Core/RuntimeStorage.h"
 #include "Core/TimeCounter.h"
+#include "Core/RuntimeStorage.h"
+#include "Core/ISubSystem.h"
 
 
 namespace Fluent
 {
+
+	class ISubSystem;
+	class RuntimeStorage;
+	class TimeCounter;
 	
-	class Runtime
+	class Runtime final
 	{
 	public:
 

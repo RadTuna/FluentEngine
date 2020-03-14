@@ -1,4 +1,3 @@
-#pragma once
 
 #ifdef API_GRAPHICS_D3D11
 

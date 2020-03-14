@@ -1,39 +1,43 @@
 
 #include "Core/TimeCounter.h"
 
-using namespace Fluent;
 
-TimeCounter::TimeCounter(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept
-	: Super(inStorage)
+namespace Fluent
 {
-}
 
-bool TimeCounter::Initialize()
-{
-	// 현재 시스템이 QueryPerformanceCounter를 지원하는 지 확인
-	QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&mFrequency));
-	if (mFrequency == 0)
+	TimeCounter::TimeCounter(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept
+		: ISubSystem(inStorage)
 	{
-		return false;
 	}
 
-	mTickPerMs = static_cast<float>(mFrequency / 1000);
+	bool TimeCounter::Initialize()
+	{
+		// 현재 시스템이 QueryPerformanceCounter를 지원하는 지 확인
+		QueryPerformanceFrequency(reinterpret_cast<LARGE_INTEGER*>(&mFrequency));
+		if (mFrequency == 0)
+		{
+			return false;
+		}
 
-	QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&mStartTime));
+		mTickPerMs = static_cast<float>(mFrequency / 1000);
 
-	return true;
-}
+		QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&mStartTime));
 
-void TimeCounter::Update(float prevDeltaTime)
-{
-	__int64 currentTime;
-	float timeDifference;
+		return true;
+	}
 
-	QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&currentTime));
+	void TimeCounter::Update(float prevDeltaTime)
+	{
+		__int64 currentTime;
+		float timeDifference;
 
-	timeDifference = static_cast<float>(currentTime - mStartTime);
-	mFrameTime = timeDifference / mTickPerMs;
-	mFramePerSecond = mFrequency / timeDifference;
+		QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&currentTime));
 
-	mStartTime = currentTime;
+		timeDifference = static_cast<float>(currentTime - mStartTime);
+		mFrameTime = timeDifference / mTickPerMs;
+		mFramePerSecond = mFrequency / timeDifference;
+
+		mStartTime = currentTime;
+	}
+
 }

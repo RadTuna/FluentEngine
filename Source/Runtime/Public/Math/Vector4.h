@@ -5,7 +5,7 @@ namespace Fluent
 {
 	class Matrix4x4;
 	
-	class Vector4
+	class Vector4 final
 	{
 	public:
 

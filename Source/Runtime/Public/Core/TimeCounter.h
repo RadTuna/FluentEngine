@@ -10,12 +10,10 @@
 
 namespace Fluent
 {
-
-	class TimeCounter : public ISubSystem
+	
+	class TimeCounter final : public ISubSystem
 	{
 	public:
-
-		using Super = ISubSystem;
 
 		explicit TimeCounter(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept;
 		virtual ~TimeCounter() = default;

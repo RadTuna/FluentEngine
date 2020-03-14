@@ -2,15 +2,16 @@
 
 // Engine Include
 #include "D3D11/D3DCommandList.h"
+#include "Core/Core.h"
 
-#ifdef API_GRAPHICS_D3D11
-using SuperClass = Fluent::D3DCommandList;
-#endif
 
 namespace Fluent
 {
-
-	class CommandList : public SuperClass
+	
+	class CommandList :
+#ifdef API_GRAPHICS_D3D11
+		public D3DCommandList
+#endif
 	{
 	public:
 

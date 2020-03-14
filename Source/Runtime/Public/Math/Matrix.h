@@ -11,7 +11,7 @@ namespace Fluent
 {
 	class Vector;
 	
-	class Matrix
+	class Matrix final
 	{
 	public:
 
