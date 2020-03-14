@@ -4,14 +4,10 @@
 #pragma comment (lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
 #pragma comment (lib, "d3dcompiler.lib")
-#pragma comment (lib, "dxguid.lib")
-#pragma comment (lib, "winmm.lib")
-#pragma comment (lib, "comctl32.lib")
 
 // External Include
 #include <Windows.h>
 #include <d3d11_1.h>
-#include <DirectXMath.h>
 #include <string>
 #include <vector>
 
@@ -66,22 +62,32 @@ namespace Fluent
 		bool CreateSwapChain();
 		
 		void CreateConstantBuffers();
-		void CreateShaders();
+		void CreateVertexShaders();
+		void CreatePixelShaders();
 		void CreateDepthStencilStates();
 		void CreateRasterizerStates();
 		void CreateRenderTargets();
 		
 	private:
 
+		// Custom device data
 		PhysicalDeviceData mDeviceData;
 		std::vector<DisplayMode> mDisplayData;
 
+		// DX core variables
 		IDXGIAdapter* mAdapter;
 		ID3D11Device* mDevice;
 		ID3D11DeviceContext* mDeviceContext;
 		IDXGISwapChain* mSwapChain;
 		ID3D11RenderTargetView* mRenderTargetView;
 
+		std::vector<ID3D11Buffer*> mConstantBuffers;
+		std::vector<ID3D11VertexShader*> mVertexShaders;
+		std::vector<ID3D11PixelShader*> mPixelShaders;
+		std::vector<ID3D11DepthStencilState*> mDepthStencilStates;
+		std::vector<ID3D11RasterizerState*> mRasterizerStates;
+		std::vector<ID3D11RenderTargetView*> mRenderTargetViews;
+		
 	};
 
 }

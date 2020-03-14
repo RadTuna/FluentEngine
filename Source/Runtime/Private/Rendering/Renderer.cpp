@@ -61,10 +61,8 @@ bool Renderer::Initialize()
 		return false;
 	}
 
-	
 	// temp
 	mDeviceContext->OMSetRenderTargets(1, &mRenderTargetView, nullptr);
-
 
 	CreateConstantBuffers();
 	CreateShaders();
@@ -245,7 +243,11 @@ void Renderer::CreateConstantBuffers()
 {
 }
 
-void Renderer::CreateShaders()
+void Renderer::CreateVertexShaders()
+{
+}
+
+void Renderer::CreatePixelShaders()
 {
 }
 

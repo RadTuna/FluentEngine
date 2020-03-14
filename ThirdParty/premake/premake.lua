@@ -20,6 +20,7 @@
 
 -- Variables declear
 ROOT_DIR			= _ARGS[1]
+GRAPHICS_API			= _ARGS[2]
 SOLUTION_NAME			= "FluentEngine"
 EDITOR_NAME			= "Editor"
 RUNTIME_NAME			= "Runtime"
@@ -44,16 +45,17 @@ solution (SOLUTION_NAME)
 	filter { "platforms:x64" }
 		system "Windows"
 		architecture "x64"
+
 		
 	-- Debug
 	filter "configurations:Debug"
-		defines { "DEBUG" }
+		defines { "DEBUG", GRAPHICS_API }
 		flags { "MultiProcessorCompile", "LinkTimeOptimization" }
 		symbols "On"			
 		
 	-- Release	
 	filter "configurations:Release"
-		defines { "NDEBUG" }
+		defines { "NDEBUG", GRAPHICS_API }
 		flags { "MultiProcessorCompile" }
 		symbols "Off"	
 		optimize "Full"
@@ -103,7 +105,7 @@ project (EDITOR_NAME)
 	objdir (INTERMEDIATE_DIR)
 	kind "WindowedApp"
 	staticruntime "On"
-	
+
 	-- Files
 	files 
 	{ 
