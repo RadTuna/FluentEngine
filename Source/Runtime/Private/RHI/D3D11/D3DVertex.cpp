@@ -5,5 +5,10 @@
 #include "RHI/Vertex.h"
 
 
+namespace Fluent
+{
+	
+}
+
 #endif
 

@@ -5,5 +5,10 @@
 #include "RHI/Viewport.h"
 
 
+namespace Fluent
+{
+	
+}
+
 #endif
 

@@ -5,4 +5,9 @@
 #include "RHI/VertexBuffer.h"
 
 
+namespace Fluent
+{
+	
+}
+
 #endif

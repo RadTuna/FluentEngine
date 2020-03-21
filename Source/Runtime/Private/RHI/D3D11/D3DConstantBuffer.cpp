@@ -16,7 +16,11 @@ namespace Fluent
 
 	ConstantBuffer::~ConstantBuffer() noexcept
 	{
-		
+		if (mBuffer != nullptr)
+		{
+			mBuffer->Release();
+			mBuffer = nullptr;
+		}
 	}
 
 	bool ConstantBuffer::CreateBufferInternal(uint32 stride)

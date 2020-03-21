@@ -5,4 +5,9 @@
 #include "RHI/CommandList.h"
 
 
+namespace Fluent
+{
+	
+}
+
 #endif

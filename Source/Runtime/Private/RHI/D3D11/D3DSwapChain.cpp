@@ -63,7 +63,17 @@ namespace Fluent
 
 	SwapChain::~SwapChain() noexcept
 	{
-		
+		if (mRenderTargetView != nullptr)
+		{
+			mRenderTargetView->Release();
+			mRenderTargetView = nullptr;
+		}
+
+		if (mSwapChain != nullptr)
+		{
+			mSwapChain->Release();
+			mSwapChain = nullptr;
+		}
 	}
 
 	void SwapChain::TempSetRenderTarget(const std::shared_ptr<Device>& device) const

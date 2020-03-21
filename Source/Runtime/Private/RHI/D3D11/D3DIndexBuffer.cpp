@@ -5,5 +5,10 @@
 #include "RHI/IndexBuffer.h"
 
 
+namespace Fluent
+{
+	
+}
+
 #endif
 

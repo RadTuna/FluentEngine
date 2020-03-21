@@ -24,7 +24,34 @@ namespace Fluent
 
 	Shader::~Shader() noexcept
 	{
-		
+		if (mShader != nullptr)
+		{
+			switch (mShaderType)
+			{
+				case EShaderType::Vertex:
+				{
+					ID3D11VertexShader* vertexShader = GetVertexShader();
+					vertexShader->Release();
+					mShader = nullptr;
+				}
+				case EShaderType::Pixel:
+				{
+					ID3D11PixelShader* pixelShader = GetPixelShader();
+					pixelShader->Release();
+					mShader = nullptr;
+				}
+				case EShaderType::Compute:
+				{
+					ID3D11ComputeShader* computeShader = GetComputeShader();
+					computeShader->Release();
+					mShader = nullptr;
+				}
+				default:
+				{
+					Assert(false);
+				}
+			}
+		}
 	}
 
 	void Shader::Compile(const std::string& shaderPath)
@@ -125,24 +152,6 @@ namespace Fluent
 
 		shaderBlob->Release();
 		shaderBlob = nullptr;
-	}
-
-
-	// ========== D3DShader Class ==========
-	
-	ID3D11VertexShader* D3DShader::GetVertexShader() const
-	{
-		return static_cast<ID3D11VertexShader*>(mShader);
-	}
-
-	ID3D11PixelShader* D3DShader::GetPixelShader() const
-	{
-		return static_cast<ID3D11PixelShader*>(mShader);
-	}
-
-	ID3D11ComputeShader* D3DShader::GetComputeShader() const
-	{
-		return static_cast<ID3D11ComputeShader*>(mShader);
 	}
 
 
