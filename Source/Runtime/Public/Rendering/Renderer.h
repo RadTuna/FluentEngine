@@ -37,6 +37,8 @@ namespace Fluent
 
 		std::shared_ptr<Device> mDevice;
 		std::shared_ptr<SwapChain> mSwapChain;
+
+		std::shared_ptr<ConstantBuffer> mCommonConstantBuffer;
 		
 	};
 

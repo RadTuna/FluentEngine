@@ -10,8 +10,8 @@ namespace Fluent
 
 	SwapChain::SwapChain(const std::shared_ptr<Device>& device, const WindowData& winData) noexcept
 	{
-		HRESULT handleResult = S_OK;
-
+		Assert(device && device->IsInitialized());
+		
 		DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
 		swapChainDesc.BufferCount = 1;
 		swapChainDesc.BufferDesc.Width = static_cast<uint32>(winData.ScreenWidth);
@@ -26,33 +26,33 @@ namespace Fluent
 		swapChainDesc.Windowed = true;
 
 		IDXGIFactory* dxgiFactory = nullptr;
-		handleResult = device->GetAdapter()->GetParent(IID_PPV_ARGS(&dxgiFactory));
-		if (FAILED(handleResult))
+		HRESULT result = device->GetAdapter()->GetParent(IID_PPV_ARGS(&dxgiFactory));
+		if (FAILED(result))
 		{
 			mbIsInitialized = false;
 			return;
 		}
 
-		handleResult = dxgiFactory->CreateSwapChain(device->GetDevice(), &swapChainDesc, &mSwapChain);
+		result = dxgiFactory->CreateSwapChain(device->GetDevice(), &swapChainDesc, &mSwapChain);
 		dxgiFactory->Release();
 		dxgiFactory = nullptr;
-		if (FAILED(handleResult))
+		if (FAILED(result))
 		{
 			mbIsInitialized = false;
 			return;
 		}
 
 		ID3D11Texture2D* backBuffer = nullptr;
-		handleResult = mSwapChain->GetBuffer(0, IID_PPV_ARGS(&backBuffer));
-		if (FAILED(handleResult))
+		result = mSwapChain->GetBuffer(0, IID_PPV_ARGS(&backBuffer));
+		if (FAILED(result))
 		{
 			mbIsInitialized = false;
 			return;
 		}
 
-		handleResult = device->GetDevice()->CreateRenderTargetView(backBuffer, nullptr, &mRenderTargetView);
+		result = device->GetDevice()->CreateRenderTargetView(backBuffer, nullptr, &mRenderTargetView);
 		backBuffer->Release();
-		if (FAILED(handleResult))
+		if (FAILED(result))
 		{
 			mbIsInitialized = false;
 			return;

@@ -9,7 +9,6 @@ namespace Fluent
 {
 	Device::Device() noexcept
 	{
-		HRESULT handleResult = S_OK;
 		const uint32 createDeviceFlags = 0;
 
 		DetectAdapter();
@@ -25,7 +24,7 @@ namespace Fluent
 
 		const D3D_DRIVER_TYPE driverType = mAdapter ? D3D_DRIVER_TYPE_UNKNOWN : D3D_DRIVER_TYPE_HARDWARE;
 		
-		handleResult = D3D11CreateDevice(
+		const HRESULT result = D3D11CreateDevice(
 			mAdapter,
 			driverType,
 			nullptr,
@@ -37,7 +36,7 @@ namespace Fluent
 			nullptr,
 			&mDeviceContext);
 
-		if (SUCCEEDED(handleResult))
+		if (SUCCEEDED(result))
 		{
 			mbIsInitialized = true;
 		}

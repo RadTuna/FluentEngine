@@ -2,6 +2,8 @@
 
 #include "RHI/RHIDefinition.h"
 
+#ifdef API_GRAPHICS_D3D11
+
 namespace Fluent
 {
 
@@ -11,7 +13,7 @@ namespace Fluent
 
 		D3DSwapChain() = default;
 		~D3DSwapChain() = default;
-
+		
 		[[nodiscard]]
 		IDXGISwapChain* GetSwapChain() const { return mSwapChain; }
 
@@ -26,3 +28,5 @@ namespace Fluent
 	};
 
 }
+
+#endif

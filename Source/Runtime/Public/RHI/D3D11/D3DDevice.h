@@ -2,6 +2,8 @@
 
 #include "RHI/RHIDefinition.h"
 
+#ifdef API_GRAPHICS_D3D11
+
 namespace Fluent
 {
 	
@@ -11,7 +13,7 @@ namespace Fluent
 
 		D3DDevice() = default;
 		virtual ~D3DDevice() = default;
-
+		
 		[[nodiscard]]
 		IDXGIAdapter* GetAdapter() const { return mAdapter; };
 
@@ -30,3 +32,5 @@ namespace Fluent
 	};
 
 }
+
+#endif

@@ -2,15 +2,24 @@
 
 #include "RHI/RHIDefinition.h"
 
+#ifdef API_GRAPHICS_D3D11
+
+#include <DirectXMath.h>
+
 namespace Fluent
 {
 
-	class D3DVertex
+	struct D3DVertexPos
 	{
-	public:
+		DirectX::XMFLOAT4 Position;
+	};
 
-	private:
-		
+	struct D3DVertexPosTex
+	{
+		DirectX::XMFLOAT4 Position;
+		DirectX::XMFLOAT2 TexCoord;
 	};
 	
 }
+
+#endif

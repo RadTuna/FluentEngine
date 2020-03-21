@@ -3,6 +3,7 @@
 #include "Core/RuntimeStorage.h"
 #include "RHI/Device.h"
 #include "RHI/SwapChain.h"
+#include "RHI/ConstantBuffer.h"
 
 namespace Fluent
 {
@@ -51,6 +52,8 @@ namespace Fluent
 
 	void Renderer::CreateConstantBuffers()
 	{
+		mCommonConstantBuffer = std::make_shared<ConstantBuffer>(mDevice);
+		mCommonConstantBuffer->CreateBuffer<BufferCommon>();
 	}
 
 	void Renderer::CreateVertexShaders()

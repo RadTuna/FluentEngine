@@ -7,16 +7,23 @@
 
 namespace Fluent
 {
-	
-	class Vertex final :
-#ifdef API_GRAPHICS_D3D11
-		public D3DVertex
-#endif
-	{
-	public:
 
-	private:
-		
+#ifdef API_GRAPHICS_D3D11
+	using VertexPos = D3DVertexPos;
+	using VertexPosTex = D3DVertexPosTex;
+#endif
+
+	enum class VertexType
+	{
+		Unknown,
+		Pos,
+		PosTex
 	};
+
+	template<typename T>
+	VertexType VertexTypeToEnum() { return VertexType::Unknown; }
+
+	template<> inline VertexType VertexTypeToEnum<VertexPos>() { return VertexType::Pos; }
+	template<> inline VertexType VertexTypeToEnum<VertexPosTex>() { return VertexType::PosTex; }
 	
 }
