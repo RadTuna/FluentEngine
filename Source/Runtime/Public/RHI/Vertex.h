@@ -2,16 +2,24 @@
 
 // Engine Include
 #include "D3D11/D3DVertex.h"
-#include "Core/Core.h"
+#include "Math/Vector4.h"
+#include "Math/Vector3.h"
+#include "Math/Vector2.h"
 
 
 namespace Fluent
 {
 
-#ifdef API_GRAPHICS_D3D11
-	using VertexPos = D3DVertexPos;
-	using VertexPosTex = D3DVertexPosTex;
-#endif
+	struct VertexPos
+	{
+		Vector4 Position;
+	};
+
+	struct VertexPosTex
+	{
+		Vector4 Position;
+		Vector2 TexCoord;
+	};
 
 	enum class VertexType
 	{
