@@ -1,5 +1,8 @@
 #pragma once
 
+// External Include
+#include <memory>
+
 // Engine Include
 #include "D3D11/D3DRasterizerState.h"
 #include "Core/Core.h"
@@ -15,7 +18,30 @@ namespace Fluent
 	{
 	public:
 
+		explicit RasterizerState(
+			const std::shared_ptr<Device>& device,
+			ERenderCullMode cullMode,
+			ERenderFillMode fillMode,
+			bool bUseDepthClip,
+			bool bUseScissor,
+			bool bUseMultiSample,
+			bool bUseAntialiasedLine) noexcept;
+
+		virtual ~RasterizerState() noexcept;
+
+		
+		[[nodiscard]]
+		bool IsInitialized() const { return mbIsInitialized; }
+
 	private:
+
+		ERenderCullMode mCullMode = ERenderCullMode::Unknown;
+		ERenderFillMode mFillMode = ERenderFillMode::Unknown;
+		bool mbUseDepthClip = false;
+		bool mbUseScissor = false;
+		bool mbUseMultiSample = false;
+		bool mbUseAntialiasedLine = false;
+		bool mbIsInitialized = false;
 		
 	};
 	

@@ -16,29 +16,22 @@ namespace Fluent
 
 	ConstantBuffer::~ConstantBuffer() noexcept
 	{
-		if (mBuffer != nullptr)
-		{
-			mBuffer->Release();
-			mBuffer = nullptr;
-		}
+		D3DRelease(mConstantBuffer);
 	}
 
-	bool ConstantBuffer::CreateBufferInternal(uint32 stride)
-	{	
-		if (!mDevice || !mDevice->GetDevice())
-		{
-			return false;
-		}
+	bool ConstantBuffer::CreateBufferInternal()
+	{
+		D3DRelease(mConstantBuffer);
 		
 		D3D11_BUFFER_DESC bufferDesc = {};
-		bufferDesc.ByteWidth = stride;
+		bufferDesc.ByteWidth = static_cast<UINT>(mSize);
 		bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 		bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 		bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 		bufferDesc.MiscFlags = 0;
 		bufferDesc.StructureByteStride = 0;
 
-		const HRESULT result = mDevice->GetDevice()->CreateBuffer(&bufferDesc, nullptr, &mBuffer);
+		const HRESULT result = mDevice->GetDevice()->CreateBuffer(&bufferDesc, nullptr, &mConstantBuffer);
 		if (FAILED(result))
 		{
 			return false;
@@ -50,7 +43,7 @@ namespace Fluent
 	void* ConstantBuffer::Map() const
 	{
 		D3D11_MAPPED_SUBRESOURCE mappedSubResource = {};
-		const HRESULT result = mDevice->GetDeviceContext()->Map(mBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedSubResource);
+		const HRESULT result = mDevice->GetDeviceContext()->Map(mConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedSubResource);
 		if (FAILED(result))
 		{
 			return nullptr;
@@ -61,7 +54,7 @@ namespace Fluent
 
 	void ConstantBuffer::Unmap() const
 	{
-		mDevice->GetDeviceContext()->Unmap(mBuffer, 0);
+		mDevice->GetDeviceContext()->Unmap(mConstantBuffer, 0);
 	}
 
 	

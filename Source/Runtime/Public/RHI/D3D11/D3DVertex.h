@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RHI/RHIDefinition.h"
+#include "D3DDefinition.h"
 
 #ifdef API_GRAPHICS_D3D11
 

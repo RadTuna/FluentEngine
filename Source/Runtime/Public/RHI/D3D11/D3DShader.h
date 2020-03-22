@@ -4,7 +4,7 @@
 #include <vector>
 
 // Engine Include
-#include "RHI/RHIDefinition.h"
+#include "D3DDefinition.h"
 
 #ifdef API_GRAPHICS_D3D11
 

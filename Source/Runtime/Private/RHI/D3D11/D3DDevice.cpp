@@ -44,23 +44,11 @@ namespace Fluent
 
 	Device::~Device() noexcept
 	{
-		if (mDeviceContext != nullptr)
-		{
-			mDeviceContext->Release();
-			mDeviceContext = nullptr;
-		}
+		D3DRelease(mDeviceContext);
 
-		if (mDevice != nullptr)
-		{
-			mDevice->Release();
-			mDevice = nullptr;
-		}
+		D3DRelease(mDevice);
 
-		if (mAdapter != nullptr)
-		{
-			mAdapter->Release();
-			mAdapter = nullptr;
-		}
+		D3DRelease(mAdapter);
 	}
 
 	void Device::DetectAdapter()

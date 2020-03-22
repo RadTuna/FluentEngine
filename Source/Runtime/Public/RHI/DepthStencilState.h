@@ -5,6 +5,7 @@
 
 // Engine Include
 #include "D3D11/D3DDepthStencilState.h"
+#include "Core/Core.h"
 
 
 namespace Fluent
@@ -25,12 +26,23 @@ namespace Fluent
 			) noexcept;
 
 		virtual ~DepthStencilState() noexcept;
+
+		[[nodiscard]]
+		bool GetUseDepthTest() const { return mbUseDepthTest; }
+		[[nodiscard]]
+		bool GetUseDepthWrite() const { return mbUseDepthWrite; }
+		[[nodiscard]]
+		bool GetUseStencil() const { return mbUseStencil; }
+		[[nodiscard]]
+		bool IsInitialized() const { return mbIsInitialized; }
 		
 	private:
 
+		std::shared_ptr<Device> mDevice;
 		bool mbUseDepthTest = true;
 		bool mbUseDepthWrite = true;
 		bool mbUseStencil = false;
+		bool mbIsInitialized = false;
 		
 	};
 	
