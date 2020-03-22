@@ -1,12 +1,10 @@
 #pragma once
 
-// External Include
-#include <vector>
+#ifdef API_GRAPHICS_D3D11
 
 // Engine Include
 #include "D3DDefinition.h"
 
-#ifdef API_GRAPHICS_D3D11
 
 namespace Fluent
 {

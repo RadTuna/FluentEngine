@@ -1,8 +1,8 @@
 #pragma once
 
-#include "RHI/RHIDefinition.h"
-
 #ifdef API_GRAPHICS_D3D11
+
+#include "RHI/RHIDefinition.h"
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "dxgi.lib")
