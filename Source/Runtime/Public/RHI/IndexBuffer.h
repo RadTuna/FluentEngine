@@ -5,7 +5,7 @@
 #include <vector>
 
 // Engine Include
-#include "D3D11/D3DIndexBuffer.h"
+#include "D3D11/D3D11IndexBuffer.h"
 #include "Core/Core.h"
 
 
@@ -14,7 +14,7 @@ namespace Fluent
 	
 	class IndexBuffer final :
 #ifdef API_GRAPHICS_D3D11
-		public D3DIndexBuffer
+		public D3D11IndexBuffer
 #endif
 	{
 	public:

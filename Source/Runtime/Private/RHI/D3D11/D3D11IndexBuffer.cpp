@@ -20,12 +20,12 @@ namespace Fluent
 
 	IndexBuffer::~IndexBuffer() noexcept
 	{
-		D3DRelease(mIndexBuffer);
+		D3D11Release(mIndexBuffer);
 	}
 
 	bool IndexBuffer::CreateBufferInternal(const void* indices)
 	{
-		D3DRelease(mIndexBuffer);
+		D3D11Release(mIndexBuffer);
 
 		D3D11_BUFFER_DESC bufferDesc = {};
 		bufferDesc.ByteWidth = static_cast<UINT>(mSize);

@@ -44,11 +44,11 @@ namespace Fluent
 
 	Device::~Device() noexcept
 	{
-		D3DRelease(mDeviceContext);
+		D3D11Release(mDeviceContext);
 
-		D3DRelease(mDevice);
+		D3D11Release(mDevice);
 
-		D3DRelease(mAdapter);
+		D3D11Release(mAdapter);
 	}
 
 	void Device::DetectAdapter()

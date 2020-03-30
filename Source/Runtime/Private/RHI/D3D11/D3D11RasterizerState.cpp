@@ -56,11 +56,11 @@ namespace Fluent
 
 	RasterizerState::~RasterizerState() noexcept
 	{
-		D3DRelease(mRasterizerState);
+		D3D11Release(mRasterizerState);
 	}
 
 
-	D3D11_CULL_MODE D3DRasterizerState::ToD3DCullMode(ERenderCullMode cullMode)
+	D3D11_CULL_MODE D3D11RasterizerState::ToD3DCullMode(ERenderCullMode cullMode)
 	{
 		switch (cullMode)
 		{
@@ -84,7 +84,7 @@ namespace Fluent
 		}
 	}
 
-	D3D11_FILL_MODE D3DRasterizerState::ToD3DFillMode(ERenderFillMode fillMode)
+	D3D11_FILL_MODE D3D11RasterizerState::ToD3DFillMode(ERenderFillMode fillMode)
 	{
 		switch (fillMode)
 		{

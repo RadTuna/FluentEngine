@@ -1,7 +1,6 @@
 #pragma once
 
 // Engine Include
-#include "D3D11/D3DVertex.h"
 #include "Math/Vector4.h"
 #include "Math/Vector3.h"
 #include "Math/Vector2.h"

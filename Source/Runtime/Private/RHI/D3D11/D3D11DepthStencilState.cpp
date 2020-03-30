@@ -46,7 +46,7 @@ namespace Fluent
 
 	DepthStencilState::~DepthStencilState() noexcept
 	{
-		D3DRelease(mDepthStencilState);
+		D3D11Release(mDepthStencilState);
 	}
 
 	

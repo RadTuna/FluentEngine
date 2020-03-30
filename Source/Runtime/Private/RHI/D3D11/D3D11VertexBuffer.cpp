@@ -20,12 +20,12 @@ namespace Fluent
 
 	VertexBuffer::~VertexBuffer() noexcept
 	{
-		D3DRelease(mVertexBuffer);
+		D3D11Release(mVertexBuffer);
 	}
 
 	bool VertexBuffer::CreateBufferInternal(const void* vertices)
 	{
-		D3DRelease(mVertexBuffer);
+		D3D11Release(mVertexBuffer);
 		
 		D3D11_BUFFER_DESC bufferDesc = {};
 		bufferDesc.ByteWidth = static_cast<UINT>(mSize);

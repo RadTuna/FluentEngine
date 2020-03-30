@@ -3,18 +3,18 @@
 #ifdef API_GRAPHICS_D3D11
 
 // Engine Include
-#include "D3DDefinition.h"
+#include "D3D11Definition.h"
 
 
 namespace Fluent
 {
 
-	class D3DSwapChain
+	class D3D11SwapChain
 	{
 	public:
 
-		D3DSwapChain() = default;
-		~D3DSwapChain() = default;
+		D3D11SwapChain() = default;
+		~D3D11SwapChain() = default;
 		
 		[[nodiscard]]
 		IDXGISwapChain* GetSwapChain() const { return mSwapChain; }

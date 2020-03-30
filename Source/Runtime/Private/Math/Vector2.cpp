@@ -86,5 +86,4 @@ namespace Fluent
 		mY = mY * invVectorLength;
 	}
 
-	
 }

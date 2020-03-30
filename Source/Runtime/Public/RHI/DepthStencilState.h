@@ -4,7 +4,7 @@
 #include <memory>
 
 // Engine Include
-#include "D3D11/D3DDepthStencilState.h"
+#include "D3D11/D3D11DepthStencilState.h"
 #include "Core/Core.h"
 
 
@@ -13,7 +13,7 @@ namespace Fluent
 
 	class DepthStencilState :
 #ifdef API_GRAPHICS_D3D11
-		public D3DDepthStencilState
+		public D3D11DepthStencilState
 #endif
 	{
 	public:

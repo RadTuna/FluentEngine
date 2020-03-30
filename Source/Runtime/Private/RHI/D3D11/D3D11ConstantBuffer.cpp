@@ -16,12 +16,12 @@ namespace Fluent
 
 	ConstantBuffer::~ConstantBuffer() noexcept
 	{
-		D3DRelease(mConstantBuffer);
+		D3D11Release(mConstantBuffer);
 	}
 
 	bool ConstantBuffer::CreateBufferInternal()
 	{
-		D3DRelease(mConstantBuffer);
+		D3D11Release(mConstantBuffer);
 		
 		D3D11_BUFFER_DESC bufferDesc = {};
 		bufferDesc.ByteWidth = static_cast<UINT>(mSize);

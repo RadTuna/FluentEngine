@@ -3,18 +3,18 @@
 #ifdef API_GRAPHICS_D3D11
 
 // Engine Include
-#include "D3DDefinition.h"
+#include "D3D11Definition.h"
 
 
 namespace Fluent
 {
 	
-	class D3DConstantBuffer
+	class D3D11ConstantBuffer
 	{
 	public:
 
-		D3DConstantBuffer() = default;
-		virtual ~D3DConstantBuffer() = default;
+		D3D11ConstantBuffer() = default;
+		virtual ~D3D11ConstantBuffer() = default;
 		
 		[[nodiscard]]
 		ID3D11Buffer* GetConstantBuffer() const { return mConstantBuffer; }

@@ -3,18 +3,18 @@
 #ifdef API_GRAPHICS_D3D11
 
 // Engine Include
-#include "D3DDefinition.h"
+#include "D3D11Definition.h"
 
 
 namespace Fluent
 {
 
-	class D3DRasterizerState
+	class D3D11RasterizerState
 	{
 	public:
 
-		explicit D3DRasterizerState() = default;
-		virtual ~D3DRasterizerState() = default;
+		explicit D3D11RasterizerState() = default;
+		virtual ~D3D11RasterizerState() = default;
 
 		[[nodiscard]]
 		ID3D11RasterizerState* GetRasterizerState() const { return mRasterizerState; }

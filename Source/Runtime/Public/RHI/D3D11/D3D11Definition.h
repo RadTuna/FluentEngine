@@ -14,7 +14,7 @@
 namespace Fluent
 {
 
-	inline void D3DRelease(IUnknown* object)
+	inline void D3D11Release(IUnknown* object)
 	{
 		if (object)
 		{

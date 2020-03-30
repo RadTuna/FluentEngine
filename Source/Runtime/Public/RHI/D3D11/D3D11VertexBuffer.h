@@ -3,18 +3,18 @@
 #ifdef API_GRAPHICS_D3D11
 
 // Engine Include
-#include "D3DDefinition.h"
+#include "D3D11Definition.h"
 
 
 namespace Fluent
 {
 
-	class D3DVertexBuffer
+	class D3D11VertexBuffer
 	{
 	public:
 
-		explicit D3DVertexBuffer() = default;
-		virtual ~D3DVertexBuffer() = default;
+		explicit D3D11VertexBuffer() = default;
+		virtual ~D3D11VertexBuffer() = default;
 
 		
 		[[nodiscard]]

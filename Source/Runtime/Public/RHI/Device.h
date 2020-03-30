@@ -4,7 +4,7 @@
 #include <vector>
 
 // Engine Include
-#include "D3D11/D3DDevice.h"
+#include "D3D11/D3D11Device.h"
 #include "Core/Core.h"
 
 
@@ -13,7 +13,7 @@ namespace Fluent
 	
 	class Device final :
 #ifdef API_GRAPHICS_D3D11
-		public D3DDevice
+		public D3D11Device
 #endif
 	{
 	public:

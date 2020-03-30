@@ -6,7 +6,7 @@
 #include <vector>
 
 // Engine Include
-#include "D3D11/D3DShader.h"
+#include "D3D11/D3D11Shader.h"
 #include "Core/Core.h"
 
 
@@ -29,7 +29,7 @@ namespace Fluent
 	
 	class Shader final :
 #ifdef API_GRAPHICS_D3D11
-		public D3DShader
+		public D3D11Shader
 #endif
 	{
 	public:

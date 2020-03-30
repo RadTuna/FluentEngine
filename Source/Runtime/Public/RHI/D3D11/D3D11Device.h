@@ -3,18 +3,18 @@
 #ifdef API_GRAPHICS_D3D11
 
 // Engine Include
-#include "D3DDefinition.h"
+#include "D3D11Definition.h"
 
 
 namespace Fluent
 {
 	
-	class D3DDevice
+	class D3D11Device
 	{
 	public:
 
-		D3DDevice() = default;
-		virtual ~D3DDevice() = default;
+		D3D11Device() = default;
+		virtual ~D3D11Device() = default;
 		
 		[[nodiscard]]
 		IDXGIAdapter* GetAdapter() const { return mAdapter; };

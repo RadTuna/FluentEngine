@@ -29,17 +29,17 @@ namespace Fluent
 				case EShaderType::Vertex:
 				{
 					ID3D11VertexShader* vertexShader = GetVertexShader();
-					D3DRelease(vertexShader);
+					D3D11Release(vertexShader);
 				}
 				case EShaderType::Pixel:
 				{
 					ID3D11PixelShader* pixelShader = GetPixelShader();
-					D3DRelease(pixelShader);
+					D3D11Release(pixelShader);
 				}
 				case EShaderType::Compute:
 				{
 					ID3D11ComputeShader* computeShader = GetComputeShader();
-					D3DRelease(computeShader);
+					D3D11Release(computeShader);
 				}
 				default:
 				{
@@ -114,7 +114,7 @@ namespace Fluent
 				case EShaderType::Vertex:
 				{
 					ID3D11VertexShader* vertexShader = GetVertexShader();
-					D3DRelease(vertexShader);
+					D3D11Release(vertexShader);
 						
 					result = mDevice->GetDevice()->CreateVertexShader(
 						shaderBlob->GetBufferPointer(),
@@ -125,7 +125,7 @@ namespace Fluent
 				case EShaderType::Pixel:
 				{
 					ID3D11PixelShader* pixelShader = GetPixelShader();
-					D3DRelease(pixelShader);
+					D3D11Release(pixelShader);
 						
 					result = mDevice->GetDevice()->CreatePixelShader(
 						shaderBlob->GetBufferPointer(),
@@ -136,7 +136,7 @@ namespace Fluent
 				case EShaderType::Compute:
 				{
 					ID3D11ComputeShader* computeShader = GetComputeShader();
-					D3DRelease(computeShader);
+					D3D11Release(computeShader);
 						
 					result = mDevice->GetDevice()->CreateComputeShader(
 						shaderBlob->GetBufferPointer(),

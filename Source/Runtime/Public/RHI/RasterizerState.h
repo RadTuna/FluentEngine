@@ -4,7 +4,7 @@
 #include <memory>
 
 // Engine Include
-#include "D3D11/D3DRasterizerState.h"
+#include "D3D11/D3D11RasterizerState.h"
 #include "Core/Core.h"
 
 
@@ -13,7 +13,7 @@ namespace Fluent
 	
 	class RasterizerState final :
 #ifdef API_GRAPHICS_D3D11
-		public D3DRasterizerState
+		public D3D11RasterizerState
 #endif
 	{
 	public:

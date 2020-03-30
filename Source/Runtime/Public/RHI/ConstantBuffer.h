@@ -4,7 +4,7 @@
 #include <memory>
 
 // Engine Include
-#include "D3D11/D3DConstantBuffer.h"
+#include "D3D11/D3D11ConstantBuffer.h"
 #include "Core/Core.h"
 
 
@@ -13,7 +13,7 @@ namespace Fluent
 	
 	class ConstantBuffer :
 #ifdef API_GRAPHICS_D3D11
-		public D3DConstantBuffer
+		public D3D11ConstantBuffer
 #endif
 	{
 	public:

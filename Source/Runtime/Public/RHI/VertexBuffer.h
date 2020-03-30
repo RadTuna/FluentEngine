@@ -5,7 +5,7 @@
 #include <vector>
 
 // Engine Include
-#include "D3D11/D3DVertexBuffer.h"
+#include "D3D11/D3D11VertexBuffer.h"
 #include "Core/Core.h"
 
 
@@ -14,7 +14,7 @@ namespace Fluent
 	
 	class VertexBuffer final :
 #ifdef API_GRAPHICS_D3D11
-		public D3DVertexBuffer
+		public D3D11VertexBuffer
 #endif
 	{
 	public:
