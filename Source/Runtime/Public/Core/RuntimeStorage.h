@@ -13,8 +13,8 @@ namespace Fluent
 		HWND Handle = nullptr;
 		HINSTANCE Instance = nullptr;
 		uint32 Message = 0;
-		float ScreenWidth = 0;
-		float ScreenHeight = 0;
+		uint32 ScreenWidth = 0;
+		uint32 ScreenHeight = 0;
 		uint32 MonitorWidth = 0;
 		uint32 MonitorHeight = 0;
 		uint64 WParam = 0;

@@ -22,6 +22,38 @@ namespace Fluent
 			object = nullptr;
 		}
 	}
+
+	const static DXGI_FORMAT DxgiFormatMap[] =
+	{
+		DXGI_FORMAT_UNKNOWN,
+
+		// R
+		DXGI_FORMAT_R8_UNORM,
+		DXGI_FORMAT_R16_UINT,
+		DXGI_FORMAT_R16_FLOAT,
+		DXGI_FORMAT_R32_UINT,
+		DXGI_FORMAT_R32_FLOAT,
+		DXGI_FORMAT_D32_FLOAT,
+		DXGI_FORMAT_R32_TYPELESS,
+
+		// RG
+		DXGI_FORMAT_R8G8_UNORM,
+		DXGI_FORMAT_R16G16_FLOAT,
+		DXGI_FORMAT_R32G32_FLOAT,
+
+		// RGB
+		DXGI_FORMAT_R32G32B32_FLOAT,
+
+		// RGBA
+		DXGI_FORMAT_R8G8B8A8_UNORM,
+		DXGI_FORMAT_R16G16B16A16_FLOAT,
+		DXGI_FORMAT_R32G32B32A32_FLOAT
+	};
+	inline DXGI_FORMAT ToDxgiFormat(EPixelFormat format)
+	{
+		const uint32 index = static_cast<uint32>(format);
+		return DxgiFormatMap[index];
+	}
 	
 }
 

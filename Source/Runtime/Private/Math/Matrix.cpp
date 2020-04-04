@@ -23,7 +23,7 @@ namespace Fluent
 	{
 	}
 
-	Matrix Matrix::operator=(Matrix other)
+	Matrix __vectorcall Matrix::operator=(Matrix other)
 	{
 		mRow1 = other.mRow1;
 		mRow2 = other.mRow2;
@@ -33,7 +33,7 @@ namespace Fluent
 		return Matrix(mRow1, mRow2, mRow3, mRow4);
 	}
 
-	Vector Matrix::operator*(Vector other) const
+	Vector __vectorcall Matrix::operator*(Vector other) const
 	{
 		const Matrix tempMatrix = *this;
 
@@ -45,7 +45,7 @@ namespace Fluent
 		return Vector(_mm_setr_ps(tempX, tempY, tempZ, tempW));
 	}
 
-	Matrix Matrix::operator*(Matrix other) const
+	Matrix __vectorcall Matrix::operator*(Matrix other) const
 	{
 		Matrix outMatrix;
 		other.Transpose();
@@ -77,7 +77,7 @@ namespace Fluent
 		return outMatrix;
 	}
 
-	Matrix Matrix::operator*=(Matrix other)
+	Matrix __vectorcall Matrix::operator*=(Matrix other)
 	{
 		float tempX = DotSIMD(mRow1, other.mRow1);
 		float tempY = DotSIMD(mRow1, other.mRow2);
@@ -106,7 +106,7 @@ namespace Fluent
 		return Matrix(mRow1, mRow2, mRow3, mRow4);
 	}
 
-	Matrix Matrix::Transpose(Matrix other)
+	Matrix __vectorcall Matrix::Transpose(Matrix other)
 	{
 		const __m128 tempRow1 = _mm_unpacklo_ps(other.mRow1, other.mRow2);
 		const __m128 tempRow2 = _mm_unpacklo_ps(other.mRow3, other.mRow4);
@@ -134,7 +134,7 @@ namespace Fluent
 		mRow4 = _mm_movehl_ps(tempRow3, tempRow4);
 	}
 
-	Matrix Matrix::LoadMatrix4X4(const Matrix4x4& inMatrix)
+	Matrix __vectorcall Matrix::LoadMatrix4X4(const Matrix4x4& inMatrix)
 	{
 		return Matrix(
 			_mm_setr_ps(inMatrix.m11, inMatrix.m12, inMatrix.m13, inMatrix.m14),
@@ -143,7 +143,7 @@ namespace Fluent
 			_mm_setr_ps(inMatrix.m41, inMatrix.m42, inMatrix.m43, inMatrix.m44));
 	}
 
-	void Matrix::StoreMatrix4X4(Matrix inMatrix, Matrix4x4* outMatrix)
+	void __vectorcall Matrix::StoreMatrix4X4(Matrix inMatrix, Matrix4x4* outMatrix)
 	{
 		FloatVector tempVector1 = {};
 		FloatVector tempVector2 = {};
@@ -176,7 +176,7 @@ namespace Fluent
 		outMatrix->m44 = tempVector4.W;
 	}
 
-	float Matrix::DotSIMD(__m128 vector1, __m128 vector2)
+	float __vectorcall Matrix::DotSIMD(__m128 vector1, __m128 vector2)
 	{
 		const __m128 mulData = _mm_mul_ps(vector1, vector2);
 		const __m128 tempAddData = _mm_hadd_ps(mulData, mulData);

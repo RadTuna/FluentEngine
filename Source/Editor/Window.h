@@ -20,12 +20,12 @@ namespace Window
 	static HWND gHandle;
 	static Functor<void(WindowData&)> gWindowMessage;
 
-	inline void GetWindowSize(float* width, float* height)
+	inline void GetWindowSize(uint32* width, uint32* height)
 	{
 		RECT rect;
 		::GetClientRect(gHandle, &rect);
-		*width = static_cast<float>(rect.right - rect.left);
-		*height = static_cast<float>(rect.bottom - rect.top);
+		*width = static_cast<uint32>(rect.right - rect.left);
+		*height = static_cast<uint32>(rect.bottom - rect.top);
 	}
 
 	inline uint32 GetWidth()
@@ -59,8 +59,8 @@ namespace Window
 
 		if (msg == WM_DISPLAYCHANGE || msg == WM_SIZE)
 		{
-			windowData.ScreenWidth = static_cast<float>(lParam & 0xffff);
-			windowData.ScreenHeight = static_cast<float>((lParam >> 16) & 0xffff);
+			windowData.ScreenWidth = static_cast<uint32>(lParam & 0xffff);
+			windowData.ScreenHeight = static_cast<uint32>((lParam >> 16) & 0xffff);
 		}
 		else if (msg == WM_CLOSE)
 		{

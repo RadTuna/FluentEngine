@@ -1,8 +1,10 @@
 
 #ifdef API_GRAPHICS_D3D11
 
-// Engine Include
+// Primary Include
 #include "RHI/ConstantBuffer.h"
+
+// Engine Include
 #include "RHI/Device.h"
 
 namespace Fluent

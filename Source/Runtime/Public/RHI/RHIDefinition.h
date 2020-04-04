@@ -14,16 +14,18 @@ namespace Fluent
 	
 	class CommandList;
 	class ConstantBuffer;
+	class DepthStencilState;
 	class Device;
 	class IndexBuffer;
-	class InputLayout;
-	class PixelShader;
+	class RasterizerState;
+	class Shader;
 	class RasterizerState;
 	class SwapChain;
+	class Texture;
+	class Texture2D;
+	class Texture3D;
 	class Vertex;
 	class VertexBuffer;
-	class VertexShader;
-	class Viewport;
 
 
 	// ========== Render structure declaration ==========
@@ -59,7 +61,18 @@ namespace Fluent
 
 
 	// ========== Render enumerate declaration ==========
-
+	
+	namespace ETextureViewFlags
+	{
+		enum ETextureViewFlags : uint32
+		{
+			Unknown = 0,
+			RenderTarget = 1,
+			DepthStencil = 1 << 1,
+			ShaderSampled = 1 << 2
+		};
+	}
+	
 	enum class ERenderCullMode
 	{
 		Unknown,
@@ -73,6 +86,33 @@ namespace Fluent
 		Unknown,
 		Solid,
 		WireFrame
+	};
+
+	enum class EPixelFormat : uint32
+	{
+		Unknown = 0,
+		
+		// R
+		R8_Unorm,
+		R16_Uint,
+		R16_Float,
+		R32_Uint,
+		R32_Float,
+		D32_Float,
+		R32_Float_Typeless,
+		
+		// RG
+		R8G8_Unorm,
+		R16G16_Float,
+		R32G32_Float,
+		
+		// RGB
+		R32G32B32_Float,
+		
+		// RGBA
+		R8G8B8A8_Unorm,
+		R16G16B16A16_Float,
+		R32G32B32A32_Float,
 	};
 	
 }
