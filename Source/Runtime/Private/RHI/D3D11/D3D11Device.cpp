@@ -9,7 +9,7 @@ namespace Fluent
 {
 	Device::Device() noexcept
 	{
-		const uint32 createDeviceFlags = 0;
+		const u32 createDeviceFlags = 0;
 
 		DetectAdapter();
 
@@ -85,7 +85,7 @@ namespace Fluent
 		const char defChar = ' ';
 		WideCharToMultiByte(CP_ACP, 0, adapterDesc.Description, -1, name, 128, &defChar, nullptr);
 		mDeviceData.DeviceName = name;
-		mDeviceData.Memory = static_cast<uint32>(adapterDesc.DedicatedVideoMemory / 1024 / 1024);
+		mDeviceData.Memory = static_cast<u32>(adapterDesc.DedicatedVideoMemory / 1024 / 1024);
 
 
 		// Get primary monitor (connected graphic card, num 0)
@@ -96,19 +96,19 @@ namespace Fluent
 			return;
 		}
 
-		uint32 displayCount = 0;
+		u32 displayCount = 0;
 		if (SUCCEEDED(dxgiOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &displayCount, nullptr)))
 		{
 			DXGI_MODE_DESC* displayModes = NewByArray<DXGI_MODE_DESC>(displayCount);
 			if (SUCCEEDED(dxgiOutput->GetDisplayModeList(DXGI_FORMAT_R8G8B8A8_UNORM, DXGI_ENUM_MODES_INTERLACED, &displayCount, displayModes)))
 			{
 				mDisplayData.reserve(displayCount);
-				for (uint32 index = 0; index < displayCount; ++index)
+				for (u32 index = 0; index < displayCount; ++index)
 				{
-					const uint32 tempWidth = displayModes[index].Width;
-					const uint32 tempHeight = displayModes[index].Height;
-					const uint32 tempNumerator = displayModes[index].RefreshRate.Numerator;
-					const uint32 tempDenominator = displayModes[index].RefreshRate.Denominator;
+					const u32 tempWidth = displayModes[index].Width;
+					const u32 tempHeight = displayModes[index].Height;
+					const u32 tempNumerator = displayModes[index].RefreshRate.Numerator;
+					const u32 tempDenominator = displayModes[index].RefreshRate.Denominator;
 					const double tempRefreshRate = static_cast<double>(tempNumerator) / static_cast<double>(tempDenominator);
 
 					mDisplayData.emplace_back(tempWidth, tempHeight, tempNumerator, tempDenominator, tempRefreshRate);

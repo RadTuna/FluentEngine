@@ -6,6 +6,9 @@
 #include <emmintrin.h> // SSE2 intrinsic
 #include <pmmintrin.h> // SSE3 intrinsic
 
+// Engine Include
+#include "Core/Core.h"
+
 
 namespace Fluent
 {
@@ -14,13 +17,13 @@ namespace Fluent
 	{
 		struct
 		{
-			float X;
-			float Y;
-			float Z;
-			float W;
+			f32 X;
+			f32 Y;
+			f32 Z;
+			f32 W;
 		};
 
-		float Data[4];
+		f32 Data[4];
 	};
 
 	class Matrix;
@@ -48,23 +51,23 @@ namespace Fluent
 		Vector __vectorcall operator-(Vector other) const;
 		Vector __vectorcall operator-=(Vector other);
 
-		Vector __vectorcall operator*(float other) const;
-		Vector __vectorcall operator*=(float other);
-		friend Vector __vectorcall operator*(float other, Vector thisVector);
+		Vector __vectorcall operator*(f32 other) const;
+		Vector __vectorcall operator*=(f32 other);
+		friend Vector __vectorcall operator*(f32 other, Vector thisVector);
 
-		float __vectorcall operator*(Vector other) const;
+		f32 __vectorcall operator*(Vector other) const;
 		
 		Vector __vectorcall operator*(Matrix other) const;
 		Vector __vectorcall operator*=(Matrix other);
 
 		Vector __vectorcall operator^(Vector other) const;
 
-		static float __vectorcall DotProduct(Vector vectorA, Vector vectorB);
+		static f32 __vectorcall DotProduct(Vector vectorA, Vector vectorB);
 
 		static Vector __vectorcall CrossProduct(Vector vectorA, Vector vectorB);
 
 		[[nodiscard]]
-		float __vectorcall Length() const;
+		f32 __vectorcall Length() const;
 
 		static Vector __vectorcall Normalize(Vector other);
 		void Normalize();
@@ -75,8 +78,8 @@ namespace Fluent
 		static void __vectorcall StoreVector3(Vector inVector, class Vector3* outVector);
 		static void __vectorcall StoreVector4(Vector inVector, class Vector4* outVector);
 
-		static Vector __vectorcall SetVector3(float x, float y, float z);
-		static Vector __vectorcall SetVector4(float x, float y, float z, float w);
+		static Vector __vectorcall SetVector3(f32 x, f32 y, f32 z);
+		static Vector __vectorcall SetVector4(f32 x, f32 y, f32 z, f32 w);
 
 	};
 

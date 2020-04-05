@@ -51,7 +51,7 @@ namespace Fluent
 
 	void Shader::Compile(const std::string& shaderPath)
 	{
-		uint32 compileFlags = 0;
+		u32 compileFlags = 0;
 #ifdef DEBUG
 		compileFlags |= D3DCOMPILE_DEBUG | D3DCOMPILE_PREFER_FLOW_CONTROL;
 #elif NDEBUG

@@ -9,29 +9,29 @@ namespace Fluent
 
 	// ========== Renderer enumerate declaration ==========
 
-	constexpr uint32 RenderTargetTypesNum = 1;
+	constexpr u32 RenderTargetTypesNum = 1;
 	namespace ERenderTargetType
 	{
-		enum ERenderTargetType : uint32
+		enum ERenderTargetType : u32
 		{
 			Albedo = 0
 		};
 	}
 
-	constexpr uint32 RenderShaderTypesNum = 2;
+	constexpr u32 RenderShaderTypesNum = 2;
 	namespace ERenderShaderType
 	{
-		enum ERenderShaderType : uint32
+		enum ERenderShaderType : u32
 		{
 			VS_Common = 0,
 			PS_Common = 1
 		};
 	}
 
-	constexpr uint32 DepthStencilStateTypesNum = 3;
+	constexpr u32 DepthStencilStateTypesNum = 3;
 	namespace EDepthStencilStateType
 	{
-		enum EDepthStencilStateType : uint32
+		enum EDepthStencilStateType : u32
 		{
 			Enable_Write = 0,
 			Enable_NoWrite = 1,
@@ -39,10 +39,10 @@ namespace Fluent
 		};
 	}
 
-	constexpr uint32 ConstantBufferTypesNum = 3;
+	constexpr u32 ConstantBufferTypesNum = 3;
 	namespace EConstantBufferType
 	{
-		enum ERenderBufferType : uint32
+		enum ERenderBufferType : u32
 		{
 			FrameBuffer = 0,
 			UberBuffer = 1,
@@ -50,10 +50,10 @@ namespace Fluent
 		};
 	}
 
-	constexpr uint32 RasterizerStateTypesNum = 7;
+	constexpr u32 RasterizerStateTypesNum = 7;
 	namespace ERasterizerStateType
 	{
-		enum ERasterizerStateType : uint32
+		enum ERasterizerStateType : u32
 		{
 			CullBack_Solid = 0,
 			CullBack_Solid_NoClip = 1,

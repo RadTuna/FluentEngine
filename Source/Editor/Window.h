@@ -20,26 +20,26 @@ namespace Window
 	static HWND gHandle;
 	static Functor<void(WindowData&)> gWindowMessage;
 
-	inline void GetWindowSize(uint32* width, uint32* height)
+	inline void GetWindowSize(u32* width, u32* height)
 	{
 		RECT rect;
 		::GetClientRect(gHandle, &rect);
-		*width = static_cast<uint32>(rect.right - rect.left);
-		*height = static_cast<uint32>(rect.bottom - rect.top);
+		*width = static_cast<u32>(rect.right - rect.left);
+		*height = static_cast<u32>(rect.bottom - rect.top);
 	}
 
-	inline uint32 GetWidth()
+	inline u32 GetWidth()
 	{
 		RECT rect;
 		GetClientRect(gHandle, &rect);
-		return static_cast<uint32>(rect.right - rect.left);
+		return static_cast<u32>(rect.right - rect.left);
 	}
 
-	inline uint32 GetHeight()
+	inline u32 GetHeight()
 	{
 		RECT rect;
 		GetClientRect(gHandle, &rect);
-		return static_cast<uint32>(rect.bottom - rect.top);
+		return static_cast<u32>(rect.bottom - rect.top);
 	}
 
 	// Window Procedure
@@ -50,17 +50,17 @@ namespace Window
 		WindowData windowData;
 		windowData.Handle = gHandle;
 		windowData.Instance = gInstance;
-		windowData.Message = static_cast<uint32>(msg);
-		windowData.WParam = static_cast<uint64>(wParam);
-		windowData.LParam = static_cast<int64>(lParam);
+		windowData.Message = static_cast<u32>(msg);
+		windowData.WParam = static_cast<u64>(wParam);
+		windowData.LParam = static_cast<i64>(lParam);
 		windowData.MonitorWidth = GetSystemMetrics(SM_CXSCREEN);
 		windowData.MonitorHeight = GetSystemMetrics(SM_CYSCREEN);
 		GetWindowSize(&windowData.ScreenWidth, &windowData.ScreenHeight);
 
 		if (msg == WM_DISPLAYCHANGE || msg == WM_SIZE)
 		{
-			windowData.ScreenWidth = static_cast<uint32>(lParam & 0xffff);
-			windowData.ScreenHeight = static_cast<uint32>((lParam >> 16) & 0xffff);
+			windowData.ScreenWidth = static_cast<u32>(lParam & 0xffff);
+			windowData.ScreenHeight = static_cast<u32>((lParam >> 16) & 0xffff);
 		}
 		else if (msg == WM_CLOSE)
 		{

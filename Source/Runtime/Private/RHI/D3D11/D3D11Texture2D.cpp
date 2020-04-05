@@ -12,8 +12,8 @@ namespace Fluent
 {
 
 	Texture2D::Texture2D(const std::shared_ptr<Device>& device, 
-		uint32 width, uint32 height, EPixelFormat format,
-		const std::vector<std::vector<uint8>>& data) noexcept
+		u32 width, u32 height, EPixelFormat format,
+		const std::vector<std::vector<u8>>& data) noexcept
 		: Texture(device)
 	{
 		Assert(device && device->IsInitialized());
@@ -22,14 +22,14 @@ namespace Fluent
 		mHeight = height;
 		mChannels = GetChannelCountFromFormat(format);
 		mFormat = format;
-		mViewFlags = static_cast<uint32>(ETextureViewFlags::ShaderSampled);
-		mMipLevel = static_cast<uint32>(data.size());
+		mViewFlags = static_cast<u32>(ETextureViewFlags::ShaderSampled);
+		mMipLevel = static_cast<u32>(data.size());
 
 		CreateTexture(data, 1);
 	}
 	
 	Texture2D::Texture2D(const std::shared_ptr<Device>& device, 
-		uint32 width, uint32 height, EPixelFormat format) noexcept
+		u32 width, u32 height, EPixelFormat format) noexcept
 		: Texture(device)
 	{
 		Assert(device && device->IsInitialized());
@@ -38,10 +38,10 @@ namespace Fluent
 		mHeight = height;
 		mChannels = GetChannelCountFromFormat(format);
 		mFormat = format;
-		mViewFlags = static_cast<uint32>(ETextureViewFlags::ShaderSampled);
+		mViewFlags = static_cast<u32>(ETextureViewFlags::ShaderSampled);
 		mViewFlags |= (format == EPixelFormat::D32_Float) ?
-			static_cast<uint32>(ETextureViewFlags::DepthStencil) :
-			static_cast<uint32>(ETextureViewFlags::RenderTarget);
+			static_cast<u32>(ETextureViewFlags::DepthStencil) :
+			static_cast<u32>(ETextureViewFlags::RenderTarget);
 		mMipLevel = 1;
 
 		CreateEmptyTexture();
@@ -65,7 +65,7 @@ namespace Fluent
 		}
 	}
 
-	bool Texture2D::CreateTexture(const std::vector<std::vector<uint8>>& data, uint32 arraySize)
+	bool Texture2D::CreateTexture(const std::vector<std::vector<u8>>& data, u32 arraySize)
 	{
 		DXGI_FORMAT renderTargetFormat = ToDxgiFormat(mFormat); // RTV = Render Target View
 		DXGI_FORMAT depthStencilFormat = ToDxgiFormat(mFormat); // DSV = Depth Stencil View
@@ -77,15 +77,15 @@ namespace Fluent
 			shaderResourceFormat = ToDxgiFormat(EPixelFormat::R32_Float);
 		}
 
-		uint32 bindFlags = 0;
+		u32 bindFlags = 0;
 		bindFlags |= (mViewFlags & ETextureViewFlags::RenderTarget) ? D3D11_BIND_RENDER_TARGET : 0;
 		bindFlags |= (mViewFlags & ETextureViewFlags::DepthStencil) ? D3D11_BIND_DEPTH_STENCIL : 0;
 		bindFlags |= (mViewFlags & ETextureViewFlags::ShaderSampled) ? D3D11_BIND_SHADER_RESOURCE : 0;
 
 		D3D11_TEXTURE2D_DESC texDesc = {};
-		texDesc.Width = static_cast<uint32>(mWidth);
-		texDesc.Height = static_cast<uint32>(mHeight);
-		texDesc.MipLevels = static_cast<uint32>(mMipLevel);
+		texDesc.Width = static_cast<u32>(mWidth);
+		texDesc.Height = static_cast<u32>(mHeight);
+		texDesc.MipLevels = static_cast<u32>(mMipLevel);
 		texDesc.ArraySize = static_cast<UINT>(mTextureArraySize);
 		texDesc.Format = ToDxgiFormat(mFormat);
 		texDesc.SampleDesc.Count = 1;
@@ -99,7 +99,7 @@ namespace Fluent
 		if (!data.empty())
 		{
 			std::vector<D3D11_SUBRESOURCE_DATA> subResources;
-			for (uint32 index = 0; index < mMipLevel; ++index)
+			for (u32 index = 0; index < mMipLevel; ++index)
 			{
 				if (data[index].empty())
 				{
@@ -146,12 +146,12 @@ namespace Fluent
 
 	bool Texture2D::CreateEmptyTexture()
 	{
-		std::vector<std::vector<uint8>> emptyVector;
+		std::vector<std::vector<u8>> emptyVector;
 		emptyVector.reserve(0);
 		return CreateTexture(emptyVector, 1);
 	}
 
-	bool D3D11Texture2D::CreateDepthStencilView(ID3D11Texture2D* texture, DXGI_FORMAT format, uint32 arraySize, ID3D11Device* device)
+	bool D3D11Texture2D::CreateDepthStencilView(ID3D11Texture2D* texture, DXGI_FORMAT format, u32 arraySize, ID3D11Device* device)
 	{
 		D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
 		dsvDesc.Format = format;
@@ -171,7 +171,7 @@ namespace Fluent
 		}
 	}
 
-	bool D3D11Texture2D::CreateRenderTargetView(ID3D11Texture2D* texture, DXGI_FORMAT format, uint32 arraySize, ID3D11Device* device)
+	bool D3D11Texture2D::CreateRenderTargetView(ID3D11Texture2D* texture, DXGI_FORMAT format, u32 arraySize, ID3D11Device* device)
 	{
 		D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
 		rtvDesc.Format = format;
@@ -191,7 +191,7 @@ namespace Fluent
 		}
 	}
 
-	bool D3D11Texture2D::CreateShaderResourceView(ID3D11Texture2D* texture, DXGI_FORMAT format, uint32 arraySize, uint32 mipLevel, ID3D11Device* device)
+	bool D3D11Texture2D::CreateShaderResourceView(ID3D11Texture2D* texture, DXGI_FORMAT format, u32 arraySize, u32 mipLevel, ID3D11Device* device)
 	{
 		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
 		srvDesc.Format = format;

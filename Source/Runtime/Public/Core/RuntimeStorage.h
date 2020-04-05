@@ -12,13 +12,13 @@ namespace Fluent
 	{
 		HWND Handle = nullptr;
 		HINSTANCE Instance = nullptr;
-		uint32 Message = 0;
-		uint32 ScreenWidth = 0;
-		uint32 ScreenHeight = 0;
-		uint32 MonitorWidth = 0;
-		uint32 MonitorHeight = 0;
-		uint64 WParam = 0;
-		int64 LParam = 0;
+		u32 Message = 0;
+		u32 ScreenWidth = 0;
+		u32 ScreenHeight = 0;
+		u32 MonitorWidth = 0;
+		u32 MonitorHeight = 0;
+		u64 WParam = 0;
+		i64 LParam = 0;
 	};
 	
 	class RuntimeStorage final

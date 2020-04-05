@@ -17,8 +17,8 @@ namespace Fluent
 		
 		DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
 		swapChainDesc.BufferCount = 1;
-		swapChainDesc.BufferDesc.Width = static_cast<uint32>(winData.ScreenWidth);
-		swapChainDesc.BufferDesc.Height = static_cast<uint32>(winData.ScreenHeight);
+		swapChainDesc.BufferDesc.Width = static_cast<u32>(winData.ScreenWidth);
+		swapChainDesc.BufferDesc.Height = static_cast<u32>(winData.ScreenHeight);
 		swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 		swapChainDesc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 		swapChainDesc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;

@@ -22,7 +22,7 @@ namespace Fluent
 		virtual ~ConstantBuffer() noexcept;
 
 		template<typename T>
-		bool CreateBuffer(uint32 instanceNum = 1);
+		bool CreateBuffer(u32 instanceNum = 1);
 
 		[[nodiscard]]
 		void* Map() const;
@@ -35,16 +35,16 @@ namespace Fluent
 	private:
 
 		std::shared_ptr<Device> mDevice;
-		uint32 mStride = 0;
-		uint32 mInstanceCount = 1;
-		uint32 mSize = 0;
+		u32 mStride = 0;
+		u32 mInstanceCount = 1;
+		u32 mSize = 0;
 
 	};
 
 	template <typename T>
-	bool ConstantBuffer::CreateBuffer(uint32 instanceNum)
+	bool ConstantBuffer::CreateBuffer(u32 instanceNum)
 	{
-		mStride = static_cast<uint32>(sizeof(T));
+		mStride = static_cast<u32>(sizeof(T));
 		mInstanceCount = instanceNum;
 		mSize = mStride * mInstanceCount;
 		

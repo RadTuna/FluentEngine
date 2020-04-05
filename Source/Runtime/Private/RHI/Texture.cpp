@@ -6,7 +6,7 @@
 namespace Fluent
 {
 
-	uint32 Texture::GetChannelCountFromFormat(EPixelFormat format) const
+	u32 Texture::GetChannelCountFromFormat(EPixelFormat format) const
 	{
 		switch (format)
 		{

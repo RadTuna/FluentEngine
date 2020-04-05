@@ -51,7 +51,7 @@ namespace Fluent
 	};
 	inline DXGI_FORMAT ToDxgiFormat(EPixelFormat format)
 	{
-		const uint32 index = static_cast<uint32>(format);
+		const u32 index = static_cast<u32>(format);
 		return DxgiFormatMap[index];
 	}
 	

@@ -6,6 +6,9 @@
 #include <emmintrin.h> // SSE2 intrinsic
 #include <pmmintrin.h> // SSE3 intrinsic
 
+// Engine Include
+#include "Core/Core.h"
+
 
 namespace Fluent
 {

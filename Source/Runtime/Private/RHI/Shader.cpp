@@ -4,11 +4,11 @@
 namespace Fluent
 {
 
-	const char* Shader::GetEntryPoint() const
+	const i8* Shader::GetEntryPoint() const
 	{
-		static const char* vertexEntry = "mainVS";
-		static const char* pixelEntry = "mainPS";
-		static const char* computeEntry = "mainCS";
+		static const i8* vertexEntry = "mainVS";
+		static const i8* pixelEntry = "mainPS";
+		static const i8* computeEntry = "mainCS";
 
 		switch (mShaderType)
 		{
@@ -32,12 +32,12 @@ namespace Fluent
 		}
 	}
 
-	const char* Shader::GetTargetProfile() const
+	const i8* Shader::GetTargetProfile() const
 	{
 #ifdef API_GRAPHICS_D3D11
-		static const char* targetVS = "vs_5_0";
-		static const char* targetPS = "ps_5_0";
-		static const char* targetCS = "cs_5_0";
+		static const i8* targetVS = "vs_5_0";
+		static const i8* targetPS = "ps_5_0";
+		static const i8* targetCS = "cs_5_0";
 #endif
 
 		switch (mShaderType)

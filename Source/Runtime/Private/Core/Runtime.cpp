@@ -26,7 +26,7 @@ namespace Fluent
 			return false;
 		}
 
-		for (int32 index = 0; index < mSubSystems.size(); ++index)
+		for (i32 index = 0; index < mSubSystems.size(); ++index)
 		{
 			const bool result = mSubSystems[index]->Initialize();
 			if (!result)
@@ -42,7 +42,7 @@ namespace Fluent
 	{
 		mTimeCounter->Update(mTimeCounter->GetDeltaTime());
 
-		for (int32 index = 0; index < mSubSystems.size(); ++index)
+		for (i32 index = 0; index < mSubSystems.size(); ++index)
 		{
 			const float deltaTime = mTimeCounter->GetDeltaTime();
 			mSubSystems[index]->Update(deltaTime);

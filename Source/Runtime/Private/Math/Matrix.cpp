@@ -37,10 +37,10 @@ namespace Fluent
 	{
 		const Matrix tempMatrix = *this;
 
-		const float tempX = DotSIMD(tempMatrix.mRow1, other.mData);
-		const float tempY = DotSIMD(tempMatrix.mRow2, other.mData);
-		const float tempZ = DotSIMD(tempMatrix.mRow3, other.mData);
-		const float tempW = DotSIMD(tempMatrix.mRow4, other.mData);
+		const f32 tempX = DotSIMD(tempMatrix.mRow1, other.mData);
+		const f32 tempY = DotSIMD(tempMatrix.mRow2, other.mData);
+		const f32 tempZ = DotSIMD(tempMatrix.mRow3, other.mData);
+		const f32 tempW = DotSIMD(tempMatrix.mRow4, other.mData);
 
 		return Vector(_mm_setr_ps(tempX, tempY, tempZ, tempW));
 	}
@@ -50,10 +50,10 @@ namespace Fluent
 		Matrix outMatrix;
 		other.Transpose();
 
-		float tempX = DotSIMD(mRow1, other.mRow1);
-		float tempY = DotSIMD(mRow1, other.mRow2);
-		float tempZ = DotSIMD(mRow1, other.mRow3);
-		float tempW = DotSIMD(mRow1, other.mRow4);
+		f32 tempX = DotSIMD(mRow1, other.mRow1);
+		f32 tempY = DotSIMD(mRow1, other.mRow2);
+		f32 tempZ = DotSIMD(mRow1, other.mRow3);
+		f32 tempW = DotSIMD(mRow1, other.mRow4);
 		outMatrix.mRow1 = _mm_setr_ps(tempX, tempY, tempZ, tempW);
 
 		tempX = DotSIMD(mRow2, other.mRow1);
@@ -79,10 +79,10 @@ namespace Fluent
 
 	Matrix __vectorcall Matrix::operator*=(Matrix other)
 	{
-		float tempX = DotSIMD(mRow1, other.mRow1);
-		float tempY = DotSIMD(mRow1, other.mRow2);
-		float tempZ = DotSIMD(mRow1, other.mRow3);
-		float tempW = DotSIMD(mRow1, other.mRow4);
+		f32 tempX = DotSIMD(mRow1, other.mRow1);
+		f32 tempY = DotSIMD(mRow1, other.mRow2);
+		f32 tempZ = DotSIMD(mRow1, other.mRow3);
+		f32 tempW = DotSIMD(mRow1, other.mRow4);
 		mRow1 = _mm_setr_ps(tempX, tempY, tempZ, tempW);
 
 		tempX = DotSIMD(mRow2, other.mRow1);
@@ -176,7 +176,7 @@ namespace Fluent
 		outMatrix->m44 = tempVector4.W;
 	}
 
-	float __vectorcall Matrix::DotSIMD(__m128 vector1, __m128 vector2)
+	f32 __vectorcall Matrix::DotSIMD(__m128 vector1, __m128 vector2)
 	{
 		const __m128 mulData = _mm_mul_ps(vector1, vector2);
 		const __m128 tempAddData = _mm_hadd_ps(mulData, mulData);

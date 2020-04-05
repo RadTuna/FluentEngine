@@ -1,5 +1,8 @@
 #pragma once
 
+// Engine Include
+#include "Core/Core.h"
+
 
 namespace Fluent
 {
@@ -12,17 +15,17 @@ namespace Fluent
 	public:
 
 		// Real number
-		float mR;
+		f32 mR;
 
 		// Image number
-		float mI;
-		float mJ;
-		float mK;
+		f32 mI;
+		f32 mJ;
+		f32 mK;
 
 	public:
 
 		explicit Quaternion() = default;
-		explicit constexpr Quaternion(float r, float i, float j, float k) noexcept;
+		explicit constexpr Quaternion(f32 r, f32 i, f32 j, f32 k) noexcept;
 		explicit Quaternion(const Vector3& eulerAngle) noexcept;
 		explicit Quaternion(const Vector4& eulerAngle) noexcept;
 
@@ -54,7 +57,7 @@ namespace Fluent
 		Quaternion ToConjugate() const;
 		
 		[[nodiscard]]
-		float Length() const;
+		f32 Length() const;
 
 		static Quaternion Normalize(const Quaternion& other);
 		void Normalize();
@@ -63,7 +66,7 @@ namespace Fluent
 
 	};
 
-	constexpr Quaternion::Quaternion(float r, float i, float j, float k) noexcept
+	constexpr Quaternion::Quaternion(f32 r, f32 i, f32 j, f32 k) noexcept
 		: mR(r)
 		, mI(i)
 		, mJ(j)

@@ -11,15 +11,18 @@
 #define FORCEINLINE __forceinline
 #define INDEX_NONE		(-1)
 
-using int8 = char;
-using int16 = short;
-using int32 = int;
-using int64 = long long;
+using i8 = char;
+using i16 = short;
+using i32 = int;
+using i64 = long long;
 
-using uint8 = unsigned char;
-using uint16 = unsigned short;
-using uint32 = unsigned int;
-using uint64 = unsigned long long;
+using u8 = unsigned char;
+using u16 = unsigned short;
+using u32 = unsigned int;
+using u64 = unsigned long long;
+
+using f32 = float;
+using f64 = double;
 
 #ifdef UNICODE
 using gchar = wchar_t;
@@ -42,7 +45,7 @@ namespace Fluent
 	}
 
 	template<typename T>
-	FORCEINLINE void MemSet(T* const dest, int value, uint64 size)
+	FORCEINLINE void MemSet(T* const dest, int value, u64 size)
 	{
 #ifdef DEBUG
 		if (dest != nullptr)
@@ -59,7 +62,7 @@ namespace Fluent
 	}
 
 	template<typename T, typename U>
-	FORCEINLINE void MemCpy(T* const dest, U* const source, uint64 size)
+	FORCEINLINE void MemCpy(T* const dest, U* const source, u64 size)
 	{
 #ifdef DEBUG
 		if (dest != nullptr && source != nullptr)
@@ -76,7 +79,7 @@ namespace Fluent
 	}
 
 	template<typename T, typename U>
-	FORCEINLINE void MemMove(T* const dest, U* const source, uint64 size)
+	FORCEINLINE void MemMove(T* const dest, U* const source, u64 size)
 	{
 #ifdef DEBUG
 		if (dest != nullptr && source != nullptr)
@@ -112,7 +115,7 @@ namespace Fluent
 	}
 
 	template<typename T>
-	T* NewByArray(int32 size)
+	T* NewByArray(i32 size)
 	{
 #ifdef DEBUG
 		T* const NewObject = new T[size];

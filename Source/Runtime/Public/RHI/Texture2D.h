@@ -17,17 +17,17 @@ namespace Fluent
 
 		// Create texture with data
 		explicit Texture2D(const std::shared_ptr<Device>& device,
-			uint32 width, uint32 height, EPixelFormat format,
-			const std::vector<std::vector<uint8>>& data) noexcept;
+			u32 width, u32 height, EPixelFormat format,
+			const std::vector<std::vector<u8>>& data) noexcept;
 
 		// Create texture without data
 		explicit Texture2D(const std::shared_ptr<Device>& device,
-			uint32 width, uint32 height, EPixelFormat format) noexcept;
+			u32 width, u32 height, EPixelFormat format) noexcept;
 
 		virtual ~Texture2D() noexcept;
 
 		
-		bool CreateTexture(const std::vector<std::vector<uint8>>& data, uint32 arraySize) override;
+		bool CreateTexture(const std::vector<std::vector<u8>>& data, u32 arraySize) override;
 		bool CreateEmptyTexture() override;
 
 	private:

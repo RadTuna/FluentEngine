@@ -27,7 +27,7 @@ namespace Fluent
 		bool CreateBuffer(const std::vector<T>& indices);
 
 		template<typename T>
-		bool CreateBuffer(const T* indices, uint32 indexCount);
+		bool CreateBuffer(const T* indices, u32 indexCount);
 
 		[[nodiscard]]
 		void* Map() const;
@@ -40,26 +40,26 @@ namespace Fluent
 	private:
 
 		std::shared_ptr<Device> mDevice;
-		uint32 mStride = 0;
-		uint32 mIndexCount = 0;
-		uint32 mSize = 0;
+		u32 mStride = 0;
+		u32 mIndexCount = 0;
+		u32 mSize = 0;
 		
 	};
 
 	template <typename T>
 	bool IndexBuffer::CreateBuffer(const std::vector<T>& indices)
 	{
-		mStride = static_cast<uint32>(sizeof(T));
-		mIndexCount = static_cast<uint32>(indices.size());
+		mStride = static_cast<u32>(sizeof(T));
+		mIndexCount = static_cast<u32>(indices.size());
 		mSize = mStride * mIndexCount;
 
 		return CreateBufferInternal(indices.data());
 	}
 
 	template <typename T>
-	bool IndexBuffer::CreateBuffer(const T* indices, uint32 indexCount)
+	bool IndexBuffer::CreateBuffer(const T* indices, u32 indexCount)
 	{
-		mStride = static_cast<uint32>(sizeof(T));
+		mStride = static_cast<u32>(sizeof(T));
 		mIndexCount = indexCount;
 		mSize = mStride * mIndexCount;
 

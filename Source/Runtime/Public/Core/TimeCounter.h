@@ -19,20 +19,20 @@ namespace Fluent
 		virtual ~TimeCounter() = default;
 
 		bool Initialize() override;
-		void Update(float prevDeltaTime) override;
+		void Update(f32 prevDeltaTime) override;
 
 	private:
 
 		__int64 mFrequency = 0;
 		__int64 mStartTime = 0;
-		float mTickPerMs = 0.0f;
-		float mFrameTime = 0.0f;
-		float mFramePerSecond = 0.0f;
+		f32 mTickPerMs = 0.0f;
+		f32 mFrameTime = 0.0f;
+		f32 mFramePerSecond = 0.0f;
 
 	public:
 
-		FORCEINLINE float GetFPS() const { return mFramePerSecond; }
-		FORCEINLINE float GetDeltaTime() const { return mFrameTime; }
+		FORCEINLINE f32 GetFPS() const { return mFramePerSecond; }
+		FORCEINLINE f32 GetDeltaTime() const { return mFrameTime; }
 
 	};
 

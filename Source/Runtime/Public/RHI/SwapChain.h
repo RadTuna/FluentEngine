@@ -34,8 +34,8 @@ namespace Fluent
 	private:
 		
 		bool mbIsInitialized = false;
-		uint32 mSyncInterval = 0;
-		uint32 mFlags = 0;
+		u32 mSyncInterval = 0;
+		u32 mFlags = 0;
 		
 	};
 	

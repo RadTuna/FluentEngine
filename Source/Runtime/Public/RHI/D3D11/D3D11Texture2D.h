@@ -28,9 +28,9 @@ namespace Fluent
 
 	protected:
 
-		bool CreateRenderTargetView(ID3D11Texture2D* texture, DXGI_FORMAT format, uint32 arraySize, ID3D11Device* device);
-		bool CreateDepthStencilView(ID3D11Texture2D* texture, DXGI_FORMAT format, uint32 arraySize, ID3D11Device* device);
-		bool CreateShaderResourceView(ID3D11Texture2D* texture, DXGI_FORMAT format, uint32 arraySize, uint32 mipLevel, ID3D11Device* device);
+		bool CreateRenderTargetView(ID3D11Texture2D* texture, DXGI_FORMAT format, u32 arraySize, ID3D11Device* device);
+		bool CreateDepthStencilView(ID3D11Texture2D* texture, DXGI_FORMAT format, u32 arraySize, ID3D11Device* device);
+		bool CreateShaderResourceView(ID3D11Texture2D* texture, DXGI_FORMAT format, u32 arraySize, u32 mipLevel, ID3D11Device* device);
 
 	protected:
 

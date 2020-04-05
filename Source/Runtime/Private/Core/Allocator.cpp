@@ -9,16 +9,16 @@ namespace Fluent
 	{
 		mStackLimit = 1048576;
 
-		mMemoryStack = NewByArray<uint8>(mStackLimit);
+		mMemoryStack = NewByArray<u8>(mStackLimit);
 		mStackBottom = mMemoryStack;
 		mStackTop = mMemoryStack + mStackLimit;
 	}
 
-	StackAllocator::StackAllocator(uint32 stackLimit)
+	StackAllocator::StackAllocator(u32 stackLimit)
 	{
 		mStackLimit = stackLimit;
 
-		mMemoryStack = NewByArray<uint8>(mStackLimit);
+		mMemoryStack = NewByArray<u8>(mStackLimit);
 		mStackBottom = mMemoryStack;
 		mStackTop = mMemoryStack + mStackLimit;
 	}

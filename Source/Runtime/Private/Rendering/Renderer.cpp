@@ -112,8 +112,8 @@ namespace Fluent
 
 	void Renderer::CreateRenderTargets()
 	{
-		const uint32 width = mStorage->mWindowData.ScreenWidth;
-		const uint32 height = mStorage->mWindowData.ScreenHeight;
+		const u32 width = mStorage->mWindowData.ScreenWidth;
+		const u32 height = mStorage->mWindowData.ScreenHeight;
 
 		if ((width / 4) == 0 || (height / 4) == 0)
 		{

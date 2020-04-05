@@ -27,7 +27,7 @@ namespace Fluent
 		bool CreateBuffer(const std::vector<T>& vertices);
 
 		template<typename T>
-		bool CreateBuffer(const T* vertices, uint32 vertexCount);
+		bool CreateBuffer(const T* vertices, u32 vertexCount);
 
 		[[nodiscard]]
 		void* Map() const;
@@ -40,26 +40,26 @@ namespace Fluent
 	private:
 
 		std::shared_ptr<Device> mDevice;
-		uint32 mStride = 0;
-		uint32 mVertexCount = 0;
-		uint32 mSize = 0;
+		u32 mStride = 0;
+		u32 mVertexCount = 0;
+		u32 mSize = 0;
 		
 	};
 
 	template <typename T>
 	bool VertexBuffer::CreateBuffer(const std::vector<T>& vertices)
 	{
-		mStride = static_cast<uint32>(sizeof(T));
-		mVertexCount = static_cast<uint32>(vertices.size());
+		mStride = static_cast<u32>(sizeof(T));
+		mVertexCount = static_cast<u32>(vertices.size());
 		mSize = mStride * mVertexCount;
 
 		return CreateBufferInternal(vertices.data());
 	}
 
 	template <typename T>
-	bool VertexBuffer::CreateBuffer(const T* vertices, uint32 vertexCount)
+	bool VertexBuffer::CreateBuffer(const T* vertices, u32 vertexCount)
 	{
-		mStride = static_cast<uint32>(sizeof(T));
+		mStride = static_cast<u32>(sizeof(T));
 		mVertexCount = vertexCount;
 		mSize = mStride * mVertexCount;
 

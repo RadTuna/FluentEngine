@@ -47,20 +47,20 @@ namespace Fluent
 		return Vector(_mm_sub_ps(mData, other.mData));
 	}
 
-	Vector __vectorcall Vector::operator*(float other) const
+	Vector __vectorcall Vector::operator*(f32 other) const
 	{
 		const __m128 multiplier = _mm_set_ps1(other);
 		return Vector(_mm_mul_ps(mData, multiplier));
 	}
 
-	Vector __vectorcall Vector::operator*=(float other)
+	Vector __vectorcall Vector::operator*=(f32 other)
 	{
 		const __m128 multiplier = _mm_set_ps1(other);
 		mData = _mm_mul_ps(mData, multiplier);
 		return Vector(mData);
 	}
 
-	float __vectorcall Vector::operator*(Vector other) const
+	f32 __vectorcall Vector::operator*(Vector other) const
 	{
 		const __m128 mulData = _mm_mul_ps(mData, other.mData);
 		const __m128 tempAddData = _mm_hadd_ps(mulData, mulData);
@@ -73,10 +73,10 @@ namespace Fluent
 	{
 		other.Transpose();
 
-		const float tempX = Matrix::DotSIMD(other.mRow1, mData);
-		const float tempY = Matrix::DotSIMD(other.mRow2, mData);
-		const float tempZ = Matrix::DotSIMD(other.mRow3, mData);
-		const float tempW = Matrix::DotSIMD(other.mRow4, mData);
+		const f32 tempX = Matrix::DotSIMD(other.mRow1, mData);
+		const f32 tempY = Matrix::DotSIMD(other.mRow2, mData);
+		const f32 tempZ = Matrix::DotSIMD(other.mRow3, mData);
+		const f32 tempW = Matrix::DotSIMD(other.mRow4, mData);
 		const __m128 outData = _mm_set_ps(tempX, tempY, tempZ, tempW);
 
 		return Vector(outData);
@@ -86,10 +86,10 @@ namespace Fluent
 	{
 		other.Transpose();
 
-		const float tempX = Matrix::DotSIMD(other.mRow1, mData);
-		const float tempY = Matrix::DotSIMD(other.mRow2, mData);
-		const float tempZ = Matrix::DotSIMD(other.mRow3, mData);
-		const float tempW = Matrix::DotSIMD(other.mRow4, mData);
+		const f32 tempX = Matrix::DotSIMD(other.mRow1, mData);
+		const f32 tempY = Matrix::DotSIMD(other.mRow2, mData);
+		const f32 tempZ = Matrix::DotSIMD(other.mRow3, mData);
+		const f32 tempW = Matrix::DotSIMD(other.mRow4, mData);
 		mData = _mm_set_ps(tempX, tempY, tempZ, tempW);
 
 		return Vector(mData);
@@ -107,7 +107,7 @@ namespace Fluent
 		return Vector(outData);
 	}
 
-	float Vector::DotProduct(Vector vectorA, Vector vectorB)
+	f32 Vector::DotProduct(Vector vectorA, Vector vectorB)
 	{
 		return vectorA * vectorB;
 	}
@@ -117,7 +117,7 @@ namespace Fluent
 		return vectorA ^ vectorB;
 	}
 
-	float __vectorcall Vector::Length() const
+	f32 __vectorcall Vector::Length() const
 	{
 		const __m128 tempMulData = _mm_mul_ps(mData, mData);
 		__m128 tempAddData = _mm_hadd_ps(tempMulData, tempMulData);
@@ -160,7 +160,7 @@ namespace Fluent
 
 	void __vectorcall Vector::StoreVector3(Vector inVector, Vector3* outVector)
 	{
-		FloatVector tempVector = {};
+		f32Vector tempVector = {};
 		_mm_store_ps(tempVector.Data, inVector.mData);
 
 		outVector->mX = tempVector.X;
@@ -170,7 +170,7 @@ namespace Fluent
 
 	void __vectorcall Vector::StoreVector4(Vector inVector, Vector4* outVector)
 	{
-		FloatVector tempVector = {};
+		f32Vector tempVector = {};
 		_mm_store_ps(tempVector.Data, inVector.mData);
 
 		outVector->mX = tempVector.X;
@@ -179,17 +179,17 @@ namespace Fluent
 		outVector->mW = tempVector.W;
 	}
 
-	Vector Vector::SetVector3(float x, float y, float z)
+	Vector Vector::SetVector3(f32 x, f32 y, f32 z)
 	{
 		return Vector(_mm_setr_ps(x, y, z, 0.0f));
 	}
 
-	Vector Vector::SetVector4(float x, float y, float z, float w)
+	Vector Vector::SetVector4(f32 x, f32 y, f32 z, f32 w)
 	{
 		return Vector(_mm_setr_ps(x, y, z, w));
 	}
 
-	Vector __vectorcall Fluent::operator*(float other, Vector thisVector)
+	Vector __vectorcall Fluent::operator*(f32 other, Vector thisVector)
 	{
 		const __m128 multiplier = _mm_set_ps1(other);
 		return Vector(_mm_mul_ps(thisVector.mData, multiplier));

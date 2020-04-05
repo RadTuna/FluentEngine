@@ -5,7 +5,7 @@
 namespace Fluent
 {
 
-	int32 Math::Sign(int32 value)
+	i32 Math::Sign(i32 value)
 	{
 		if (value > 0)
 		{

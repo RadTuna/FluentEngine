@@ -23,10 +23,10 @@ namespace Fluent
 
 	Quaternion Quaternion::operator+(const Quaternion& other) const
 	{
-		const float tempR = mR + other.mR;
-		const float tempI = mI + other.mI;
-		const float tempJ = mJ + other.mJ;
-		const float tempK = mK + other.mK;
+		const f32 tempR = mR + other.mR;
+		const f32 tempI = mI + other.mI;
+		const f32 tempJ = mJ + other.mJ;
+		const f32 tempK = mK + other.mK;
 
 		return Quaternion(tempR, tempI, tempJ, tempK);
 	}
@@ -43,10 +43,10 @@ namespace Fluent
 
 	Quaternion Quaternion::operator-(const Quaternion& other) const
 	{
-		const float tempR = mR - other.mR;
-		const float tempI = mI - other.mI;
-		const float tempJ = mJ - other.mJ;
-		const float tempK = mK - other.mK;
+		const f32 tempR = mR - other.mR;
+		const f32 tempI = mI - other.mI;
+		const f32 tempJ = mJ - other.mJ;
+		const f32 tempK = mK - other.mK;
 
 		return Quaternion(tempR, tempI, tempJ, tempK);
 	}
@@ -63,10 +63,10 @@ namespace Fluent
 
 	Quaternion Quaternion::operator*(const Quaternion& other) const
 	{
-		const float tempR = mR * other.mR - (mI * other.mI + mJ * other.mJ + mK * other.mK);
-		const float tempI = mR * other.mI + other.mR * mI + (mJ * other.mK - other.mK * other.mJ);
-		const float tempJ = mR * other.mJ + other.mR * mJ + (mK * other.mI - other.mI * other.mK);
-		const float tempK = mR * other.mK + other.mK * mI + (mI * other.mJ - other.mJ * other.mI);
+		const f32 tempR = mR * other.mR - (mI * other.mI + mJ * other.mJ + mK * other.mK);
+		const f32 tempI = mR * other.mI + other.mR * mI + (mJ * other.mK - other.mK * other.mJ);
+		const f32 tempJ = mR * other.mJ + other.mR * mJ + (mK * other.mI - other.mI * other.mK);
+		const f32 tempK = mR * other.mK + other.mK * mI + (mI * other.mJ - other.mJ * other.mI);
 
 		return Quaternion(tempR, tempI, tempJ, tempK);
 	}
@@ -103,12 +103,12 @@ namespace Fluent
 
 	void Quaternion::SetEuler(const Vector3& other)
 	{
-		const float cosX = std::cosf(other.mX);
-		const float sinX = std::sinf(other.mX);
-		const float cosY = std::cosf(other.mY);
-		const float sinY = std::sinf(other.mY);
-		const float cosZ = std::cosf(other.mZ);
-		const float sinZ = std::sinf(other.mZ);
+		const f32 cosX = std::cosf(other.mX);
+		const f32 sinX = std::sinf(other.mX);
+		const f32 cosY = std::cosf(other.mY);
+		const f32 sinY = std::sinf(other.mY);
+		const f32 cosZ = std::cosf(other.mZ);
+		const f32 sinZ = std::sinf(other.mZ);
 
 		mR = cosX * cosY * cosZ + sinX * sinY * sinZ;
 		mI = sinX * cosY * cosZ - cosX * sinY * sinZ;
@@ -118,12 +118,12 @@ namespace Fluent
 
 	void Quaternion::SetEuler(const Vector4& other)
 	{
-		const float cosX = std::cosf(Math::Deg2Rad(other.mX) * 0.5f);
-		const float sinX = std::sinf(Math::Deg2Rad(other.mX) * 0.5f);
-		const float cosY = std::cosf(Math::Deg2Rad(other.mY) * 0.5f);
-		const float sinY = std::sinf(Math::Deg2Rad(other.mY) * 0.5f);
-		const float cosZ = std::cosf(Math::Deg2Rad(other.mZ) * 0.5f);
-		const float sinZ = std::sinf(Math::Deg2Rad(other.mZ) * 0.5f);
+		const f32 cosX = std::cosf(Math::Deg2Rad(other.mX) * 0.5f);
+		const f32 sinX = std::sinf(Math::Deg2Rad(other.mX) * 0.5f);
+		const f32 cosY = std::cosf(Math::Deg2Rad(other.mY) * 0.5f);
+		const f32 sinY = std::sinf(Math::Deg2Rad(other.mY) * 0.5f);
+		const f32 cosZ = std::cosf(Math::Deg2Rad(other.mZ) * 0.5f);
+		const f32 sinZ = std::sinf(Math::Deg2Rad(other.mZ) * 0.5f);
 
 		mR = cosX * cosY * cosZ + sinX * sinY * sinZ;
 		mI = sinX * cosY * cosZ - cosX * sinY * sinZ;
@@ -133,11 +133,11 @@ namespace Fluent
 
 	Vector3 Quaternion::ToEuler() const
 	{
-		const float tempX = std::atan2f(2.0f * (mR * mI + mJ * mK), 1.0f - (2.0f * (mI * mI + mJ * mJ)));
-		const float tempZ = std::atan2f(2.0f * (mR * mK + mI * mJ), 1.0f - (2.0f * (mJ * mJ + mK * mK)));
+		const f32 tempX = std::atan2f(2.0f * (mR * mI + mJ * mK), 1.0f - (2.0f * (mI * mI + mJ * mJ)));
+		const f32 tempZ = std::atan2f(2.0f * (mR * mK + mI * mJ), 1.0f - (2.0f * (mJ * mJ + mK * mK)));
 
-		const float intermediateY = 2.0f * (mR * mJ - mK * mI);
-		float tempY = 0.0f;
+		const f32 intermediateY = 2.0f * (mR * mJ - mK * mI);
+		f32 tempY = 0.0f;
 		if (std::abs(intermediateY) >= 1.0f)
 		{
 			tempY = std::copysignf(PI * 0.5f, intermediateY);
@@ -152,11 +152,11 @@ namespace Fluent
 
 	Vector4 Quaternion::ToEuler4() const
 	{
-		const float tempX = std::atan2f(2.0f * (mR * mI + mJ * mK), 1.0f - (2.0f * (mI * mI + mJ * mJ)));
-		const float tempZ = std::atan2f(2.0f * (mR * mK + mI * mJ), 1.0f - (2.0f * (mJ * mJ + mK * mK)));
+		const f32 tempX = std::atan2f(2.0f * (mR * mI + mJ * mK), 1.0f - (2.0f * (mI * mI + mJ * mJ)));
+		const f32 tempZ = std::atan2f(2.0f * (mR * mK + mI * mJ), 1.0f - (2.0f * (mJ * mJ + mK * mK)));
 
-		const float intermediateY = 2.0f * (mR * mJ - mK * mI);
-		float tempY = 0.0f;
+		const f32 intermediateY = 2.0f * (mR * mJ - mK * mI);
+		f32 tempY = 0.0f;
 		if (std::abs(intermediateY) >= 1.0f)
 		{
 			tempY = std::copysignf(PI * 0.5f, intermediateY);
@@ -173,17 +173,17 @@ namespace Fluent
 	{
 		Quaternion unitQuat = Quaternion::Normalize(*this);
 
-		const float _11 = 1.0f - 2.0f * (unitQuat.mJ * unitQuat.mJ + unitQuat.mK * unitQuat.mK);
-		const float _12 = 2.0f * (unitQuat.mI * unitQuat.mJ - unitQuat.mK * unitQuat.mR);
-		const float _13 = 2.0f * (unitQuat.mI * unitQuat.mK + unitQuat.mJ * unitQuat.mR);
+		const f32 _11 = 1.0f - 2.0f * (unitQuat.mJ * unitQuat.mJ + unitQuat.mK * unitQuat.mK);
+		const f32 _12 = 2.0f * (unitQuat.mI * unitQuat.mJ - unitQuat.mK * unitQuat.mR);
+		const f32 _13 = 2.0f * (unitQuat.mI * unitQuat.mK + unitQuat.mJ * unitQuat.mR);
 
-		const float _21 = 2.0f * (unitQuat.mI * unitQuat.mJ + unitQuat.mK * unitQuat.mR);
-		const float _22 = 1.0f - 2.0f * (unitQuat.mI * unitQuat.mI + unitQuat.mK * unitQuat.mK);
-		const float _23 = 2.0f * (unitQuat.mJ * unitQuat.mK - unitQuat.mI * unitQuat.mR);
+		const f32 _21 = 2.0f * (unitQuat.mI * unitQuat.mJ + unitQuat.mK * unitQuat.mR);
+		const f32 _22 = 1.0f - 2.0f * (unitQuat.mI * unitQuat.mI + unitQuat.mK * unitQuat.mK);
+		const f32 _23 = 2.0f * (unitQuat.mJ * unitQuat.mK - unitQuat.mI * unitQuat.mR);
 
-		const float _31 = 2.0f * (unitQuat.mI * unitQuat.mK - unitQuat.mJ * unitQuat.mR);
-		const float _32 = 2.0f * (unitQuat.mJ * unitQuat.mK + unitQuat.mI * unitQuat.mR);
-		const float _33 = 1.0f - 2.0f * (unitQuat.mI * unitQuat.mI + unitQuat.mJ * unitQuat.mJ);
+		const f32 _31 = 2.0f * (unitQuat.mI * unitQuat.mK - unitQuat.mJ * unitQuat.mR);
+		const f32 _32 = 2.0f * (unitQuat.mJ * unitQuat.mK + unitQuat.mI * unitQuat.mR);
+		const f32 _33 = 1.0f - 2.0f * (unitQuat.mI * unitQuat.mI + unitQuat.mJ * unitQuat.mJ);
 
 		return Matrix4x4(
 			_11, _12, _13, 0.0f,
@@ -197,27 +197,27 @@ namespace Fluent
 		return Quaternion(mR, -mI, -mJ, -mK);
 	}
 
-	float Quaternion::Length() const
+	f32 Quaternion::Length() const
 	{
-		const float squareValue = mR * mR + mI * mI + mJ * mJ + mK * mK;
+		const f32 squareValue = mR * mR + mI * mI + mJ * mJ + mK * mK;
 		return std::sqrtf(squareValue);
 	}
 
 	Quaternion Quaternion::Normalize(const Quaternion& other)
 	{
-		const float invQuatLength = 1.0f / other.Length();
+		const f32 invQuatLength = 1.0f / other.Length();
 
-		const float tempR = other.mR * invQuatLength;
-		const float tempI = other.mI * invQuatLength;
-		const float tempJ = other.mJ * invQuatLength;
-		const float tempK = other.mK * invQuatLength;
+		const f32 tempR = other.mR * invQuatLength;
+		const f32 tempI = other.mI * invQuatLength;
+		const f32 tempJ = other.mJ * invQuatLength;
+		const f32 tempK = other.mK * invQuatLength;
 
 		return Quaternion(tempR, tempI, tempJ, tempK);
 	}
 
 	void Quaternion::Normalize()
 	{
-		const float invQuatLength = 1.0f / Length();
+		const f32 invQuatLength = 1.0f / Length();
 
 		mR = mR * invQuatLength;
 		mI = mI * invQuatLength;

@@ -33,22 +33,22 @@ namespace Fluent
 	struct PhysicalDeviceData
 	{
 		PhysicalDeviceData() = default;
-		PhysicalDeviceData(const std::string& name, uint32 mem) : DeviceName(name), Memory(mem) {}
+		PhysicalDeviceData(const std::string& name, u32 mem) : DeviceName(name), Memory(mem) {}
 
 		std::string DeviceName = "Unknown";
-		uint32 Memory = 0;
+		u32 Memory = 0;
 	};
 
 	struct DisplayMode
 	{
 		DisplayMode() = default;
-		DisplayMode(uint32 inWidth, uint32 inHeight, uint32 inNumerator, uint32 inDenominator, double inRefresh)
+		DisplayMode(u32 inWidth, u32 inHeight, u32 inNumerator, u32 inDenominator, double inRefresh)
 			: Width(inWidth), Height(inHeight), Numerator(inNumerator), Denominator(inDenominator), RefreshRate(inRefresh) {}
 
-		uint32 Width = 0;
-		uint32 Height = 0;
-		uint32 Numerator = 0;
-		uint32 Denominator = 0;
+		u32 Width = 0;
+		u32 Height = 0;
+		u32 Numerator = 0;
+		u32 Denominator = 0;
 		double RefreshRate = 0.0;
 	};
 
@@ -64,7 +64,7 @@ namespace Fluent
 	
 	namespace ETextureViewFlags
 	{
-		enum ETextureViewFlags : uint32
+		enum ETextureViewFlags : u32
 		{
 			Unknown = 0,
 			RenderTarget = 1,
@@ -88,7 +88,7 @@ namespace Fluent
 		WireFrame
 	};
 
-	enum class EPixelFormat : uint32
+	enum class EPixelFormat : u32
 	{
 		Unknown = 0,
 		
