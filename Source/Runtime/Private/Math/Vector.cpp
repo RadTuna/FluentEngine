@@ -160,7 +160,7 @@ namespace Fluent
 
 	void __vectorcall Vector::StoreVector3(Vector inVector, Vector3* outVector)
 	{
-		f32Vector tempVector = {};
+		FloatVector tempVector = {};
 		_mm_store_ps(tempVector.Data, inVector.mData);
 
 		outVector->mX = tempVector.X;
@@ -170,7 +170,7 @@ namespace Fluent
 
 	void __vectorcall Vector::StoreVector4(Vector inVector, Vector4* outVector)
 	{
-		f32Vector tempVector = {};
+		FloatVector tempVector = {};
 		_mm_store_ps(tempVector.Data, inVector.mData);
 
 		outVector->mX = tempVector.X;
