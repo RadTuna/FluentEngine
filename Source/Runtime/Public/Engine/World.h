@@ -6,16 +6,20 @@
 
 // Engine Include
 #include "Core/Core.h"
-#include "Core/ISubSystem.h"
+#include "Core/ISubModule.h"
+#include "Entity.h"
+#include "ComponentArchive.h"
+#include "ISystem.h"
+
 
 namespace Fluent
 {
 	
-	class World final : public ISubSystem
+	class World final : public ISubModule
 	{
 	public:
 
-		explicit World(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept;
+		explicit World(const std::shared_ptr<EngineStorage>& inStorage) noexcept;
 		virtual ~World() = default;
 
 		bool Initialize() override;
@@ -23,9 +27,9 @@ namespace Fluent
 
 	private:
 
-		std::vector<class Entity*> mEntities;
-		std::vector<class IComponent*> mComponents;
-		std::vector<class ISystem*> mSystems;
+		std::vector<Entity> mEntities;
+		std::vector<ComponentArchive> mComponents;
+		std::vector<std::unique_ptr<ISystem>> mSystems;
 		
 	};
 

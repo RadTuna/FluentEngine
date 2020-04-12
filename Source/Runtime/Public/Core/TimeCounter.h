@@ -5,17 +5,17 @@
 
 // Engine Include
 #include "Core/Core.h"
-#include "Core/ISubSystem.h"
+#include "Core/ISubModule.h"
 
 
 namespace Fluent
 {
 	
-	class TimeCounter final : public ISubSystem
+	class TimeCounter final : public ISubModule
 	{
 	public:
 
-		explicit TimeCounter(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept;
+		explicit TimeCounter(const std::shared_ptr<EngineStorage>& inStorage) noexcept;
 		virtual ~TimeCounter() = default;
 
 		bool Initialize() override;

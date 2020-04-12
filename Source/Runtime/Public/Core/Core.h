@@ -96,7 +96,7 @@ namespace Fluent
 	}
 
 	template<typename T, typename ...Args>
-	T* New(Args&&... args)
+	FORCEINLINE T* New(Args&&... args)
 	{
 #ifdef DEBUG
 		T* const NewObject = new T(args...);
@@ -115,7 +115,7 @@ namespace Fluent
 	}
 
 	template<typename T>
-	T* NewByArray(i32 size)
+	FORCEINLINE T* NewByArray(i32 size)
 	{
 #ifdef DEBUG
 		T* const NewObject = new T[size];
@@ -134,7 +134,7 @@ namespace Fluent
 	}
 
 	template<typename T>
-	void Delete(T* const object)
+	FORCEINLINE void Delete(T* const object)
 	{
 #ifdef DEBUG
 		if (object != nullptr)
@@ -151,7 +151,7 @@ namespace Fluent
 	}
 
 	template<typename T>
-	void DeleteByArray(T* const object)
+	FORCEINLINE void DeleteByArray(T* const object)
 	{
 #ifdef DEBUG
 		if (object != nullptr)
@@ -165,6 +165,12 @@ namespace Fluent
 #else
 		delete[] object;
 #endif
+	}
+
+	inline u64 GenerateFID()
+	{
+		static u64 lastFID = 0;
+		return lastFID++;
 	}
 
 }

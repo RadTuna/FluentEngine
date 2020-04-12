@@ -3,7 +3,7 @@
 #include "Rendering/Renderer.h"
 
 // Engine Include
-#include "Core/RuntimeStorage.h"
+#include "Core/EngineStorage.h"
 #include "RHI/Device.h"
 #include "RHI/SwapChain.h"
 #include "RHI/ConstantBuffer.h"
@@ -16,8 +16,8 @@
 namespace Fluent
 {
 
-	Renderer::Renderer(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept
-		: ISubSystem(inStorage)
+	Renderer::Renderer(const std::shared_ptr<EngineStorage>& inStorage) noexcept
+		: ISubModule(inStorage)
 	{
 	}
 

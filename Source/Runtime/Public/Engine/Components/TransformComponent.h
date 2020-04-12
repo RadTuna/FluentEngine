@@ -12,6 +12,8 @@ namespace Fluent
 	{
 	public:
 
+		REGISTER_COMPONENT()
+
 		explicit TransformComponent() = default;
 		virtual ~TransformComponent() = default;
 		

@@ -6,7 +6,7 @@
 
 // Engine Include
 #include "Core/Core.h"
-#include "Core/ISubSystem.h"
+#include "Core/ISubModule.h"
 #include "RendererDefinition.h"
 #include "RHI/RHIDefinition.h"
 
@@ -14,15 +14,15 @@
 namespace Fluent
 {
 
-	class Renderer final : public ISubSystem
+	class Renderer final : public ISubModule
 	{
 	public:
 		
-		explicit Renderer(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept;
+		explicit Renderer(const std::shared_ptr<EngineStorage>& inStorage) noexcept;
 		virtual ~Renderer() noexcept;
 
 		
-		// ISubSystem functions
+		// ISubModule functions
 		bool Initialize() override;
 		void Update(float deltaTime) override;
 

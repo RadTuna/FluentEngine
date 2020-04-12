@@ -5,8 +5,8 @@
 namespace Fluent
 {
 
-	TimeCounter::TimeCounter(const std::shared_ptr<RuntimeStorage>& inStorage) noexcept
-		: ISubSystem(inStorage)
+	TimeCounter::TimeCounter(const std::shared_ptr<EngineStorage>& inStorage) noexcept
+		: ISubModule(inStorage)
 	{
 	}
 

@@ -7,8 +7,8 @@
 // Editor Include
 #include "Core/Core.h"
 
-// Runtime Include
-#include "Core/RuntimeStorage.h"
+// Engine Include
+#include "Core/EngineStorage.h"
 #include "Core/Functor.h"
 
 

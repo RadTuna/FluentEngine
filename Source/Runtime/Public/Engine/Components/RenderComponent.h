@@ -12,6 +12,8 @@ namespace Fluent
 	{
 	public:
 
+		REGISTER_COMPONENT()
+
 		explicit RenderComponent() = default;
 		virtual ~RenderComponent() = default;
 

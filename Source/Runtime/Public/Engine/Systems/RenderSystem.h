@@ -9,7 +9,7 @@ namespace Fluent
 {
 
 	class RenderSystem final : public ISystem
-	{
+	{	
 	public:
 
 		explicit RenderSystem() = default;

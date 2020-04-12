@@ -8,7 +8,7 @@ namespace Fluent
 	{
 		if (!mEditorInitialized)
 		{
-			mRuntime = std::make_unique<Runtime>(windowData);
+			mRuntime = std::make_unique<Engine>(windowData);
 
 			const bool result = mRuntime->Initialize();
 			Assert(result);
