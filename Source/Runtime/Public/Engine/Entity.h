@@ -20,7 +20,7 @@ namespace Fluent
 		
 	private:
 
-		u32 mID;
+		u64 mID;
 		
 		std::vector<class IComponent*> mComponents;
 		

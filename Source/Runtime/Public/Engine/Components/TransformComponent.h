@@ -4,6 +4,8 @@
 #include "Core/Core.h"
 #include "Engine/IComponent.h"
 
+// test
+#include "Math/Vector4.h"
 
 namespace Fluent
 {
@@ -12,10 +14,14 @@ namespace Fluent
 	{
 	public:
 
-		REGISTER_COMPONENT()
+		REGISTER_COMPONENT(TransformComponent)
 
-		explicit TransformComponent() = default;
+		explicit TransformComponent() noexcept;
 		virtual ~TransformComponent() = default;
+
+
+		// test var
+		Vector4 mLocation;
 		
 	private:
 		

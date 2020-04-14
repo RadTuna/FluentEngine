@@ -25,6 +25,14 @@ namespace Fluent
 		bool Initialize() override;
 		void Update(f32 deltaTime) override;
 
+
+		// Component function;
+		void AddComponentPack(class ComponentPack* componentPack, bool bAllowAddArchive = true);
+
+	private:
+
+		void AddComponentArchive(const class ComponentPack& componentPack);
+
 	private:
 
 		std::vector<Entity> mEntities;

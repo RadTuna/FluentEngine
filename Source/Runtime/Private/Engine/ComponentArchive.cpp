@@ -34,14 +34,20 @@ namespace Fluent
 			if (chunk->GetEmptyIndex() != INDEX_NONE)
 			{
 				// Pointer calculation
-				return chunk->mComponents.data() + chunk->GetEmptyIndex();
+				return chunk->Components.data() + chunk->GetEmptyIndex();
 			}
 
 			if (mComponentSetSize <= chunk->GetRemainSize())
 			{
 				// Pointer calculation
-				return chunk->mComponents.data() + chunk->mComponents.size();
+				return chunk->Components.data() + chunk->Components.size();
 			}
+		}
+
+		if (bAllowAddChunk)
+		{
+			AddChunk();
+			return GetEmptyComponentSet(false);
 		}
 
 		return nullptr;
@@ -55,13 +61,13 @@ namespace Fluent
 		for (ComponentChunk* chunk : mChunks)
 		{
 			// Pointer calculation
-			const u8* const chunkBasePtr = chunk->mComponents.data();
-			const u8* const chunkTopPtr = chunk->mComponents.data() + DEFAULT_CHUNK_CAPACITY - mComponentSetSize;
+			const u8* const chunkBasePtr = chunk->Components.data();
+			const u8* const chunkTopPtr = chunk->Components.data() + DEFAULT_CHUNK_CAPACITY - mComponentSetSize;
 			if (chunkBasePtr >= purePtr && chunkTopPtr < purePtr)
 			{
 				// Pointer calculation
 				const i64 ptrDiff = purePtr - chunkBasePtr;
-				chunk->mEmptyIndices.emplace_back(static_cast<u32>(ptrDiff));
+				chunk->EmptyIndices.emplace_back(static_cast<u32>(ptrDiff));
 
 				bIsFindChunk = true;
 				break;
@@ -72,6 +78,11 @@ namespace Fluent
 		{
 			MemSet(dest, 0, mComponentSetSize);
 		}
+	}
+
+	bool ComponentArchive::IsEqualIDSet(const std::set<u64>& componentIDSet) const
+	{
+		return mComponentIDSet == componentIDSet;
 	}
 
 	void ComponentArchive::AddChunk()

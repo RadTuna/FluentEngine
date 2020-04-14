@@ -8,13 +8,10 @@
 #include "Editor.h"
 
 
-#include "Engine/Components/TransformComponent.h"
-#include "Engine/Components/RenderComponent.h"
-
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     using namespace Fluent;
-	
+
     // Create editor
     Editor editor;
 

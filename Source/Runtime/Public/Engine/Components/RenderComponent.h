@@ -12,11 +12,15 @@ namespace Fluent
 	{
 	public:
 
-		REGISTER_COMPONENT()
+		REGISTER_COMPONENT(RenderComponent)
 
-		explicit RenderComponent() = default;
+		explicit RenderComponent() noexcept;
 		virtual ~RenderComponent() = default;
 
+		
+		// test var
+		i32 TestNumber = 0;
+		
 	private:
 
 	};

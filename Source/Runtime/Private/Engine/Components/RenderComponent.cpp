@@ -1,9 +1,13 @@
 
 // Primary Include
-#include "Engine/Systems/RenderSystem.h"
+#include "Engine/Components/RenderComponent.h"
 
 
 namespace Fluent
 {
+	RenderComponent::RenderComponent() noexcept
+	{
+		TestNumber = 851654651;
+	}
 	
 }
