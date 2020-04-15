@@ -5,9 +5,11 @@
 namespace Fluent
 {
 
+	StackAllocator gStackAllocator;
+
 	StackAllocator::StackAllocator()
 	{
-		mStackLimit = 1048576;
+		mStackLimit = DEFAULT_STACK_LIMIT;
 
 		mMemoryStack = NewByArray<u8>(mStackLimit);
 		mStackBottom = mMemoryStack;

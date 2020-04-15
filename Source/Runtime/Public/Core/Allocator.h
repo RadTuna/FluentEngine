@@ -4,7 +4,9 @@
 
 namespace Fluent
 {
-
+	
+	constexpr u32 DEFAULT_STACK_LIMIT = 1048576;
+	
 	class StackAllocator
 	{
 	public:
@@ -27,10 +29,10 @@ namespace Fluent
 		friend void DeleteStack(StackAllocator& memStack, T* object);
 
 		template <typename T>
-		friend T* NewStackByArray(StackAllocator& memStack, i32 size);
+		friend T* NewStackByArray(StackAllocator& memStack, u32 size);
 
 		template <typename T>
-		friend void DeleteStackByArray(StackAllocator& memStack, T* object, i32 size);
+		friend void DeleteStackByArray(StackAllocator& memStack, T* object, u32 size);
 
 	private:
 
@@ -42,11 +44,12 @@ namespace Fluent
 
 	};
 
+	extern StackAllocator gStackAllocator;
 
 	template <typename T, typename ... Args>
 	T* NewStack(StackAllocator& memStack, Args... args)
 	{
-		const u32 objectSize = sizeof(T);
+		const u32 objectSize = static_cast<u32>(sizeof(T));
 		if (memStack.mStackTop < memStack.mStackBottom + objectSize)
 		{
 			return nullptr;
@@ -74,7 +77,7 @@ namespace Fluent
 			return;
 		}
 
-		const u32 objectSize = sizeof(T);
+		const u32 objectSize = static_cast<u32>(sizeof(T));
 		u8* convertPtr = reinterpret_cast<u8*>(object);
 		if (convertPtr == memStack.mStackBottom - objectSize)
 		{
@@ -91,16 +94,16 @@ namespace Fluent
 	}
 
 	template <typename T>
-	T* NewStackByArray(StackAllocator& memStack, i32 size)
+	T* NewStackByArray(StackAllocator& memStack, u32 size)
 	{
-		const u32 objectSize = sizeof(T);
+		const u32 objectSize = static_cast<u32>(sizeof(T));
 		if (memStack.mStackTop < memStack.mStackBottom + (objectSize * size))
 		{
 			return nullptr;
 		}
 
 		u8* stackBottomCache = memStack.mStackBottom;
-		for (i32 arrayIndex = 0; arrayIndex < size; ++arrayIndex)
+		for (u32 arrayIndex = 0; arrayIndex < size; ++arrayIndex)
 		{
 			T newObject = T();
 
@@ -117,14 +120,14 @@ namespace Fluent
 	}
 
 	template <typename T>
-	void DeleteStackByArray(StackAllocator& memStack, T* object, i32 size)
+	void DeleteStackByArray(StackAllocator& memStack, T* object, u32 size)
 	{
 		if (!object)
 		{
 			return;
 		}
 
-		const u32 objectSize = sizeof(T);
+		const u32 objectSize = static_cast<u32>(sizeof(T));
 		u8* convertPtr = reinterpret_cast<u8*>(object);
 		if (convertPtr == memStack.mStackBottom - (objectSize * size))
 		{

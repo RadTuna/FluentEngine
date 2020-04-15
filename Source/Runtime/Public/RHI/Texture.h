@@ -11,7 +11,7 @@
 
 namespace Fluent
 {
-
+	
 	class Texture
 	{
 	public:

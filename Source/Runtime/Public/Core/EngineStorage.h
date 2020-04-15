@@ -2,7 +2,6 @@
 
 // Engine Include
 #include "Core/Core.h"
-#include "TypeDefinition.h"
 
 
 namespace Fluent
@@ -10,8 +9,8 @@ namespace Fluent
 
 	struct WindowData
 	{
-		HWND Handle = nullptr;
-		HINSTANCE Instance = nullptr;
+		void* Handle = nullptr;
+		void* Instance = nullptr;
 		u32 Message = 0;
 		u32 ScreenWidth = 0;
 		u32 ScreenHeight = 0;

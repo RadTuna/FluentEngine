@@ -10,9 +10,9 @@ namespace Fluent
 
 	class RenderComponent final : public IComponent
 	{
+		CLASS_BODY(RenderComponent, IComponent)
+		
 	public:
-
-		REGISTER_COMPONENT(RenderComponent)
 
 		explicit RenderComponent() noexcept;
 		virtual ~RenderComponent() = default;

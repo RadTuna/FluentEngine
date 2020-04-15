@@ -34,7 +34,7 @@ namespace Fluent
 		void AppendComponent(Type** componentPtr, Param&&... params);
 
 		template<typename D>
-		void MoveInitData(D* const source, u64 size);
+		void CopyInitData(D* const source, u64 size);
 
 	private:
 
@@ -69,7 +69,7 @@ namespace Fluent
 	}
 
 	template <typename D>
-	void ComponentPack::MoveInitData(D* const dest, u64 size)
+	void ComponentPack::CopyInitData(D* const dest, u64 size)
 	{
 		MemCpy(dest, mComponentInitData.data(), size);
 	}

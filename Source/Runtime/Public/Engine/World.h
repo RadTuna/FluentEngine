@@ -26,7 +26,7 @@ namespace Fluent
 		void Update(f32 deltaTime) override;
 
 
-		// Component function;
+		// Component function
 		void AddComponentPack(class ComponentPack* componentPack, bool bAllowAddArchive = true);
 
 	private:

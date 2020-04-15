@@ -18,13 +18,13 @@ namespace Fluent
 	bool World::Initialize()
 	{
 		// temp code
-		ComponentPack testPack;
-		RenderComponent* RenderComp = nullptr;
-		TransformComponent* TransformComp = nullptr;
-		testPack.AppendComponent(&RenderComp);
-		testPack.AppendComponent(&TransformComp);
+		//ComponentPack testPack;
+		//RenderComponent* RenderComp = nullptr;
+		//TransformComponent* TransformComp = nullptr;
+		//testPack.AppendComponent(&RenderComp);
+		//testPack.AppendComponent(&TransformComp);
 
-		AddComponentPack(&testPack);
+		//AddComponentPack(&testPack);
 		// temp code
 		
 		return true;
@@ -57,7 +57,7 @@ namespace Fluent
 				topIndex += componentPack->ComponentSize[index];
 			}
 
-			componentPack->MoveInitData(basePtr, topIndex);
+			componentPack->CopyInitData(basePtr, topIndex);
 		}
 
 		if (bAllowAddArchive)

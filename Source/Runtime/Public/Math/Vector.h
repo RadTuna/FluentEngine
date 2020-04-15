@@ -13,7 +13,7 @@
 namespace Fluent
 {
 
-	union __declspec(align(16)) FloatVector
+	union alignas(16) FloatVector
 	{
 		struct
 		{

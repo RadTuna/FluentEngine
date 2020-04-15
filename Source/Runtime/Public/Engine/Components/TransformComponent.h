@@ -12,9 +12,9 @@ namespace Fluent
 
 	class TransformComponent final : public IComponent
 	{
+		CLASS_BODY(TransformComponent, IComponent);
+		
 	public:
-
-		REGISTER_COMPONENT(TransformComponent)
 
 		explicit TransformComponent() noexcept;
 		virtual ~TransformComponent() = default;
