@@ -58,10 +58,7 @@ namespace Fluent
 		T newObject(args...);
 
 		u8* convertPtr = reinterpret_cast<u8*>(&newObject);
-		for (u32 index = 0; index < objectSize; ++index)
-		{
-			memStack.mStackBottom[index] = convertPtr[index];
-		}
+		MemCpy(memStack.mStackBottom, convertPtr, objectSize);
 
 		u8* stackBottomCache = memStack.mStackBottom;
 		memStack.mStackBottom += objectSize;
@@ -82,10 +79,7 @@ namespace Fluent
 		if (convertPtr == memStack.mStackBottom - objectSize)
 		{
 			memStack.mStackBottom -= objectSize;
-			for (u32 index = 0; index < objectSize; ++index)
-			{
-				memStack.mStackBottom[index] = 0;
-			}
+			MemSet(memStack.mStackBottom, 0, objectSize);
 		}
 		else
 		{
@@ -108,10 +102,7 @@ namespace Fluent
 			T newObject = T();
 
 			u8* convertPtr = reinterpret_cast<u8*>(&newObject);
-			for (u32 index = 0; index < objectSize; ++index)
-			{
-				memStack.mStackBottom[index] = convertPtr[index];
-			}
+			MemCpy(memStack.mStackBottom, convertPtr, objectSize);
 
 			memStack.mStackBottom += objectSize;
 		}
@@ -131,12 +122,9 @@ namespace Fluent
 		u8* convertPtr = reinterpret_cast<u8*>(object);
 		if (convertPtr == memStack.mStackBottom - (objectSize * size))
 		{
-			memStack.mStackBottom -= objectSize * size;
-			const u32 indexEnd = objectSize * size;
-			for (u32 index = 0; index < indexEnd; ++index)
-			{
-				memStack.mStackBottom[index] = 0;
-			}
+			const u32 totalSize = objectSize * size;
+			memStack.mStackBottom -= totalSize;
+			MemSet(memStack.mStackBottom, 0, totalSize);
 		}
 		else
 		{

@@ -10,7 +10,7 @@ namespace Fluent
 
 	class RenderComponent final : public IComponent
 	{
-		CLASS_BODY(RenderComponent, IComponent)
+		REFLECTION_CLASS(RenderComponent, IComponent)
 		
 	public:
 

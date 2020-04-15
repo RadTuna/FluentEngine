@@ -1,8 +1,5 @@
 #pragma once
 
-// External Include
-#include <string>
-
 // Engine Include
 #include "TypeDefinition.h"
 
@@ -14,14 +11,42 @@ namespace Fluent
 	{
 	public:
 
-		ReflectionClass(ReflectionClass* superClass, u64 classID, const std::string& className, u64 classSize);
+		ReflectionClass(ReflectionClass* superClass, u64 classID, const tchar* className, u64 classSize);
+		~ReflectionClass() = default;
+		
 
+		void SetNewSuper(ReflectionClass* superClass);
+
+		template<typename Class>
+		bool IsChildOf()
+		{
+			return IsChildof(Class::GetClass());
+		}
+		bool IsChildOf(ReflectionClass* baseClass);
+		
+		[[nodiscard]]
+		bool IsEqual(ReflectionClass* baseClass) const;
+		[[nodiscard]]
+		bool IsEqual(u64 classID) const { return mClassID == classID; }
+
+		[[nodiscard]]
+		ReflectionClass* GetSuperClass() const { return mSuperClass; }
+		
+		[[nodiscard]]
+		u64 GetClassID() const { return mClassID; }
+
+		[[nodiscard]]
+		const tchar* GetClassName() const { return mClassName; }
+
+		[[nodiscard]]
+		u64 GetClassSize() const { return mClassSize; }
+		
 	private:
 
-		ReflectionClass* mSuperClass;
-		u64 mClassID;
-		std::string mClassName;
-		u64 mClassSize;
+		ReflectionClass* mSuperClass = nullptr;
+		u64 mClassID = 0;
+		const tchar* mClassName;
+		u64 mClassSize = 0;
 		
 	};
 	

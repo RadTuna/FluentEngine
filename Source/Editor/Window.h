@@ -80,10 +80,10 @@ namespace Window
 		return result;
 	}
 
-	inline bool Create(HINSTANCE instance, const gchar* title)
+	inline bool Create(HINSTANCE instance, const tchar* title)
 	{
 		gInstance = instance;
-		gchar* windowTitle = TEXT("FluentEngine");
+		tchar* windowTitle = TEXT("FluentEngine");
 		const int windowWidth = GetSystemMetrics(SM_CXSCREEN);
 		const int windowHeight = GetSystemMetrics(SM_CYSCREEN);
 		LPCWSTR className = L"myWindowClass";

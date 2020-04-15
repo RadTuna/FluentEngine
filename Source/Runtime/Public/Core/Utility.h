@@ -137,7 +137,7 @@ namespace Fluent
 
 	inline u64 GenerateFID()
 	{
-		static u64 lastFID = 0;
+		static u64 lastFID = 1;
 		return lastFID++;
 	}
 

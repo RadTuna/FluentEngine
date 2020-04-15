@@ -14,7 +14,8 @@ using f32 = float;
 using f64 = double;
 
 #ifdef UNICODE
-using gchar = wchar_t;
+using tchar = wchar_t;
 #else
-using gchar = char;
+using tchar = char;
 #endif
+

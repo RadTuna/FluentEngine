@@ -6,6 +6,8 @@
 #include "Engine/ComponentPack.h"
 #include "Engine/Components/RenderComponent.h"
 #include "Engine/Components/TransformComponent.h"
+#include "Engine/Systems/MovementSystem.h"
+#include "Engine/Systems/RenderSystem.h"
 
 namespace Fluent
 {
@@ -17,6 +19,7 @@ namespace Fluent
 
 	bool World::Initialize()
 	{
+		
 		// temp code
 		//ComponentPack testPack;
 		//RenderComponent* RenderComp = nullptr;

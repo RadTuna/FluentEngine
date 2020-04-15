@@ -9,6 +9,8 @@ namespace Fluent
 
 	class ISystem
 	{
+		REFLECTION_CLASS_NO_SUPER(ISystem)
+		
 	public:
 
 		explicit ISystem() = default;

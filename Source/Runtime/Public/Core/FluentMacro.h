@@ -2,7 +2,13 @@
 
 #define INDEX_NONE		(-1)
 
-#define CLASS_BODY(Class, SuperClass) \
+#ifdef UNICODE
+#define TXT(String) L##String
+#elif
+#define TXT(String) String
+#endif
+
+#define REFLECTION_CLASS(Class, SuperClass) \
 	public: \
 		using Super = SuperClass; \
 		using ThisClass = Class; \
@@ -15,14 +21,14 @@
 					gStackAllocator, \
 					Super::GetClass(), \
 					GenerateFID(), \
-					#Class, \
+					TXT(#Class), \
 					sizeof(Class)); \
 			} \
 			return refClass; \
 		} \
 	private: \
 
-#define CLASS_BODY_NO_SUPER(Class) \
+#define REFLECTION_CLASS_NO_SUPER(Class) \
 	public: \
 		using ThisClass = Class; \
 		inline static ReflectionClass* GetClass() \
@@ -34,7 +40,7 @@
 					gStackAllocator, \
 					nullptr, \
 					GenerateFID(), \
-					#Class, \
+					TXT(#Class), \
 					sizeof(Class)); \
 			} \
 			return refClass; \

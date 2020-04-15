@@ -12,7 +12,7 @@ namespace Fluent
 	
 	class IComponent
 	{
-		CLASS_BODY_NO_SUPER(IComponent)
+		REFLECTION_CLASS_NO_SUPER(IComponent)
 		
 	public:
 

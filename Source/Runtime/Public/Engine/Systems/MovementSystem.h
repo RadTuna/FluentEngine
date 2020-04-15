@@ -10,6 +10,8 @@ namespace Fluent
 
 	class MovementSystem final : public ISystem
 	{
+		REFLECTION_CLASS(MovementSystem, ISystem)
+		
 	public:
 
 		explicit MovementSystem() = default;
