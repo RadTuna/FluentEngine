@@ -16,7 +16,8 @@ namespace Fluent
 	Shader::Shader(const std::shared_ptr<Device>& device, EShaderType shaderType) noexcept
 	{
 		Assert(device && device->IsInitialized());
-		mDevice = device;
+		
+		mDevice = device->GetDevice();
 		mShaderType = shaderType;
 	}
 
@@ -116,7 +117,7 @@ namespace Fluent
 					ID3D11VertexShader* vertexShader = GetVertexShader();
 					D3D11Release(vertexShader);
 						
-					result = mDevice->GetDevice()->CreateVertexShader(
+					result = mDevice->CreateVertexShader(
 						shaderBlob->GetBufferPointer(),
 						shaderBlob->GetBufferSize(),
 						nullptr,
@@ -127,7 +128,7 @@ namespace Fluent
 					ID3D11PixelShader* pixelShader = GetPixelShader();
 					D3D11Release(pixelShader);
 						
-					result = mDevice->GetDevice()->CreatePixelShader(
+					result = mDevice->CreatePixelShader(
 						shaderBlob->GetBufferPointer(),
 						shaderBlob->GetBufferSize(),
 						nullptr,
@@ -138,7 +139,7 @@ namespace Fluent
 					ID3D11ComputeShader* computeShader = GetComputeShader();
 					D3D11Release(computeShader);
 						
-					result = mDevice->GetDevice()->CreateComputeShader(
+					result = mDevice->CreateComputeShader(
 						shaderBlob->GetBufferPointer(),
 						shaderBlob->GetBufferSize(),
 						nullptr,

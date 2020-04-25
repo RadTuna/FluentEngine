@@ -34,6 +34,8 @@ namespace Fluent
 
 	protected:
 
+		ID3D11Device* mDevice = nullptr;
+		
 		ID3D11ShaderResourceView* mShaderResourceView = nullptr;
 		ID3D11RenderTargetView* mRenderTargetView = nullptr;
 		ID3D11DepthStencilView* mDepthStencilView = nullptr;

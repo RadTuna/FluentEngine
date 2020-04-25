@@ -38,7 +38,6 @@ namespace Fluent
 		
 	private:
 
-		std::shared_ptr<Device> mDevice;
 		bool mbUseDepthTest = true;
 		bool mbUseDepthWrite = true;
 		bool mbUseStencil = false;

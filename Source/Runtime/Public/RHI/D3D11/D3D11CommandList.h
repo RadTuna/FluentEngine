@@ -13,7 +13,19 @@ namespace Fluent
 	{
 	public:
 
-	private:
+		explicit D3D11CommandList() = default;
+		virtual ~D3D11CommandList() = default;
+
+
+		[[nodiscard]]
+		ID3D11CommandList* GetCommandList() const { return mCommandList; }
+
+	protected:
+
+		ID3D11DeviceContext* mDeviceContext = nullptr;
+		
+		ID3D11DeviceContext* mDeferredContext = nullptr;
+		ID3D11CommandList* mCommandList = nullptr;
 
 	};
 

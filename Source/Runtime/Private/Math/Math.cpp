@@ -5,36 +5,41 @@
 namespace Fluent
 {
 
-	i32 Math::Sign(i32 value)
+	namespace Math
 	{
-		if (value > 0)
-		{
-			return 1;
-		}
-		else if (value < 0)
-		{
-			return -1;
-		}
-		else
-		{
-			return 0;
-		}
-	}
 
-	float Math::Signf(float value, float epsilon)
-	{
-		if (value > epsilon)
+		i32 Sign(i32 value)
 		{
-			return 1.0f;
+			if (value > 0)
+			{
+				return 1;
+			}
+			else if (value < 0)
+			{
+				return -1;
+			}
+			else
+			{
+				return 0;
+			}
 		}
-		else if (value < -epsilon)
+
+		float Signf(float value, float epsilon)
 		{
-			return -1.0f;
+			if (value > epsilon)
+			{
+				return 1.0f;
+			}
+			else if (value < -epsilon)
+			{
+				return -1.0f;
+			}
+			else
+			{
+				return 0.0f;
+			}
 		}
-		else
-		{
-			return 0.0f;
-		}
+
 	}
 
 }

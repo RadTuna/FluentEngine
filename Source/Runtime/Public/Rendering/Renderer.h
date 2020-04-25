@@ -35,6 +35,7 @@ namespace Fluent
 		void CreateDepthStencilStates();
 		void CreateRasterizerStates();
 		void CreateRenderTargets();
+		void CreateCommandLists();
 		
 	private:
 
@@ -42,6 +43,9 @@ namespace Fluent
 		std::shared_ptr<Device> mDevice;
 		std::shared_ptr<SwapChain> mSwapChain;
 
+		// CommandLists // SingleThread == 1
+		std::vector<std::shared_ptr<CommandList>> mCommandLists;
+		
 		// RenderTargets
 		std::vector<std::shared_ptr<Texture2D>> mRenderTargets;
 

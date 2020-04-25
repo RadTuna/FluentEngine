@@ -8,8 +8,8 @@ namespace Fluent
 
 	Vector2 Vector2::operator+(const Vector2& other) const
 	{
-		const float tempX = mX + other.mX;
-		const float tempY = mY + other.mY;
+		const f32 tempX = mX + other.mX;
+		const f32 tempY = mY + other.mY;
 
 		return Vector2(tempX, tempY);
 	}
@@ -24,8 +24,8 @@ namespace Fluent
 
 	Vector2 Vector2::operator-(const Vector2& other) const
 	{
-		const float tempX = mX - other.mX;
-		const float tempY = mY - other.mY;
+		const f32 tempX = mX - other.mX;
+		const f32 tempY = mY - other.mY;
 
 		return Vector2(tempX, tempY);
 	}
@@ -38,15 +38,15 @@ namespace Fluent
 		return Vector2(mX, mY);
 	}
 
-	Vector2 Vector2::operator*(float other) const
+	Vector2 Vector2::operator*(f32 other) const
 	{
-		const float tempX = mX * other;
-		const float tempY = mY * other;
+		const f32 tempX = mX * other;
+		const f32 tempY = mY * other;
 
 		return Vector2(tempX, tempY);
 	}
 
-	Vector2 Vector2::operator*=(float other)
+	Vector2 Vector2::operator*=(f32 other)
 	{
 		mX = mX * other;
 		mY = mY * other;
@@ -54,7 +54,7 @@ namespace Fluent
 		return Vector2(mX, mY);
 	}
 
-	float Vector2::operator*(const Vector2& other) const
+	f32 Vector2::operator*(const Vector2& other) const
 	{
 		return mX * other.mX + mY * other.mY;
 	}
@@ -66,22 +66,22 @@ namespace Fluent
 
 	float Vector2::Length() const
 	{
-		const float squareValue = mX * mX + mY * mY;
+		const f32 squareValue = mX * mX + mY * mY;
 		return std::sqrtf(squareValue);
 	}
 
 	Vector2 Vector2::Normalize(const Vector2& other)
 	{
-		const float invVectorLength = 1.0f / other.Length();
-		const float tempX = other.mX * invVectorLength;
-		const float tempY = other.mY * invVectorLength;
+		const f32 invVectorLength = 1.0f / other.Length();
+		const f32 tempX = other.mX * invVectorLength;
+		const f32 tempY = other.mY * invVectorLength;
 
 		return Vector2(tempX, tempY);
 	}
 
 	void Vector2::Normalize()
 	{
-		const float invVectorLength = 1.0f / Length();
+		const f32 invVectorLength = 1.0f / Length();
 		mX = mX * invVectorLength;
 		mY = mY * invVectorLength;
 	}

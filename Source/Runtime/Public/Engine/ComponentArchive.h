@@ -52,7 +52,7 @@ namespace Fluent
 
 
 		[[nodiscard]]
-		void* GetEmptyComponentSet(bool bAllowAddChunk = true);
+		void* GetEmptyComponentSet();
 
 		void RemoveComponentSet(class IComponent* dest);
 

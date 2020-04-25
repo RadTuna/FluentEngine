@@ -15,7 +15,8 @@ namespace Fluent
 	{
 		Assert(device && device->IsInitialized());
 
-		mDevice = device;
+		mDevice = device->GetDevice();
+		mDeviceContext = device->GetDeviceContext();
 	}
 
 	VertexBuffer::~VertexBuffer() noexcept
@@ -41,7 +42,7 @@ namespace Fluent
 		subResource.SysMemPitch = 0;
 		subResource.SysMemSlicePitch = 0;
 		
-		const HRESULT result = mDevice->GetDevice()->CreateBuffer(&bufferDesc, &subResource, &mVertexBuffer);
+		const HRESULT result = mDevice->CreateBuffer(&bufferDesc, &subResource, &mVertexBuffer);
 		if (SUCCEEDED(result))
 		{
 			return true;
@@ -55,7 +56,7 @@ namespace Fluent
 	void* VertexBuffer::Map() const
 	{
 		D3D11_MAPPED_SUBRESOURCE mappedSubResource = {};
-		const HRESULT result = mDevice->GetDeviceContext()->Map(mVertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedSubResource);
+		const HRESULT result = mDeviceContext->Map(mVertexBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedSubResource);
 		if (FAILED(result))
 		{
 			return nullptr;
@@ -66,7 +67,7 @@ namespace Fluent
 
 	void VertexBuffer::Unmap() const
 	{
-		mDevice->GetDeviceContext()->Unmap(mVertexBuffer, 0);
+		mDeviceContext->Unmap(mVertexBuffer, 0);
 	}
 
 	

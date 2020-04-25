@@ -34,7 +34,6 @@ namespace Fluent
 
 	private:
 
-		std::shared_ptr<Device> mDevice;
 		u32 mStride = 0;
 		u32 mInstanceCount = 1;
 		u32 mSize = 0;

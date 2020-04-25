@@ -22,6 +22,8 @@ namespace Fluent
 		
 	protected:
 
+		ID3D11Device* mDevice = nullptr;
+		
 		ID3D11Buffer* mIndexBuffer = nullptr;
 		
 	};

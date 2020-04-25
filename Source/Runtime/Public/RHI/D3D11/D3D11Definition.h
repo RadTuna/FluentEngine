@@ -11,18 +11,20 @@
 #include <d3d11_1.h>
 #include <Windows.h>
 
+
+#define D3D11Release(Object) \
+	D3DRelease(Object); \
+	Object = nullptr; \
+
 namespace Fluent
 {
-
-	inline void D3D11Release(IUnknown* object)
+	inline void D3DRelease(IUnknown* object)
 	{
-		if (object)
-		{
-			object->Release();
-			object = nullptr;
-		}
-	}
+		Assert(object != nullptr);
 
+		object->Release();
+	}
+	
 	const static DXGI_FORMAT DxgiFormatMap[] =
 	{
 		DXGI_FORMAT_UNKNOWN,
@@ -54,7 +56,19 @@ namespace Fluent
 		const u32 index = static_cast<u32>(format);
 		return DxgiFormatMap[index];
 	}
-	
+
+	const static D3D11_PRIMITIVE_TOPOLOGY TopologyMap[] =
+	{
+		D3D11_PRIMITIVE_TOPOLOGY_UNDEFINED,
+		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST,
+		D3D11_PRIMITIVE_TOPOLOGY_LINELIST
+	};
+	inline D3D11_PRIMITIVE_TOPOLOGY ToD3D11Topology(EPrimitiveTopology topology)
+	{
+		const u32 index = static_cast<u32>(topology);
+		return TopologyMap[index];
+	}
+
 }
 
 #endif

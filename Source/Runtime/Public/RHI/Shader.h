@@ -19,14 +19,6 @@ namespace Fluent
 		std::string Value;
 	};
 	
-	enum class EShaderType
-	{
-		Unknown,
-		Vertex,
-		Pixel,
-		Compute
-	};
-	
 	class Shader final :
 #ifdef API_GRAPHICS_D3D11
 		public D3D11Shader
@@ -46,7 +38,6 @@ namespace Fluent
 
 	private:
 
-		std::shared_ptr<Device> mDevice = nullptr;
 		EShaderType mShaderType = EShaderType::Unknown;
 		std::vector<ShaderDefine> mDefines;
 		

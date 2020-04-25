@@ -27,7 +27,11 @@ namespace Fluent
 
 
 		// Component function
-		void AddComponentPack(class ComponentPack* componentPack, bool bAllowAddArchive = true);
+		void AddComponentPack(class ComponentPack* componentPack);
+
+		// System function
+		template<typename System, typename... Param>
+		void AddSystem(Param... params);
 
 	private:
 
@@ -41,4 +45,9 @@ namespace Fluent
 		
 	};
 
+	template <typename System, typename... Param>
+	void World::AddSystem(Param... params)
+	{
+		mSystems.emplace_back(std::make_unique<System>(params...));
+	}
 }

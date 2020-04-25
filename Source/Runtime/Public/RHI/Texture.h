@@ -16,7 +16,7 @@ namespace Fluent
 	{
 	public:
 
-		explicit Texture(const std::shared_ptr<Device>& device) noexcept : mDevice(device) {}
+		explicit Texture() = default;
 		virtual ~Texture() = default;
 
 
@@ -60,9 +60,7 @@ namespace Fluent
 		u32 mMipLevel = 1;
 		EPixelFormat mFormat = EPixelFormat::Unknown;
 		bool mbIsTransparent = true;
-		u32 mViewFlags = 0; // Equal to ETextureViewFlags::Unknown
-
-		std::shared_ptr<Device> mDevice;
+		u32 mViewFlags = ETextureViewFlags::Unknown; // Equal to ETextureViewFlags::Unknown
 		
 	};
 	

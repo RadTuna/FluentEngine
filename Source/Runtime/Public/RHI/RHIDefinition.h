@@ -26,7 +26,9 @@ namespace Fluent
 	class Texture3D;
 	class Vertex;
 	class VertexBuffer;
-
+	class PipelineState;
+	class Viewport;
+	
 
 	// ========== Render structure declaration ==========
 	
@@ -64,7 +66,7 @@ namespace Fluent
 	
 	namespace ETextureViewFlags
 	{
-		enum ETextureViewFlags : u32
+		enum Enum : u32
 		{
 			Unknown = 0,
 			RenderTarget = 1,
@@ -72,6 +74,14 @@ namespace Fluent
 			ShaderSampled = 1 << 2
 		};
 	}
+
+	enum class EShaderType
+	{
+		Unknown,
+		Vertex,
+		Pixel,
+		Compute
+	};
 	
 	enum class ERenderCullMode
 	{
@@ -113,6 +123,13 @@ namespace Fluent
 		R8G8B8A8_Unorm,
 		R16G16B16A16_Float,
 		R32G32B32A32_Float,
+	};
+
+	enum class EPrimitiveTopology : u32
+	{
+		Unknown = 0,
+		TriangleList,
+		LineList
 	};
 	
 }

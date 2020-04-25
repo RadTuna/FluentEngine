@@ -47,4 +47,17 @@
 		} \
 	private: \
 
-	
+
+#define REFLECTION_PROPERTY (Type, Name) \
+	static ReflectionProperty* refProperty_##Name = nullptr; \
+	if (!refProperty_##Name) \
+	{ \
+		refProperty_##Name = NewStack<ReflectionProperty>( \
+			gStackAllocator, \
+			TXT(#Type), \
+			TXT(#Name), \
+			sizeof(Type));\
+		refClass->AddProperty(refProperty_##Name); \
+	} \
+
+

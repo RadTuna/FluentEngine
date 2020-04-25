@@ -14,15 +14,15 @@ namespace Fluent
 	Texture2D::Texture2D(const std::shared_ptr<Device>& device, 
 		u32 width, u32 height, EPixelFormat format,
 		const std::vector<std::vector<u8>>& data) noexcept
-		: Texture(device)
 	{
 		Assert(device && device->IsInitialized());
+		mDevice = device->GetDevice();
 		
 		mWidth = width;
 		mHeight = height;
 		mChannels = GetChannelCountFromFormat(format);
 		mFormat = format;
-		mViewFlags = static_cast<u32>(ETextureViewFlags::ShaderSampled);
+		mViewFlags = ETextureViewFlags::ShaderSampled;
 		mMipLevel = static_cast<u32>(data.size());
 
 		CreateTexture(data, 1);
@@ -30,9 +30,9 @@ namespace Fluent
 	
 	Texture2D::Texture2D(const std::shared_ptr<Device>& device, 
 		u32 width, u32 height, EPixelFormat format) noexcept
-		: Texture(device)
 	{
 		Assert(device && device->IsInitialized());
+		mDevice = device->GetDevice();
 		
 		mWidth = width;
 		mHeight = height;
@@ -40,8 +40,7 @@ namespace Fluent
 		mFormat = format;
 		mViewFlags = static_cast<u32>(ETextureViewFlags::ShaderSampled);
 		mViewFlags |= (format == EPixelFormat::D32_Float) ?
-			static_cast<u32>(ETextureViewFlags::DepthStencil) :
-			static_cast<u32>(ETextureViewFlags::RenderTarget);
+			ETextureViewFlags::DepthStencil : ETextureViewFlags::RenderTarget;
 		mMipLevel = 1;
 
 		CreateEmptyTexture();
@@ -116,7 +115,7 @@ namespace Fluent
 		}
 
 		ID3D11Texture2D* texture = nullptr;
-		const HRESULT result = mDevice->GetDevice()->CreateTexture2D(&texDesc, subResourcePtr, &texture);
+		const HRESULT result = mDevice->CreateTexture2D(&texDesc, subResourcePtr, &texture);
 		if (FAILED(result))
 		{
 			return false;
@@ -125,19 +124,19 @@ namespace Fluent
 		bool resultRTV = false;
 		if (bindFlags & ETextureViewFlags::RenderTarget)
 		{
-			resultRTV = CreateRenderTargetView(texture, renderTargetFormat, mTextureArraySize, mDevice->GetDevice());
+			resultRTV = CreateRenderTargetView(texture, renderTargetFormat, mTextureArraySize, mDevice);
 		}
 
 		bool resultDSV = false;
 		if (bindFlags & ETextureViewFlags::DepthStencil)
 		{
-			resultDSV = CreateDepthStencilView(texture, depthStencilFormat, mTextureArraySize, mDevice->GetDevice());
+			resultDSV = CreateDepthStencilView(texture, depthStencilFormat, mTextureArraySize, mDevice);
 		}
 
 		bool resultSRV = false;
 		if (bindFlags & ETextureViewFlags::ShaderSampled)
 		{
-			resultSRV = CreateShaderResourceView(texture, shaderResourceFormat, mTextureArraySize, mMipLevel, mDevice->GetDevice());
+			resultSRV = CreateShaderResourceView(texture, shaderResourceFormat, mTextureArraySize, mMipLevel, mDevice);
 		}
 
 		D3D11Release(texture);

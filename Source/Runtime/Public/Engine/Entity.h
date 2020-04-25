@@ -6,6 +6,7 @@
 
 // Engine Include
 #include "Core/Core.h"
+#include "Engine/ComponentPack.h"
 
 
 namespace Fluent
@@ -22,7 +23,7 @@ namespace Fluent
 
 		u64 mID;
 		
-		std::vector<class IComponent*> mComponents;
+		std::shared_ptr<ComponentPack> mComponents;
 		
 	};
 	

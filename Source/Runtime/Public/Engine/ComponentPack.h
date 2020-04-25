@@ -20,7 +20,7 @@ namespace Fluent
 		std::set<u64> ComponentIDSet;
 		std::vector<void**> ComponentPtr;
 		std::vector<u32> ComponentSize;
-
+		
 	public:
 
 		explicit ComponentPack(u32 dataCapacity = 128)
@@ -34,7 +34,9 @@ namespace Fluent
 		void AppendComponent(Type** componentPtr, Param&&... params);
 
 		template<typename D>
-		void CopyInitData(D* const source, u64 size);
+		void CopyInitData(D* const dest, u64 size);
+
+		void Clear();
 
 	private:
 
@@ -46,7 +48,8 @@ namespace Fluent
 	template <typename Type, typename ...Param>
 	void ComponentPack::AppendComponent(Type** componentPtr, Param&&... params)
 	{
-		const u64 componentID = static_cast<u64>(Type::mID);
+		ReflectionClass* refClass = Type::GetClass();
+		const u64 componentID = refClass->GetClassID();
 		ComponentIDSet.emplace(componentID);
 
 		ComponentPtr.emplace_back(reinterpret_cast<void**>(componentPtr));
@@ -73,4 +76,14 @@ namespace Fluent
 	{
 		MemCpy(dest, mComponentInitData.data(), size);
 	}
+
+	inline void ComponentPack::Clear()
+	{
+		ComponentIDSet.clear();
+		ComponentPtr.clear();
+		ComponentSize.clear();
+		mComponentInitData.clear();
+		mComponentDataSize = 0;
+	}
+
 }

@@ -27,6 +27,8 @@ namespace Fluent
 		
 	protected:
 
+		ID3D11Device* mDevice = nullptr;
+		
 		void* mShader = nullptr;
 
 	};

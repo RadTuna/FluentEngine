@@ -1,7 +1,7 @@
 #pragma once
 
 // Engine Include
-#include "Core/Core.h"
+#include "Core/TypeDefinition.h"
 
 namespace Fluent
 {

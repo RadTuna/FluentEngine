@@ -13,7 +13,8 @@ namespace Fluent
 	ConstantBuffer::ConstantBuffer(const std::shared_ptr<Device>& device) noexcept
 	{
 		Assert(device && device->IsInitialized());
-		mDevice = device;
+		mDevice = device->GetDevice();
+		mDeviceContext = device->GetDeviceContext();
 	}
 
 	ConstantBuffer::~ConstantBuffer() noexcept
@@ -33,7 +34,7 @@ namespace Fluent
 		bufferDesc.MiscFlags = 0;
 		bufferDesc.StructureByteStride = 0;
 
-		const HRESULT result = mDevice->GetDevice()->CreateBuffer(&bufferDesc, nullptr, &mConstantBuffer);
+		const HRESULT result = mDevice->CreateBuffer(&bufferDesc, nullptr, &mConstantBuffer);
 		if (FAILED(result))
 		{
 			return false;
@@ -45,7 +46,7 @@ namespace Fluent
 	void* ConstantBuffer::Map() const
 	{
 		D3D11_MAPPED_SUBRESOURCE mappedSubResource = {};
-		const HRESULT result = mDevice->GetDeviceContext()->Map(mConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedSubResource);
+		const HRESULT result = mDeviceContext->Map(mConstantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedSubResource);
 		if (FAILED(result))
 		{
 			return nullptr;
@@ -56,7 +57,7 @@ namespace Fluent
 
 	void ConstantBuffer::Unmap() const
 	{
-		mDevice->GetDeviceContext()->Unmap(mConstantBuffer, 0);
+		mDeviceContext->Unmap(mConstantBuffer, 0);
 	}
 
 	

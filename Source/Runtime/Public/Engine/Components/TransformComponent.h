@@ -10,7 +10,8 @@ namespace Fluent
 
 	class TransformComponent final : public IComponent
 	{
-		REFLECTION_CLASS(TransformComponent, IComponent);
+		REFLECTION_CLASS(TransformComponent, IComponent,
+			)
 		
 	public:
 
@@ -18,6 +19,8 @@ namespace Fluent
 		virtual ~TransformComponent() = default;
 		
 	private:
+
+		u64 Test;
 		
 	};
 	

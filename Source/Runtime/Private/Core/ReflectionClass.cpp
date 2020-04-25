@@ -26,6 +26,12 @@ namespace Fluent
 		}
 	}
 
+	void ReflectionClass::AddProperty(ReflectionProperty* property)
+	{
+		property->SetNext(mFrontProperty);
+		mFrontProperty = property;
+	}
+
 	bool ReflectionClass::IsChildOf(ReflectionClass* baseClass)
 	{
 		if (!baseClass)

@@ -2,6 +2,7 @@
 
 // Engine Include
 #include "TypeDefinition.h"
+#include "ReflectionProperty.h"
 
 
 namespace Fluent
@@ -16,6 +17,8 @@ namespace Fluent
 		
 
 		void SetNewSuper(ReflectionClass* superClass);
+
+		void AddProperty(ReflectionProperty* property);
 
 		template<typename Class>
 		bool IsChildOf()
@@ -43,6 +46,8 @@ namespace Fluent
 		
 	private:
 
+		ReflectionProperty* mFrontProperty = nullptr;
+		
 		ReflectionClass* mSuperClass = nullptr;
 		u64 mClassID = 0;
 		const tchar* mClassName;

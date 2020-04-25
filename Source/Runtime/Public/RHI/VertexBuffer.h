@@ -33,13 +33,21 @@ namespace Fluent
 		void* Map() const;
 		void Unmap() const;
 
+		[[nodiscard]]
+		u32 GetStride() const { return mStride; }
+
+		[[nodiscard]]
+		u32 GetVertexCount() const { return mVertexCount; }
+
+		[[nodiscard]]
+		u32 GetSize() const { return mSize; }
+
 	private:
 		
 		bool CreateBufferInternal(const void* vertices);
 		
 	private:
 
-		std::shared_ptr<Device> mDevice;
 		u32 mStride = 0;
 		u32 mVertexCount = 0;
 		u32 mSize = 0;

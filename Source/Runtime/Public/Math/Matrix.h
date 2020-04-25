@@ -7,7 +7,7 @@
 #include <pmmintrin.h> // SSE3 intrinsic
 
 // Engine Include
-#include "Core/Core.h"
+#include "Core/TypeDefinition.h"
 
 
 namespace Fluent

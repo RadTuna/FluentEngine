@@ -41,7 +41,7 @@ solution (SOLUTION_NAME)
 	language "C++"
 	platforms "x64"
 	configurations { "Release", "Debug" }
-	
+
 	filter { "platforms:x64" }
 		system "Windows"
 		architecture "x64"
@@ -51,7 +51,7 @@ solution (SOLUTION_NAME)
 	filter "configurations:Debug"
 		defines { "DEBUG", GRAPHICS_API }
 		flags { "MultiProcessorCompile", "LinkTimeOptimization" }
-		symbols "On"			
+		symbols "On"				
 		
 	-- Release	
 	filter "configurations:Release"

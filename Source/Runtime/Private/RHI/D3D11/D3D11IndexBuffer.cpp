@@ -15,7 +15,7 @@ namespace Fluent
 	{
 		Assert(device && device->IsInitialized());
 
-		mDevice = device;
+		mDevice = device->GetDevice();
 	}
 
 	IndexBuffer::~IndexBuffer() noexcept
@@ -41,7 +41,7 @@ namespace Fluent
 		subResource.SysMemPitch = 0;
 		subResource.SysMemSlicePitch = 0;
 
-		const HRESULT result = mDevice->GetDevice()->CreateBuffer(&bufferDesc, &subResource, &mIndexBuffer);
+		const HRESULT result = mDevice->CreateBuffer(&bufferDesc, &subResource, &mIndexBuffer);
 		if (SUCCEEDED(result))
 		{
 			return true;

@@ -18,7 +18,7 @@ namespace Fluent
 		bool bUseStencil) noexcept
 	{
 		Assert(device && device->IsInitialized());
-		mDevice = device;
+		mDevice = device->GetDevice();
 
 		mbUseDepthTest = bUseDepthTest;
 		mbUseDepthWrite = bUseDepthWrite;
@@ -36,7 +36,7 @@ namespace Fluent
 		depthDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 		depthDesc.BackFace = depthDesc.FrontFace;
 
-		const HRESULT result = mDevice->GetDevice()->CreateDepthStencilState(&depthDesc, &mDepthStencilState);
+		const HRESULT result = mDevice->CreateDepthStencilState(&depthDesc, &mDepthStencilState);
 		if (SUCCEEDED(result))
 		{
 			mbIsInitialized = true;

@@ -21,6 +21,8 @@ namespace Fluent
 		
 	protected:
 
+		ID3D11Device* mDevice = nullptr;
+		
 		ID3D11DepthStencilState* mDepthStencilState = nullptr;
 		
 	};

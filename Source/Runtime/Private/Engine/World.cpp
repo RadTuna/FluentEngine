@@ -19,17 +19,25 @@ namespace Fluent
 
 	bool World::Initialize()
 	{
-		
-		// temp code
-		//ComponentPack testPack;
-		//RenderComponent* RenderComp = nullptr;
-		//TransformComponent* TransformComp = nullptr;
-		//testPack.AppendComponent(&RenderComp);
-		//testPack.AppendComponent(&TransformComp);
 
-		//AddComponentPack(&testPack);
 		// temp code
-		
+		ComponentPack testPack;
+		RenderComponent* RenderComp = nullptr;
+		TransformComponent* TransformComp = nullptr;
+		testPack.AppendComponent(&RenderComp);
+		testPack.AppendComponent(&TransformComp);
+
+		AddComponentPack(&testPack);
+
+		testPack.Clear();
+		RenderComponent* RenderComp1 = nullptr;
+		TransformComponent* TransformComp1 = nullptr;
+		testPack.AppendComponent(&RenderComp1);
+		testPack.AppendComponent(&TransformComp1);
+
+		AddComponentPack(&testPack);
+		// temp code
+
 		return true;
 	}
 
@@ -41,10 +49,11 @@ namespace Fluent
 		}
 	}
 
-	void World::AddComponentPack(ComponentPack* componentPack, bool bAllowAddArchive)
+	void World::AddComponentPack(ComponentPack* componentPack)
 	{
 		Assert(componentPack->ComponentIDSet.size() == componentPack->ComponentSize.size());
-		
+
+		bool bIsFind = false;
 		for (ComponentArchive& componentArchive : mComponents)
 		{
 			if (!componentArchive.IsEqualIDSet(componentPack->ComponentIDSet))
@@ -55,18 +64,20 @@ namespace Fluent
 			u8* basePtr = static_cast<u8*>(componentArchive.GetEmptyComponentSet());
 			u64 topIndex = 0;
 			for (u32 index = 0; index < componentPack->ComponentIDSet.size(); ++index)
-			{	
+			{
 				*(componentPack->ComponentPtr[index]) = reinterpret_cast<void*>(basePtr + topIndex);
 				topIndex += componentPack->ComponentSize[index];
 			}
 
 			componentPack->CopyInitData(basePtr, topIndex);
+			bIsFind = true;
+			break;
 		}
 
-		if (bAllowAddArchive)
+		if (!bIsFind)
 		{
 			AddComponentArchive(*componentPack);
-			AddComponentPack(componentPack, false);
+			AddComponentPack(componentPack);
 		}
 	}
 
@@ -77,8 +88,8 @@ namespace Fluent
 		{
 			totalSize += separateSize;
 		}
-		
+
 		mComponents.emplace_back(componentPack.ComponentIDSet, totalSize);
 	}
-	
+
 }

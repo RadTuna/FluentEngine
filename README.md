@@ -1,4 +1,4 @@
-# FluentEngine_DefaultFramework
+# FluentEngine
 
-This project was created to build the basic framework of FluentEngine.
+It is a single thread renderer based on the D3D11 API.
 

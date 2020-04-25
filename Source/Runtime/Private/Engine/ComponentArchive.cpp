@@ -27,7 +27,7 @@ namespace Fluent
 		}
 	}
 
-	void* ComponentArchive::GetEmptyComponentSet(bool bAllowAddChunk)
+	void* ComponentArchive::GetEmptyComponentSet()
 	{
 		for (ComponentChunk* chunk : mChunks)
 		{
@@ -44,13 +44,8 @@ namespace Fluent
 			}
 		}
 
-		if (bAllowAddChunk)
-		{
-			AddChunk();
-			return GetEmptyComponentSet(false);
-		}
-
-		return nullptr;
+		AddChunk();
+		return GetEmptyComponentSet();
 	}
 
 	void ComponentArchive::RemoveComponentSet(IComponent* dest)

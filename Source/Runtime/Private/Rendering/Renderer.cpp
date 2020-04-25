@@ -46,6 +46,7 @@ namespace Fluent
 		CreateDepthStencilStates();
 		CreateRasterizerStates();
 		CreateRenderTargets();
+		CreateCommandLists();
 
 		if (!mbIsInitialized)
 		{
@@ -126,4 +127,8 @@ namespace Fluent
 			std::make_shared<Texture2D>(mDevice, width, height, EPixelFormat::R8G8B8A8_Unorm);
 	}
 
+	void Renderer::CreateCommandLists()
+	{
+		mCommandLists.emplace_back();
+	}
 }
