@@ -11,6 +11,7 @@ namespace Fluent
 	{
 	public:
 
+		explicit Viewport() = default;
 		explicit Viewport(f32 locX, f32 locY, f32 width, f32 height, f32 near, f32 far);
 		~Viewport() = default;
 

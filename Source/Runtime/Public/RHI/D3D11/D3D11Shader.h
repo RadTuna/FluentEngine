@@ -17,19 +17,21 @@ namespace Fluent
 		virtual ~D3D11Shader() = default;
 
 		[[nodiscard]]
-		ID3D11VertexShader* GetVertexShader() const { return static_cast<ID3D11VertexShader*>(mShader); }
+		ID3D11VertexShader* GetVertexShader() const { return mVertexShader; }
 
 		[[nodiscard]]
-		ID3D11PixelShader* GetPixelShader() const { return static_cast<ID3D11PixelShader*>(mShader); }
+		ID3D11PixelShader* GetPixelShader() const { return mPixelShader; }
 
 		[[nodiscard]]
-		ID3D11ComputeShader* GetComputeShader() const { return static_cast<ID3D11ComputeShader*>(mShader); }
+		ID3D11ComputeShader* GetComputeShader() const { return mComputeShader; }
 		
 	protected:
 
 		ID3D11Device* mDevice = nullptr;
 		
-		void* mShader = nullptr;
+		ID3D11VertexShader* mVertexShader = nullptr;
+		ID3D11PixelShader* mPixelShader = nullptr;
+		ID3D11ComputeShader* mComputeShader = nullptr;
 
 	};
 	

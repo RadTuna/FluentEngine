@@ -20,9 +20,10 @@ namespace Fluent
 {
 	inline void D3DRelease(IUnknown* object)
 	{
-		Assert(object != nullptr);
-
-		object->Release();
+		if (object != nullptr)
+		{
+			object->Release();
+		}
 	}
 	
 	const static DXGI_FORMAT DxgiFormatMap[] =

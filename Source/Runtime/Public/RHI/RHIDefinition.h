@@ -28,38 +28,6 @@ namespace Fluent
 	class VertexBuffer;
 	class PipelineState;
 	class Viewport;
-	
-
-	// ========== Render structure declaration ==========
-	
-	struct PhysicalDeviceData
-	{
-		PhysicalDeviceData() = default;
-		PhysicalDeviceData(const std::string& name, u32 mem) : DeviceName(name), Memory(mem) {}
-
-		std::string DeviceName = "Unknown";
-		u32 Memory = 0;
-	};
-
-	struct DisplayMode
-	{
-		DisplayMode() = default;
-		DisplayMode(u32 inWidth, u32 inHeight, u32 inNumerator, u32 inDenominator, double inRefresh)
-			: Width(inWidth), Height(inHeight), Numerator(inNumerator), Denominator(inDenominator), RefreshRate(inRefresh) {}
-
-		u32 Width = 0;
-		u32 Height = 0;
-		u32 Numerator = 0;
-		u32 Denominator = 0;
-		double RefreshRate = 0.0;
-	};
-
-	struct BufferCommon
-	{
-		Matrix4x4 WorldMatrix;
-		Matrix4x4 ViewMatrix;
-		Matrix4x4 ProjectionMatrix;
-	};
 
 
 	// ========== Render enumerate declaration ==========
@@ -130,6 +98,41 @@ namespace Fluent
 		Unknown = 0,
 		TriangleList,
 		LineList
+	};
+
+
+	// ========== Render structure declaration ==========
+
+	struct PhysicalDeviceData
+	{
+		PhysicalDeviceData() = default;
+		PhysicalDeviceData(const std::string& name, u32 mem) : DeviceName(name), Memory(mem) {}
+
+		std::string DeviceName = "Unknown";
+		u32 Memory = 0;
+	};
+
+	struct DisplayMode
+	{
+		DisplayMode() = default;
+		DisplayMode(u32 inWidth, u32 inHeight, u32 inNumerator, u32 inDenominator, double inRefresh)
+			: Width(inWidth), Height(inHeight), Numerator(inNumerator), Denominator(inDenominator), RefreshRate(inRefresh) {}
+
+		u32 Width = 0;
+		u32 Height = 0;
+		u32 Numerator = 0;
+		u32 Denominator = 0;
+		double RefreshRate = 0.0;
+	};
+
+	struct InputLayout
+	{
+		std::string SemanticName;
+		u32 SemanticIndex;
+		EPixelFormat Format;
+		u32 InputSlot;
+		u32 ByteOffset;
+		u32 InstanceStepRate;
 	};
 	
 }

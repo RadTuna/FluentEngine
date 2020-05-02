@@ -26,16 +26,25 @@ namespace Fluent
 		bool Initialize() override;
 		void Update(float deltaTime) override;
 
+		[[nodiscard]]
 		bool IsInitialized() const { return mbIsInitialized; }
 
 	private:
-		
+
+		// Render resource creation
 		void CreateConstantBuffers();
 		void CreateShaders();
 		void CreateDepthStencilStates();
 		void CreateRasterizerStates();
 		void CreateRenderTargets();
 		void CreateCommandLists();
+
+		// Update constant buffers
+		void UpdateFrameBuffer(std::shared_ptr<CommandList>& commandList);
+		
+		// Render passes
+		void PassGBuffer(std::shared_ptr<CommandList>& commandList);
+		void PassComposition(std::shared_ptr<CommandList>& commandList);
 		
 	private:
 
@@ -63,6 +72,8 @@ namespace Fluent
 
 		// Other
 		bool mbIsInitialized = false;
+
+		bool mbIsRendering = false;
 	};
 
 }

@@ -71,23 +71,6 @@ namespace Fluent
 		D3D11Release(mSwapChain);
 	}
 
-	void SwapChain::TempSetRenderTarget(const std::shared_ptr<Device>& device) const
-	{
-		device->GetDeviceContext()->OMSetRenderTargets(1, &mRenderTargetView, nullptr);
-	}
-
-	void SwapChain::TempSetColorRed(const std::shared_ptr<Device>& device) const
-	{
-		// temp
-		float color[4];
-		color[0] = 1.0f;
-		color[1] = 0.0f;
-		color[2] = 0.0f;
-		color[3] = 1.0f;
-		
-		device->GetDeviceContext()->ClearRenderTargetView(mRenderTargetView, color);
-	}
-
 	bool SwapChain::Present() const
 	{
 		HRESULT handleResult = S_OK;

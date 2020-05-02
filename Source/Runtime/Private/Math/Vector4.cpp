@@ -5,7 +5,7 @@
 
 namespace Fluent
 {
-
+	
 	Vector4 Vector4::operator+(const Vector4& other) const
 	{
 		const f32 tempX = mX + other.mX;

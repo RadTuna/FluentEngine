@@ -17,18 +17,18 @@ namespace Fluent
 		static i32 Sign(i32 value);
 		static f32 Signf(f32 value, f32 epsilon = MATH_EPSILON);
 
-		constexpr f32 Math::Rad2Deg(f32 radian)
+		constexpr f32 Rad2Deg(f32 radian)
 		{
 			return (radian / PI) * 180.0f;
 		}
 
-		constexpr f32 Math::Deg2Rad(f32 degree)
+		constexpr f32 Deg2Rad(f32 degree)
 		{
 			return (degree / 180.0f) * PI;
 		}
 
 		template <typename T>
-		void Math::Swap(T& a, T& b)
+		void Swap(T& a, T& b)
 		{
 			T temp = a;
 			a = b;

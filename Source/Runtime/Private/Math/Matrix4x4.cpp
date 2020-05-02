@@ -8,6 +8,12 @@
 namespace Fluent
 {
 
+	const Matrix4x4 Matrix4x4::Identity = Matrix4x4(
+		1.0f, 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 1.0f, 0.0f,
+		0.0f, 0.0f, 0.0f, 1.0f);
+	
 	Matrix4x4::Matrix4x4(const Vector4& row1, const Vector4& row2, const Vector4& row3, const Vector4& row4) noexcept
 	{
 		m11 = row1.mX; m12 = row1.mY; m13 = row1.mZ; m14 = row1.mW;

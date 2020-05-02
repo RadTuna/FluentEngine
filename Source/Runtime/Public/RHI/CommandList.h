@@ -35,7 +35,7 @@ namespace Fluent
 		void SetScissorRectangle(const Rectangle& rectangle) const;
 		void SetVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) const;
 		void SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) const;
-		void SetConstantBuffer(u32 slot, EShaderType shaderFlags, const std::shared_ptr<ConstantBuffer>& constantBuffer) const;
+		void SetConstantBuffer(u32 slot, EShaderType shaderType, const std::shared_ptr<ConstantBuffer>& constantBuffer) const;
 		void SetViewport(const Viewport& viewport) const;
 		void SetTexture(u32 slot, EShaderType shaderType, const std::shared_ptr<Texture2D>& texture) const;
 

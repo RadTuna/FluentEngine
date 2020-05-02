@@ -41,45 +41,45 @@ namespace Fluent
 
 		~Vector() = default;
 
-		Vector __vectorcall operator=(const Vector& other) = delete;
-		Vector __vectorcall operator=(Vector other);
-		Vector __vectorcall operator=(__m128 other);
+		Vector SIMD_CALL operator=(const Vector& other) = delete;
+		Vector SIMD_CALL operator=(Vector other);
+		Vector SIMD_CALL operator=(__m128 other);
 
-		Vector __vectorcall operator+(Vector other) const;
-		Vector __vectorcall operator+=(Vector other);
+		Vector SIMD_CALL operator+(Vector other) const;
+		Vector SIMD_CALL operator+=(Vector other);
 
-		Vector __vectorcall operator-(Vector other) const;
-		Vector __vectorcall operator-=(Vector other);
+		Vector SIMD_CALL operator-(Vector other) const;
+		Vector SIMD_CALL operator-=(Vector other);
 
-		Vector __vectorcall operator*(f32 other) const;
-		Vector __vectorcall operator*=(f32 other);
-		friend Vector __vectorcall operator*(f32 other, Vector thisVector);
+		Vector SIMD_CALL operator*(f32 other) const;
+		Vector SIMD_CALL operator*=(f32 other);
+		friend Vector SIMD_CALL operator*(f32 other, Vector thisVector);
 
-		f32 __vectorcall operator*(Vector other) const;
+		f32 SIMD_CALL operator*(Vector other) const;
 		
-		Vector __vectorcall operator*(Matrix other) const;
-		Vector __vectorcall operator*=(Matrix other);
+		Vector SIMD_CALL operator*(Matrix other) const;
+		Vector SIMD_CALL operator*=(Matrix other);
 
-		Vector __vectorcall operator^(Vector other) const;
+		Vector SIMD_CALL operator^(Vector other) const;
 
-		static f32 __vectorcall DotProduct(Vector vectorA, Vector vectorB);
+		static f32 SIMD_CALL DotProduct(Vector vectorA, Vector vectorB);
 
-		static Vector __vectorcall CrossProduct(Vector vectorA, Vector vectorB);
+		static Vector SIMD_CALL CrossProduct(Vector vectorA, Vector vectorB);
 
 		[[nodiscard]]
-		f32 __vectorcall Length() const;
+		f32 SIMD_CALL Length() const;
 
-		static Vector __vectorcall Normalize(Vector other);
+		static Vector SIMD_CALL Normalize(Vector other);
 		void Normalize();
 
-		static Vector __vectorcall LoadVector3(const class Vector3& inVector);
-		static Vector __vectorcall LoadVector4(const class Vector4& inVector);
+		static Vector SIMD_CALL LoadVector3(const class Vector3& inVector);
+		static Vector SIMD_CALL LoadVector4(const class Vector4& inVector);
 
-		static void __vectorcall StoreVector3(Vector inVector, class Vector3* outVector);
-		static void __vectorcall StoreVector4(Vector inVector, class Vector4* outVector);
+		static void SIMD_CALL StoreVector3(Vector inVector, class Vector3* outVector);
+		static void SIMD_CALL StoreVector4(Vector inVector, class Vector4* outVector);
 
-		static Vector __vectorcall SetVector3(f32 x, f32 y, f32 z);
-		static Vector __vectorcall SetVector4(f32 x, f32 y, f32 z, f32 w);
+		static Vector SIMD_CALL SetVector3(f32 x, f32 y, f32 z);
+		static Vector SIMD_CALL SetVector4(f32 x, f32 y, f32 z, f32 w);
 
 	};
 

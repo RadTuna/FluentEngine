@@ -42,6 +42,8 @@ namespace Fluent
 		static Matrix4x4 Transpose(const Matrix4x4& other);
 		void Transpose();
 
+		static const Matrix4x4 Identity;
+
 	};
 
 	constexpr Matrix4x4::Matrix4x4(

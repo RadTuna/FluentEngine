@@ -7,8 +7,7 @@
 #include <pmmintrin.h> // SSE3 intrinsic
 
 // Engine Include
-#include "Core/TypeDefinition.h"
-
+#include "Core/Core.h"
 
 namespace Fluent
 {
@@ -27,25 +26,33 @@ namespace Fluent
 
 		explicit Matrix() noexcept;
 		explicit Matrix(const __m128& inRow1, const __m128& inRow2, const __m128& inRow3, const __m128& inRow4) noexcept;
+		explicit Matrix(Vector inRow1, Vector inRow2, Vector inRow3, Vector inRow4) noexcept;
 
 		~Matrix() = default;
 		 
-		Matrix __vectorcall operator=(const Matrix & other) = delete;
-		Matrix __vectorcall operator=(Matrix other);
+		Matrix SIMD_CALL operator=(const Matrix & other) = delete;
+		Matrix SIMD_CALL operator=(Matrix other);
 
-		Vector __vectorcall operator*(Vector other) const;
+		Vector SIMD_CALL operator*(Vector other) const;
 
-		Matrix __vectorcall operator*(Matrix other) const;
-		Matrix __vectorcall operator*=(Matrix other);
+		Matrix SIMD_CALL operator*(Matrix other) const;
+		Matrix SIMD_CALL operator*=(Matrix other);
 
-		static Matrix __vectorcall Transpose(Matrix other);
+		static Matrix SIMD_CALL Transpose(Matrix other);
 		void Transpose();
 
-		static Matrix __vectorcall LoadMatrix4X4(const class Matrix4x4& inMatrix);
+		static Matrix SIMD_CALL CreateLookAtLH(Vector cameraPosition, Vector targetPosition, Vector upVector);
+		static Matrix SIMD_CALL CreateOrthographicLH(f32 width, f32 height, f32 near, f32 far);
+		static Matrix SIMD_CALL CreatePerspectiveLH(f32 width, f32 height, f32 near, f32 far);
+		static Matrix SIMD_CALL CreatePerspectiveFovLH(f32 fov, f32 aspectRatio, f32 near, f32 far);
 
-		static void __vectorcall StoreMatrix4X4(Matrix inMatrix, class Matrix4x4* outMatrix);
+		static Matrix SIMD_CALL LoadMatrix4X4(const class Matrix4x4& inMatrix);
 
-		static float __vectorcall DotSIMD(__m128 vector1, __m128 vector2);
+		static void SIMD_CALL StoreMatrix4X4(Matrix inMatrix, class Matrix4x4* outMatrix);
+
+		static float SIMD_CALL DotSIMD(__m128 vector1, __m128 vector2);
+
+		static const Matrix Identity;
 		
 	};
 }

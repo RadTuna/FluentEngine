@@ -42,7 +42,7 @@ namespace Fluent
 		static f32 DotProduct(const Vector4& vectorA, const Vector4& vectorB);
 
 		static Vector4 CrossProduct(const Vector4& vectorA, const Vector4& vectorB);
-
+		
 		[[nodiscard]]
 		f32 Length() const;
 

@@ -15,6 +15,7 @@
 
 namespace Fluent
 {
+	
 	CommandList::CommandList(const std::shared_ptr<Device>& device) noexcept
 	{
 		Assert(device && device->IsInitialized());
@@ -22,10 +23,7 @@ namespace Fluent
 		mDeviceContext = device->GetDeviceContext();
 		
 		const HRESULT result = device->GetDevice()->CreateDeferredContext(0, &mDeferredContext);
-		if (SUCCEEDED(result))
-		{
-			mbIsInitialized = true;
-		}
+		Assert(SUCCEEDED(result));
 	}
 
 	void CommandList::SetPipelineState(const PipelineState* pipelineState)
@@ -73,7 +71,7 @@ namespace Fluent
 		{
 			mDeferredContext->IASetPrimitiveTopology(ToD3D11Topology(pipelineState->mPrimitiveTopology));
 		}
-
+		
 		// Bind render target
 		if (!pipelineState->mRenderTargetTextures.empty())
 		{
@@ -81,7 +79,7 @@ namespace Fluent
 			std::vector<ID3D11RenderTargetView*> arrayRTV;
 			arrayRTV.reserve(renderTargetNum);
 
-			for (const Texture2D* tex : pipelineState->mRenderTargetTextures)
+			for (const std::shared_ptr<Texture2D>& tex : pipelineState->mRenderTargetTextures)
 			{
 				arrayRTV.emplace_back(tex->GetRenderTargetView());
 			}

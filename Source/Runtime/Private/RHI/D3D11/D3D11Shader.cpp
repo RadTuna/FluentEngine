@@ -23,31 +23,9 @@ namespace Fluent
 
 	Shader::~Shader() noexcept
 	{
-		if (mShader != nullptr)
-		{
-			switch (mShaderType)
-			{
-				case EShaderType::Vertex:
-				{
-					ID3D11VertexShader* vertexShader = GetVertexShader();
-					D3D11Release(vertexShader);
-				}
-				case EShaderType::Pixel:
-				{
-					ID3D11PixelShader* pixelShader = GetPixelShader();
-					D3D11Release(pixelShader);
-				}
-				case EShaderType::Compute:
-				{
-					ID3D11ComputeShader* computeShader = GetComputeShader();
-					D3D11Release(computeShader);
-				}
-				default:
-				{
-					Assert(false);
-				}
-			}
-		}
+		D3D11Release(mVertexShader);
+		D3D11Release(mPixelShader);
+		D3D11Release(mComputeShader);
 	}
 
 	void Shader::Compile(const std::string& shaderPath)

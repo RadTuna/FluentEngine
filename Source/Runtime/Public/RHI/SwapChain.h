@@ -22,9 +22,6 @@ namespace Fluent
 
 		explicit SwapChain(const std::shared_ptr<Device>& device, const WindowData& winData) noexcept;
 		virtual ~SwapChain() noexcept;
-
-		void TempSetRenderTarget(const std::shared_ptr<Device>& device) const;
-		void TempSetColorRed(const std::shared_ptr<Device>& device) const;
 		
 		bool Present() const;
 

@@ -2,6 +2,8 @@
 
 #define INDEX_NONE		(-1)
 
+#define SIMD_CALL __vectorcall
+
 #ifdef UNICODE
 #define TXT(String) L##String
 #elif
