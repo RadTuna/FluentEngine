@@ -44,14 +44,7 @@ namespace Fluent
 		rasterDesc.ScissorEnable = mbUseScissor;
 
 		const HRESULT result = device->GetDevice()->CreateRasterizerState(&rasterDesc, &mRasterizerState);
-		if (SUCCEEDED(result))
-		{
-			mbIsInitialized = true;
-		}
-		else
-		{
-			mbIsInitialized = false;
-		}
+		Assert(SUCCEEDED(result));
 	}
 
 	RasterizerState::~RasterizerState() noexcept

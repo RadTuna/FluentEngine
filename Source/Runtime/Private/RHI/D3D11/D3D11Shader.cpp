@@ -28,7 +28,7 @@ namespace Fluent
 		D3D11Release(mComputeShader);
 	}
 
-	void Shader::Compile(const std::string& shaderPath)
+	void Shader::CompileInternal(const std::string& shaderPath, EVertexType vertexType)
 	{
 		u32 compileFlags = 0;
 #ifdef DEBUG
@@ -100,6 +100,17 @@ namespace Fluent
 						shaderBlob->GetBufferSize(),
 						nullptr,
 						&vertexShader);
+
+					std::vector<D3D11_INPUT_ELEMENT_DESC> inputDescs;
+					ToD3D11InputDesc(inputDescs, vertexType);
+
+					const u32 inputDescsNum = static_cast<u32>(inputDescs.size());
+					result = mDevice->CreateInputLayout(
+						inputDescs.data(),
+						inputDescsNum, 
+						shaderBlob->GetBufferPointer(), 
+						shaderBlob->GetBufferSize(), 
+						&mInputLayout);
 				}
 				case EShaderType::Pixel:
 				{

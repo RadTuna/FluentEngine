@@ -13,6 +13,7 @@
 #include "RHI/RasterizerState.h"
 #include "RHI/Texture2D.h"
 #include "RHI/PipelineState.h"
+#include "RHI/BlendState.h"
 
 // temp include
 #include "Math/Vector.h"
@@ -50,6 +51,7 @@ namespace Fluent
 		CreateDepthStencilStates();
 		CreateRasterizerStates();
 		CreateRenderTargets();
+		CreateBlendState();
 		CreateCommandLists();
 
 		if (!mbIsInitialized)
@@ -97,10 +99,10 @@ namespace Fluent
 		mShaders.resize(RenderShaderTypesNum);
 
 		mShaders[ERenderShaderType::VS_Common] = std::make_shared<Shader>(mDevice, EShaderType::Vertex);
-		mShaders[ERenderShaderType::VS_Common]->Compile("TempPath");
+		mShaders[ERenderShaderType::VS_Common]->Compile<VertexPos>("TempPath");
 
 		mShaders[ERenderShaderType::PS_Common] = std::make_shared<Shader>(mDevice, EShaderType::Pixel);
-		mShaders[ERenderShaderType::PS_Common]->Compile("TempPath");
+		mShaders[ERenderShaderType::PS_Common]->Compile<VertexPos>("TempPath");
 	}
 
 	void Renderer::CreateDepthStencilStates()
@@ -156,13 +158,28 @@ namespace Fluent
 			std::make_shared<Texture2D>(mDevice, width, height, EPixelFormat::D32_Float);
 	}
 
+	void Renderer::CreateBlendState()
+	{
+		mBlendStates.resize(BlendStateTypesNum);
+		
+		mBlendStates[EBlendStateType::Disable] = std::make_shared<BlendState>(mDevice, false,
+			ERenderBlend::SrcAlpha, ERenderBlend::InvSrcAlpha, ERenderBlendOperation::Add,
+			ERenderBlend::One, ERenderBlend::One, ERenderBlendOperation::Add);
+		mBlendStates[EBlendStateType::Enable] = std::make_shared<BlendState>(mDevice, true,
+			ERenderBlend::SrcAlpha, ERenderBlend::InvSrcAlpha, ERenderBlendOperation::Add,
+			ERenderBlend::One, ERenderBlend::One, ERenderBlendOperation::Add);
+		mBlendStates[EBlendStateType::ColorAdd] = std::make_shared<BlendState>(mDevice, true,
+			ERenderBlend::One, ERenderBlend::One, ERenderBlendOperation::Add,
+			ERenderBlend::One, ERenderBlend::One, ERenderBlendOperation::Add);
+	}
+
 	void Renderer::CreateCommandLists()
 	{
 		// temp // only single thread
 		mCommandLists.emplace_back(mDevice);
 	}
 
-	void Renderer::UpdateFrameBuffer(std::shared_ptr<CommandList>& commandList)
+	void Renderer::UpdateFrameBuffer(const std::shared_ptr<CommandList>& commandList)
 	{
 		// Map
 		BufferFrame* bufferFrame = reinterpret_cast<Fluent::BufferFrame*>(mConstantBuffers[EConstantBufferType::FrameBuffer]->Map());
@@ -191,23 +208,18 @@ namespace Fluent
 		mConstantBuffers[EConstantBufferType::FrameBuffer]->Unmap();
 	}
 
-	void Renderer::PassGBuffer(std::shared_ptr<CommandList>& commandList)
+	void Renderer::PassGBuffer(const std::shared_ptr<CommandList>& commandList)
 	{
 		std::shared_ptr<Texture2D> albedoTex = mRenderTargets[ERenderTargetType::Albedo];
 		std::shared_ptr<Texture2D> diffuseTex = mRenderTargets[ERenderTargetType::Diffuse];
 		std::shared_ptr<Texture2D> specularTex = mRenderTargets[ERenderTargetType::Specular];
 		std::shared_ptr<Texture2D> normalTex = mRenderTargets[ERenderTargetType::Normal];
 		std::shared_ptr<Texture2D> depthTex = mRenderTargets[ERenderTargetType::Depth];
-
-		PipelineState pipelineState;
-		pipelineState.mVertexShader = mShaders[ERenderShaderType::VS_Common]->GetVertexShader();
-		pipelineState.mRasterizerState = mRasterizerStates[ERasterizerStateType::CullBack_Solid]->GetRasterizerState();
-		pipelineState.mDepthStencilState = m
 		
 		
 	}
 
-	void Renderer::PassComposition(std::shared_ptr<CommandList>& commandList)
+	void Renderer::PassComposition(const std::shared_ptr<CommandList>& commandList)
 	{
 	}
 	

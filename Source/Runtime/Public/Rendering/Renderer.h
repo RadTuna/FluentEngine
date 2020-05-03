@@ -37,14 +37,15 @@ namespace Fluent
 		void CreateDepthStencilStates();
 		void CreateRasterizerStates();
 		void CreateRenderTargets();
+		void CreateBlendState();
 		void CreateCommandLists();
 
 		// Update constant buffers
-		void UpdateFrameBuffer(std::shared_ptr<CommandList>& commandList);
+		void UpdateFrameBuffer(const std::shared_ptr<CommandList>& commandList);
 		
 		// Render passes
-		void PassGBuffer(std::shared_ptr<CommandList>& commandList);
-		void PassComposition(std::shared_ptr<CommandList>& commandList);
+		void PassGBuffer(const std::shared_ptr<CommandList>& commandList);
+		void PassComposition(const std::shared_ptr<CommandList>& commandList);
 		
 	private:
 
@@ -69,6 +70,9 @@ namespace Fluent
 
 		// Constant buffer
 		std::vector<std::shared_ptr<ConstantBuffer>> mConstantBuffers;
+
+		// Blend state
+		std::vector<std::shared_ptr<BlendState>> mBlendStates;
 
 		// Other
 		bool mbIsInitialized = false;

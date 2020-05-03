@@ -33,15 +33,12 @@ namespace Fluent
 		bool GetUseDepthWrite() const { return mbUseDepthWrite; }
 		[[nodiscard]]
 		bool GetUseStencil() const { return mbUseStencil; }
-		[[nodiscard]]
-		bool IsInitialized() const { return mbIsInitialized; }
 		
 	private:
 
 		bool mbUseDepthTest = true;
 		bool mbUseDepthWrite = true;
 		bool mbUseStencil = false;
-		bool mbIsInitialized = false;
 		
 	};
 	

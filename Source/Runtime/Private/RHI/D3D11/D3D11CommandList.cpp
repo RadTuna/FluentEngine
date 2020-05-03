@@ -11,6 +11,7 @@
 #include "RHI/VertexBuffer.h"
 #include "RHI/IndexBuffer.h"
 #include "RHI/ConstantBuffer.h"
+#include "RHI/Shader.h"
 
 
 namespace Fluent
@@ -115,6 +116,41 @@ namespace Fluent
 
 		Assert(mCommandList == nullptr);
 		mDeferredContext->FinishCommandList(false, const_cast<ID3D11CommandList**>(&mCommandList));
+	}
+
+	void CommandList::SetVertexShader(const std::shared_ptr<Shader>& vertexShader) const
+	{
+		Assert(vertexShader->GetVertexShader() != nullptr);
+		
+		mDeferredContext->VSSetShader(vertexShader->GetVertexShader(), nullptr, 0);
+	}
+
+	void CommandList::SetPixelShader(const std::shared_ptr<Shader>& pixelShader) const
+	{
+		Assert(pixelShader->GetPixelShader() != nullptr);
+		
+		mDeferredContext->PSSetShader(pixelShader->GetPixelShader(), nullptr, 0);
+	}
+
+	void CommandList::SetViewport(const Viewport& viewport)
+	{
+	}
+
+	void CommandList::SetDepthStencilState(const std::shared_ptr<DepthStencilState>& depthStencilState)
+	{
+	}
+
+	void CommandList::SetRasterizerState(const std::shared_ptr<RasterizerState>& rasterizerState)
+	{
+	}
+
+	void CommandList::SetPrimitiveTopology(EPrimitiveTopology topology)
+	{
+	}
+
+	void CommandList::SetRenderTarget(const std::vector<std::shared_ptr<Texture2D>>& renderTarget,
+		const std::shared_ptr<Texture2D>& depthStencil)
+	{
 	}
 
 	void CommandList::SetScissorRectangle(const Rectangle& rectangle) const

@@ -23,6 +23,7 @@ namespace Fluent
 		ID3D11PixelShader* mPixelShader = nullptr;
 		ID3D11RasterizerState* mRasterizerState = nullptr;
 		ID3D11DepthStencilState* mDepthStencilState = nullptr;
+		ID3D11BlendState* mBlendState = nullptr;
 		ID3D11InputLayout* mInputLayout = nullptr;
 
 	};

@@ -8,6 +8,7 @@
 // Engine Include
 #include "D3D11/D3D11Shader.h"
 #include "Core/Core.h"
+#include "RHI/Vertex.h"
 
 
 namespace Fluent
@@ -29,7 +30,9 @@ namespace Fluent
 		explicit Shader(const std::shared_ptr<Device>& device, EShaderType shaderType) noexcept;
 		virtual ~Shader() noexcept;
 
+		template<typename Vertex>
 		void Compile(const std::string& shaderPath);
+		void CompileInternal(const std::string& shaderPath, EVertexType vertexType);
 
 		[[nodiscard]]
 		const char* GetEntryPoint() const;
@@ -42,5 +45,11 @@ namespace Fluent
 		std::vector<ShaderDefine> mDefines;
 		
 	};
-	
+
+	template <typename Vertex>
+	void Shader::Compile(const std::string& shaderPath)
+	{
+		const EVertexType vertexType = VertexTypeToEnum<Vertex>();
+		CompileInternal(shaderPath, vertexType);
+	}
 }

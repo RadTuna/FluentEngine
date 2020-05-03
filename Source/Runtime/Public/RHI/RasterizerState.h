@@ -29,10 +29,6 @@ namespace Fluent
 
 		virtual ~RasterizerState() noexcept;
 
-		
-		[[nodiscard]]
-		bool IsInitialized() const { return mbIsInitialized; }
-
 	private:
 
 		ERenderCullMode mCullMode = ERenderCullMode::Unknown;
@@ -41,7 +37,6 @@ namespace Fluent
 		bool mbUseScissor = false;
 		bool mbUseMultiSample = false;
 		bool mbUseAntialiasedLine = false;
-		bool mbIsInitialized = false;
 		
 	};
 	

@@ -37,14 +37,7 @@ namespace Fluent
 		depthDesc.BackFace = depthDesc.FrontFace;
 
 		const HRESULT result = mDevice->CreateDepthStencilState(&depthDesc, &mDepthStencilState);
-		if (SUCCEEDED(result))
-		{
-			mbIsInitialized = true;
-		}
-		else
-		{
-			mbIsInitialized = false;
-		}
+		Assert(SUCCEEDED(result));
 	}
 
 	DepthStencilState::~DepthStencilState() noexcept

@@ -15,7 +15,7 @@ namespace Fluent
 {
 
 	void PipelineState::CreatePipelineState(
-		const std::shared_ptr<Device>& device
+		const std::shared_ptr<Device>& device,
 		const std::shared_ptr<Shader>& vertexShader, 
 		const std::shared_ptr<Shader>& pixelShader, 
 		const std::shared_ptr<RasterizerState>& rasterizerState, 

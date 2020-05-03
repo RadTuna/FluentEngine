@@ -28,6 +28,7 @@ namespace Fluent
 	class VertexBuffer;
 	class PipelineState;
 	class Viewport;
+	class BlendState;
 
 
 	// ========== Render enumerate declaration ==========
@@ -100,6 +101,25 @@ namespace Fluent
 		LineList
 	};
 
+	enum class ERenderBlend : u32
+	{
+		Zero,
+		One,
+		SrcColor,
+		InvSrcColor,
+		SrcAlpha,
+		InvSrcAlpha
+	};
+
+	enum class ERenderBlendOperation : u32
+	{
+		Add,
+		Subtract,
+		ReverseSubtract,
+		Min,
+		Max
+	};
+
 
 	// ========== Render structure declaration ==========
 
@@ -125,14 +145,14 @@ namespace Fluent
 		double RefreshRate = 0.0;
 	};
 
-	struct InputLayout
+	struct Viewport
 	{
-		std::string SemanticName;
-		u32 SemanticIndex;
-		EPixelFormat Format;
-		u32 InputSlot;
-		u32 ByteOffset;
-		u32 InstanceStepRate;
+		f32 X;
+		f32 Y;
+		f32 Width;
+		f32 Height;
+		f32 Near;
+		f32 Far;
 	};
 	
 }

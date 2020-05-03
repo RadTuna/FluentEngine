@@ -30,6 +30,7 @@ namespace Fluent
 		ID3D11Device* mDevice = nullptr;
 		
 		ID3D11VertexShader* mVertexShader = nullptr;
+		ID3D11InputLayout* mInputLayout = nullptr;
 		ID3D11PixelShader* mPixelShader = nullptr;
 		ID3D11ComputeShader* mComputeShader = nullptr;
 
