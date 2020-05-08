@@ -27,8 +27,8 @@ namespace Fluent
 	class Vertex;
 	class VertexBuffer;
 	class PipelineState;
-	class Viewport;
 	class BlendState;
+	struct Viewport;
 
 
 	// ========== Render enumerate declaration ==========

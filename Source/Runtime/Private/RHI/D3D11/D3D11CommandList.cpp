@@ -6,98 +6,33 @@
 
 // Engine Include
 #include "RHI/Device.h"
-#include "RHI/PipelineState.h"
 #include "RHI/Texture2D.h"
 #include "RHI/VertexBuffer.h"
 #include "RHI/IndexBuffer.h"
 #include "RHI/ConstantBuffer.h"
 #include "RHI/Shader.h"
+#include "RHI/DepthStencilState.h"
+#include "RHI/RasterizerState.h"
+#include "RHI/BlendState.h"
 
 
 namespace Fluent
 {
-	
+
 	CommandList::CommandList(const std::shared_ptr<Device>& device) noexcept
 	{
 		Assert(device && device->IsInitialized());
 
 		mDeviceContext = device->GetDeviceContext();
-		
+
 		const HRESULT result = device->GetDevice()->CreateDeferredContext(0, &mDeferredContext);
 		Assert(SUCCEEDED(result));
-	}
-
-	void CommandList::SetPipelineState(const PipelineState* pipelineState)
-	{
-		Assert(pipelineState != nullptr);
-		
-		// Bind vertex shader
-		if (pipelineState->mVertexShader != nullptr)
-		{
-			mDeferredContext->VSSetShader(pipelineState->mVertexShader, nullptr, 0);
-		}
-
-		// Bind input layout
-		if (pipelineState->mInputLayout != nullptr)
-		{
-			mDeferredContext->IASetInputLayout(pipelineState->mInputLayout);
-		}
-
-		// Bind pixel shader
-		if (pipelineState->mPixelShader != nullptr)
-		{
-			mDeferredContext->PSSetShader(pipelineState->mPixelShader, nullptr, 0);
-		}
-
-		// Bind viewport
-		if (pipelineState->mViewport.IsDefined())
-		{
-			SetViewport(pipelineState->mViewport);
-		}
-
-		// Bind depth-stencil state
-		if (pipelineState->mDepthStencilState != nullptr)
-		{
-			mDeferredContext->OMSetDepthStencilState(pipelineState->mDepthStencilState, 1);
-		}
-
-		// Bind rasterizer state
-		if (pipelineState->mRasterizerState != nullptr)
-		{
-			mDeferredContext->RSSetState(pipelineState->mRasterizerState);
-		}
-
-		// Bind primitive topology
-		if (pipelineState->mPrimitiveTopology != EPrimitiveTopology::Unknown)
-		{
-			mDeferredContext->IASetPrimitiveTopology(ToD3D11Topology(pipelineState->mPrimitiveTopology));
-		}
-		
-		// Bind render target
-		if (!pipelineState->mRenderTargetTextures.empty())
-		{
-			const u32 renderTargetNum = static_cast<u32>(pipelineState->mRenderTargetTextures.size());
-			std::vector<ID3D11RenderTargetView*> arrayRTV;
-			arrayRTV.reserve(renderTargetNum);
-
-			for (const std::shared_ptr<Texture2D>& tex : pipelineState->mRenderTargetTextures)
-			{
-				arrayRTV.emplace_back(tex->GetRenderTargetView());
-			}
-
-			ID3D11DepthStencilView* tempDSV = pipelineState->mDepthStencilTexture->GetDepthStencilView();
-			mDeferredContext->OMSetRenderTargets(renderTargetNum, arrayRTV.data(), tempDSV);
-		}
-	}
-
-	void CommandList::Clear(const PipelineState* pipelineState)
-	{
 	}
 
 	void CommandList::Execute()
 	{
 		Assert(mDeviceContext != nullptr);
-		
+
 		mDeviceContext->ExecuteCommandList(mCommandList, false);
 		D3D11Release(mCommandList);
 	}
@@ -121,43 +56,74 @@ namespace Fluent
 	void CommandList::SetVertexShader(const std::shared_ptr<Shader>& vertexShader) const
 	{
 		Assert(vertexShader->GetVertexShader() != nullptr);
-		
+		Assert(vertexShader->GetInputLayout() != nullptr);
+
 		mDeferredContext->VSSetShader(vertexShader->GetVertexShader(), nullptr, 0);
+		mDeferredContext->IASetInputLayout(vertexShader->GetInputLayout());
 	}
 
 	void CommandList::SetPixelShader(const std::shared_ptr<Shader>& pixelShader) const
 	{
 		Assert(pixelShader->GetPixelShader() != nullptr);
-		
+
 		mDeferredContext->PSSetShader(pixelShader->GetPixelShader(), nullptr, 0);
 	}
 
-	void CommandList::SetViewport(const Viewport& viewport)
+	void CommandList::SetDepthStencilState(const std::shared_ptr<DepthStencilState>& depthStencilState) const
 	{
+		Assert(depthStencilState->GetDepthStencilState() != nullptr);
+
+		mDeferredContext->OMSetDepthStencilState(depthStencilState->GetDepthStencilState(), 1);
 	}
 
-	void CommandList::SetDepthStencilState(const std::shared_ptr<DepthStencilState>& depthStencilState)
+	void CommandList::SetRasterizerState(const std::shared_ptr<RasterizerState>& rasterizerState) const
 	{
+		Assert(rasterizerState->GetRasterizerState() != nullptr);
+
+		mDeferredContext->RSSetState(rasterizerState->GetRasterizerState());
 	}
 
-	void CommandList::SetRasterizerState(const std::shared_ptr<RasterizerState>& rasterizerState)
+	void CommandList::SetBlendState(const std::shared_ptr<BlendState>& blendState) const
 	{
+		Assert(blendState->GetBlendState() != nullptr);
+		
+		const f32 commonBlendFactor = blendState->GetBlendFactor();
+		f32 blendFactors[4] = { commonBlendFactor, };
+	
+		mDeferredContext->OMSetBlendState(blendState->GetBlendState(), blendFactors, 0xFFFFFFFF);
 	}
 
-	void CommandList::SetPrimitiveTopology(EPrimitiveTopology topology)
-	{
+	void CommandList::SetPrimitiveTopology(EPrimitiveTopology topology) const
+	{	
+		const D3D11_PRIMITIVE_TOPOLOGY d3dTopology = ToD3D11Topology(topology);
+		
+		mDeferredContext->IASetPrimitiveTopology(d3dTopology);
 	}
 
-	void CommandList::SetRenderTarget(const std::vector<std::shared_ptr<Texture2D>>& renderTarget,
-		const std::shared_ptr<Texture2D>& depthStencil)
+	void CommandList::SetRenderTarget(const std::vector<std::shared_ptr<Texture2D>>& renderTargets,
+		const std::shared_ptr<Texture2D>& depthStencil) const
 	{
+		Assert(depthStencil->GetDepthStencilView() != nullptr);
+		
+		const u32 renderTargetNum = static_cast<u32>(renderTargets.size());
+		std::vector<ID3D11RenderTargetView*> d3dRenderTargets;
+		d3dRenderTargets.reserve(renderTargetNum);
+		for (u32 index = 0; index < renderTargetNum; ++index)
+		{
+			ID3D11RenderTargetView* tempRTV = renderTargets[index]->GetRenderTargetView();
+			Assert(tempRTV != nullptr);
+			
+			d3dRenderTargets.emplace_back(tempRTV);
+		}
+		
+		mDeferredContext->OMSetRenderTargets(renderTargetNum, d3dRenderTargets.data(), depthStencil->GetDepthStencilView());
 	}
 
 	void CommandList::SetScissorRectangle(const Rectangle& rectangle) const
 	{
 		D3D11_RECT scissorRect = {
-			static_cast<u32>(rectangle.MinX), static_cast<u32>(rectangle.MinY),
-			static_cast<u32>(rectangle.MaxX), static_cast<u32>(rectangle.MaxY) };
+			static_cast<i32>(rectangle.MinX), static_cast<i32>(rectangle.MinY),
+			static_cast<i32>(rectangle.MaxX), static_cast<i32>(rectangle.MaxY) };
 
 		mDeferredContext->RSSetScissorRects(1, &scissorRect);
 	}
@@ -215,12 +181,12 @@ namespace Fluent
 	void CommandList::SetViewport(const Viewport& viewport) const
 	{
 		D3D11_VIEWPORT d3dViewport;
-		d3dViewport.TopLeftX = viewport.mX;
-		d3dViewport.TopLeftY = viewport.mY;
-		d3dViewport.Width = viewport.mWidth;
-		d3dViewport.Height = viewport.mHeight;
-		d3dViewport.MinDepth = viewport.mNear;
-		d3dViewport.MaxDepth = viewport.mFar;
+		d3dViewport.TopLeftX = viewport.X;
+		d3dViewport.TopLeftY = viewport.Y;
+		d3dViewport.Width = viewport.Width;
+		d3dViewport.Height = viewport.Height;
+		d3dViewport.MinDepth = viewport.Near;
+		d3dViewport.MaxDepth = viewport.Far;
 		
 		mDeferredContext->RSSetViewports(1, &d3dViewport);
 	}

@@ -10,8 +10,7 @@ namespace Fluent
 
 	class TransformComponent final : public IComponent
 	{
-		REFLECTION_CLASS(TransformComponent, IComponent,
-			)
+		REFLECTION_CLASS(TransformComponent, IComponent)
 		
 	public:
 

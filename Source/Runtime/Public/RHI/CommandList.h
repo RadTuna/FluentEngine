@@ -31,12 +31,11 @@ namespace Fluent
 
 		void SetVertexShader(const std::shared_ptr<Shader>& vertexShader) const;
 		void SetPixelShader(const std::shared_ptr<Shader>& pixelShader) const;
-		void SetInputLayout(const InputLayout& inputLayout) const;
-		void SetViewport(const Viewport& viewport);
-		void SetDepthStencilState(const std::shared_ptr<DepthStencilState>& depthStencilState);
-		void SetRasterizerState(const std::shared_ptr<RasterizerState>& rasterizerState);
-		void SetPrimitiveTopology(EPrimitiveTopology topology);
-		void SetRenderTarget(const std::vector<std::shared_ptr<Texture2D>>& renderTarget, const std::shared_ptr<Texture2D>& depthStencil);
+		void SetDepthStencilState(const std::shared_ptr<DepthStencilState>& depthStencilState) const;
+		void SetRasterizerState(const std::shared_ptr<RasterizerState>& rasterizerState) const;
+		void SetBlendState(const std::shared_ptr<BlendState>& blendState) const;
+		void SetPrimitiveTopology(EPrimitiveTopology topology) const;
+		void SetRenderTarget(const std::vector<std::shared_ptr<Texture2D>>& renderTargets, const std::shared_ptr<Texture2D>& depthStencil) const;
 		void SetScissorRectangle(const Rectangle& rectangle) const;
 		void SetVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) const;
 		void SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) const;

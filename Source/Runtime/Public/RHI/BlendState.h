@@ -20,8 +20,31 @@ namespace Fluent
 
 		explicit BlendState(const std::shared_ptr<Device>& device, bool bIsEnable, 
 			ERenderBlend srcBlend, ERenderBlend destBlend, ERenderBlendOperation blendOp,
-			ERenderBlend srcBlendAlpha, ERenderBlend destBlendAlpha, ERenderBlendOperation blendOpAlpha) noexcept;
+			ERenderBlend srcBlendAlpha, ERenderBlend destBlendAlpha, ERenderBlendOperation blendOpAlpha,
+			f32 blendFactor) noexcept;
 		virtual ~BlendState() = default;
+
+		
+		[[nodiscard]]
+		ERenderBlend GetSourceBlend() const { return mSourceBlend; }
+		
+		[[nodiscard]]
+		ERenderBlend GetDestinationBlend() const { return mDestBlend; }
+
+		[[nodiscard]]
+		ERenderBlendOperation GetColorBlendOperation() const { return mColorBlendOperation; }
+
+		[[nodiscard]]
+		ERenderBlend GetSourceAlphaBlend() const { return mSourceAlphaBlend; }
+
+		[[nodiscard]]
+		ERenderBlend GetDestinationAlphaBlend() const { return mDestAlphaBlend; }
+
+		[[nodiscard]]
+		ERenderBlendOperation GetAlphaBlendOperation() const { return mAlphaBlendOperation; }
+		
+		[[nodiscard]]
+		f32 GetBlendFactor() const { return mBlendFactor; }
 
 	private:
 
@@ -29,9 +52,10 @@ namespace Fluent
 		ERenderBlend mSourceBlend;
 		ERenderBlend mDestBlend;
 		ERenderBlendOperation mColorBlendOperation;
-		ERenderBlend mSourceBlendAlpha;
-		ERenderBlend mDestBlendAlpha;
+		ERenderBlend mSourceAlphaBlend;
+		ERenderBlend mDestAlphaBlend;
 		ERenderBlendOperation mAlphaBlendOperation;
+		f32 mBlendFactor = 0.0f;
 		
 	};
 	

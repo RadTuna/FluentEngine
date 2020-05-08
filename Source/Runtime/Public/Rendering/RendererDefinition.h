@@ -69,14 +69,15 @@ namespace Fluent
 		};
 	}
 
-	constexpr u32 BlendStateTypesNum = 3;
+	constexpr u32 BlendStateTypesNum = 4;
 	namespace EBlendStateType
 	{
 		enum Enum : u32
 		{
 			Disable,
 			Enable,
-			ColorAdd
+			ColorAdd,
+			Bloom
 		};
 	}
 

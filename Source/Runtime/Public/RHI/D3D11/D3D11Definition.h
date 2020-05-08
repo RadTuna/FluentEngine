@@ -10,7 +10,7 @@
 #pragma comment(lib, "d3dcompiler.lib")
 
 #include <d3d11_1.h>
-#include <Windows.h>
+#include <vector>
 
 
 #define D3D11Release(Object) \

@@ -140,7 +140,7 @@ namespace Fluent
 		f32 tempY = 0.0f;
 		if (std::abs(intermediateY) >= 1.0f)
 		{
-			tempY = std::copysignf(PI * 0.5f, intermediateY);
+			tempY = std::copysignf(Math::PI * 0.5f, intermediateY);
 		}
 		else
 		{
@@ -159,7 +159,7 @@ namespace Fluent
 		f32 tempY = 0.0f;
 		if (std::abs(intermediateY) >= 1.0f)
 		{
-			tempY = std::copysignf(PI * 0.5f, intermediateY);
+			tempY = std::copysignf(Math::PI * 0.5f, intermediateY);
 		}
 		else
 		{

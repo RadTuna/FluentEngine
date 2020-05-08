@@ -13,7 +13,8 @@ namespace Fluent
 
 	BlendState::BlendState(const std::shared_ptr<Device>& device, bool bIsEnable, 
 		ERenderBlend srcBlend, ERenderBlend destBlend, ERenderBlendOperation blendOp, 
-		ERenderBlend srcBlendAlpha, ERenderBlend destBlendAlpha, ERenderBlendOperation blendOpAlpha) noexcept
+		ERenderBlend srcBlendAlpha, ERenderBlend destBlendAlpha, ERenderBlendOperation blendOpAlpha,
+		f32 blendFactor) noexcept
 	{
 		Assert(device && device->IsInitialized());
 
@@ -21,9 +22,10 @@ namespace Fluent
 		mSourceBlend = srcBlend;
 		mDestBlend = destBlend;
 		mColorBlendOperation = blendOp;
-		mSourceBlendAlpha = srcBlendAlpha;
-		mDestBlendAlpha = destBlendAlpha;
+		mSourceAlphaBlend = srcBlendAlpha;
+		mDestAlphaBlend = destBlendAlpha;
 		mAlphaBlendOperation = blendOpAlpha;
+		mBlendFactor = blendFactor;
 
 		D3D11_BLEND_DESC blendDesc = { 0, };
 		blendDesc.AlphaToCoverageEnable = false;

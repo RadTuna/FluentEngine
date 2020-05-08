@@ -1,4 +1,5 @@
 
+#include "Math/Math.h"
 #include "Math/Matrix.h"
 #include "Math/Vector.h"
 #include "Math/Matrix4x4.h"
@@ -178,7 +179,7 @@ namespace Fluent
 	Matrix SIMD_CALL Matrix::CreatePerspectiveLH(f32 width, f32 height, f32 near, f32 far)
 	{
 		const f32 aspectRatio = height / width;
-		const f32 fov = atan2(height * 0.5f, near) * 2.0f;
+		const f32 fov = std::atan2f(height * 0.5f, near) * 2.0f;
 
 		return CreatePerspectiveFovLH(fov, aspectRatio, near, far);
 	}

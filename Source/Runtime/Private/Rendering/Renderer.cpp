@@ -12,8 +12,8 @@
 #include "RHI/DepthStencilState.h"
 #include "RHI/RasterizerState.h"
 #include "RHI/Texture2D.h"
-#include "RHI/PipelineState.h"
 #include "RHI/BlendState.h"
+#include "RHI/CommandList.h"
 
 // temp include
 #include "Math/Vector.h"
@@ -164,19 +164,23 @@ namespace Fluent
 		
 		mBlendStates[EBlendStateType::Disable] = std::make_shared<BlendState>(mDevice, false,
 			ERenderBlend::SrcAlpha, ERenderBlend::InvSrcAlpha, ERenderBlendOperation::Add,
-			ERenderBlend::One, ERenderBlend::One, ERenderBlendOperation::Add);
+			ERenderBlend::One, ERenderBlend::One, ERenderBlendOperation::Add, 0.0f);
 		mBlendStates[EBlendStateType::Enable] = std::make_shared<BlendState>(mDevice, true,
 			ERenderBlend::SrcAlpha, ERenderBlend::InvSrcAlpha, ERenderBlendOperation::Add,
-			ERenderBlend::One, ERenderBlend::One, ERenderBlendOperation::Add);
+			ERenderBlend::One, ERenderBlend::One, ERenderBlendOperation::Add, 0.0f);
 		mBlendStates[EBlendStateType::ColorAdd] = std::make_shared<BlendState>(mDevice, true,
 			ERenderBlend::One, ERenderBlend::One, ERenderBlendOperation::Add,
-			ERenderBlend::One, ERenderBlend::One, ERenderBlendOperation::Add);
+			ERenderBlend::One, ERenderBlend::One, ERenderBlendOperation::Add, 0.0f);
+		mBlendStates[EBlendStateType::Bloom] = std::make_shared<BlendState>(mDevice, true,
+			ERenderBlend::SrcAlpha, ERenderBlend::InvSrcAlpha, ERenderBlendOperation::Add,
+			ERenderBlend::One, ERenderBlend::One, ERenderBlendOperation::Add, 0.5f);
 	}
 
 	void Renderer::CreateCommandLists()
 	{
 		// temp // only single thread
-		mCommandLists.emplace_back(mDevice);
+		std::shared_ptr<CommandList> newCommandList = std::make_shared<CommandList>(mDevice);
+		mCommandLists.emplace_back(newCommandList);
 	}
 
 	void Renderer::UpdateFrameBuffer(const std::shared_ptr<CommandList>& commandList)
@@ -193,8 +197,8 @@ namespace Fluent
 		const Vector upVector = Vector::SetVector4(0.0f, 1.0f, 0.0f, 0.0f);
 		const Matrix viewMatrix = Matrix::CreateLookAtLH(cameraPosition, targetPosition, upVector);
 		const Matrix projMatrix = Matrix::CreatePerspectiveLH(
-			mStorage->mWindowData.ScreenWidth,
-			mStorage->mWindowData.ScreenHeight,
+			static_cast<f32>(mStorage->mWindowData.ScreenWidth),
+			static_cast<f32>(mStorage->mWindowData.ScreenHeight),
 			cameraNear, cameraFar);
 		// temp
 		
@@ -221,6 +225,7 @@ namespace Fluent
 
 	void Renderer::PassComposition(const std::shared_ptr<CommandList>& commandList)
 	{
+		// pass
 	}
 	
 }
