@@ -118,6 +118,61 @@ namespace Fluent
 		}
 	}
 
+	static const D3D11_FILTER_TYPE FilterTypeMap[] =
+	{
+		D3D11_FILTER_TYPE_POINT,
+		D3D11_FILTER_TYPE_LINEAR
+	};
+	inline D3D11_FILTER_TYPE ToD3D11FilterType(ESamplerFilter filter)
+	{
+		const u32 index = static_cast<u32>(filter);
+		return FilterTypeMap[index];
+	}
+
+	inline D3D11_FILTER ToD3D11Filter(ESamplerFilter min, ESamplerFilter mag, ESamplerFilter mip, bool bAnisotropy, bool bComparison)
+	{
+		D3D11_FILTER_REDUCTION_TYPE reduction = bComparison ? D3D11_FILTER_REDUCTION_TYPE_COMPARISON : D3D11_FILTER_REDUCTION_TYPE_STANDARD;
+		if (bAnisotropy)
+		{
+			return D3D11_ENCODE_ANISOTROPIC_FILTER(reduction);
+		}
+		else
+		{
+			return D3D11_ENCODE_BASIC_FILTER(ToD3D11FilterType(min), ToD3D11FilterType(mag), ToD3D11FilterType(mip), reduction);
+		}
+	}
+
+	static const D3D11_TEXTURE_ADDRESS_MODE AddressModeMap[] =
+	{
+		D3D11_TEXTURE_ADDRESS_WRAP,
+		D3D11_TEXTURE_ADDRESS_MIRROR,
+		D3D11_TEXTURE_ADDRESS_CLAMP,
+		D3D11_TEXTURE_ADDRESS_BORDER,
+		D3D11_TEXTURE_ADDRESS_MIRROR_ONCE
+	};
+	inline D3D11_TEXTURE_ADDRESS_MODE ToD3D11AddressMode(ESamplerAddressMode addressMode)
+	{
+		const u32 index = static_cast<u32>(addressMode);
+		return AddressModeMap[index];
+	}
+
+	static const D3D11_COMPARISON_FUNC ComparisonFunctionMap[] =
+	{
+		D3D11_COMPARISON_NEVER,
+		D3D11_COMPARISON_LESS,
+		D3D11_COMPARISON_EQUAL,
+		D3D11_COMPARISON_LESS_EQUAL,
+		D3D11_COMPARISON_GREATER,
+		D3D11_COMPARISON_NOT_EQUAL,
+		D3D11_COMPARISON_GREATER_EQUAL,
+		D3D11_COMPARISON_ALWAYS
+	};
+	inline D3D11_COMPARISON_FUNC ToD3D11ComparisonFunction(ESamplerComparisonFunction comparison)
+	{
+		const u32 index = static_cast<u32>(comparison);
+		return ComparisonFunctionMap[index];
+	}
+	
 }
 
 #endif

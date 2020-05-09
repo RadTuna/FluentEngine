@@ -67,7 +67,6 @@ namespace Fluent
 	SwapChain::~SwapChain() noexcept
 	{
 		D3D11Release(mRenderTargetView);
-
 		D3D11Release(mSwapChain);
 	}
 

@@ -45,9 +45,7 @@ namespace Fluent
 	Device::~Device() noexcept
 	{
 		D3D11Release(mDeviceContext);
-
 		D3D11Release(mDevice);
-
 		D3D11Release(mAdapter);
 	}
 

@@ -38,8 +38,12 @@ namespace Fluent
 		void CreateRasterizerStates();
 		void CreateRenderTargets();
 		void CreateBlendState();
+		void CreateSampler();
 		void CreateCommandLists();
 
+		// Update current viewport
+		void UpdateViewport();
+		
 		// Update constant buffers
 		void UpdateFrameBuffer(const std::shared_ptr<CommandList>& commandList);
 		
@@ -56,23 +60,17 @@ namespace Fluent
 		// CommandLists // SingleThread == 1
 		std::vector<std::shared_ptr<CommandList>> mCommandLists;
 		
-		// RenderTargets
 		std::vector<std::shared_ptr<Texture2D>> mRenderTargets;
-
-		// Shaders
+		std::shared_ptr<Texture2D> mDepthStencil;
 		std::vector<std::shared_ptr<Shader>> mShaders;
-
-		// Depth-stencil state
 		std::vector<std::shared_ptr<DepthStencilState>> mDepthStencilStates;
-
-		// Rasterizer state
 		std::vector<std::shared_ptr<RasterizerState>> mRasterizerStates;
-
-		// Constant buffer
 		std::vector<std::shared_ptr<ConstantBuffer>> mConstantBuffers;
-
-		// Blend state
 		std::vector<std::shared_ptr<BlendState>> mBlendStates;
+		std::vector<std::shared_ptr<Sampler>> mSamplers;
+
+		// Current viewport
+		Viewport mViewport;
 
 		// Other
 		bool mbIsInitialized = false;

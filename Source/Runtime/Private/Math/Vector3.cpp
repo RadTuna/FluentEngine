@@ -7,6 +7,11 @@
 namespace Fluent
 {
 
+	const Vector3 Vector3::Zero = Vector3(0.0f, 0.0f, 0.0f);
+	const Vector3 Vector3::OneX = Vector3(1.0f, 0.0f, 0.0f);
+	const Vector3 Vector3::OneY = Vector3(0.0f, 1.0f, 0.0f);
+	const Vector3 Vector3::OneZ = Vector3(0.0f, 0.0f, 1.0f);
+	
 	Vector3 Vector3::operator+(const Vector3& other) const
 	{
 		const f32 tempX = mX + other.mX;

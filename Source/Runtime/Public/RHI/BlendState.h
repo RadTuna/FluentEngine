@@ -22,7 +22,7 @@ namespace Fluent
 			ERenderBlend srcBlend, ERenderBlend destBlend, ERenderBlendOperation blendOp,
 			ERenderBlend srcBlendAlpha, ERenderBlend destBlendAlpha, ERenderBlendOperation blendOpAlpha,
 			f32 blendFactor) noexcept;
-		virtual ~BlendState() = default;
+		virtual ~BlendState() noexcept;
 
 		
 		[[nodiscard]]

@@ -28,6 +28,7 @@ namespace Fluent
 	class VertexBuffer;
 	class PipelineState;
 	class BlendState;
+	class Sampler;
 	struct Viewport;
 
 
@@ -118,6 +119,33 @@ namespace Fluent
 		ReverseSubtract,
 		Min,
 		Max
+	};
+
+	enum class ESamplerFilter : u32
+	{
+		Point = 0,
+		Linear
+	};
+
+	enum class ESamplerAddressMode : u32
+	{
+		Wrap = 0,
+		Mirror,
+		Clamp,
+		Border,
+		MirrorOnce
+	};
+
+	enum class ESamplerComparisonFunction : u32
+	{
+		Never = 0,
+		Less,
+		Equal,
+		LessEqual,
+		Greater,
+		NotEqual,
+		GreaterEqual,
+		Always
 	};
 
 

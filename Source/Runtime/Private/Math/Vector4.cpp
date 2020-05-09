@@ -5,6 +5,11 @@
 
 namespace Fluent
 {
+
+	const Vector4 Vector4::Zero = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
+	const Vector4 Vector4::OneX = Vector4(1.0f, 0.0f, 0.0f, 0.0f);
+	const Vector4 Vector4::OneY = Vector4(0.0f, 1.0f, 0.0f, 0.0f);
+	const Vector4 Vector4::OneZ = Vector4(0.0f, 0.0f, 1.0f, 0.0f);
 	
 	Vector4 Vector4::operator+(const Vector4& other) const
 	{

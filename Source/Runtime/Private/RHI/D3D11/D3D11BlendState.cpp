@@ -47,7 +47,10 @@ namespace Fluent
 		
 	}
 
-	
+	BlendState::~BlendState() noexcept
+	{
+		D3D11Release(mBlendState);
+	}
 }
 
 #endif

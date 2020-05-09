@@ -40,6 +40,10 @@ namespace Fluent
 		static Vector2 Normalize(const Vector2& other);
 		void Normalize();
 
+		static const Vector2 Zero;
+		static const Vector2 OneX;
+		static const Vector2 OneY;
+		
 	};
 
 }

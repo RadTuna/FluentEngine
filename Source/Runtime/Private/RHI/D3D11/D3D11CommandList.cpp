@@ -14,6 +14,7 @@
 #include "RHI/DepthStencilState.h"
 #include "RHI/RasterizerState.h"
 #include "RHI/BlendState.h"
+#include "Math/Vector4.h"
 
 
 namespace Fluent
@@ -29,12 +30,45 @@ namespace Fluent
 		Assert(SUCCEEDED(result));
 	}
 
+	CommandList::~CommandList() noexcept
+	{
+		D3D11Release(mDeferredContext);
+		D3D11Release(mCommandList);
+	}
+
 	void CommandList::Execute()
 	{
 		Assert(mDeviceContext != nullptr);
 
 		mDeviceContext->ExecuteCommandList(mCommandList, false);
 		D3D11Release(mCommandList);
+	}
+
+	void CommandList::ClearRenderTargetAndDepth(std::vector<Vector4>& clearColor, f32 clearDepth) const
+	{
+		const u32 searchNum = static_cast<u32>(clearColor.size());
+
+		std::vector<ID3D11RenderTargetView*> renderTargets;
+		renderTargets.reserve(searchNum);
+		ID3D11DepthStencilView* depthStencil;
+		
+		mDeferredContext->OMGetRenderTargets(searchNum, renderTargets.data(), &depthStencil);
+
+		for (u32 index = 0; index < searchNum; ++index)
+		{
+			if (renderTargets[index] != nullptr)
+			{
+				f32 initColor[4] = { clearColor[index].mX, clearColor[index].mY, clearColor[index].mZ, clearColor[index].mW };
+				mDeferredContext->ClearRenderTargetView(renderTargets[index], initColor);
+				D3D11Release(renderTargets[index]);
+			}
+		}
+
+		if (depthStencil != nullptr)
+		{
+			mDeferredContext->ClearDepthStencilView(depthStencil, D3D11_CLEAR_DEPTH, clearDepth, 0);
+			D3D11Release(depthStencil);
+		}
 	}
 
 	void CommandList::Draw(u32 vertexCount, u32 vertexOffset) const

@@ -9,7 +9,7 @@ namespace Fluent
 
 	// ========== Renderer enumerate declaration ==========
 
-	constexpr u32 RenderTargetTypesNum = 5;
+	constexpr u32 RenderTargetTypesNum = 4;
 	namespace ERenderTargetType
 	{
 		enum Enum : u32
@@ -18,7 +18,6 @@ namespace Fluent
 			Diffuse = 1,
 			Specular = 2,
 			Normal = 3,
-			Depth = 4
 		};
 	}
 
@@ -78,6 +77,23 @@ namespace Fluent
 			Enable,
 			ColorAdd,
 			Bloom
+		};
+	}
+
+	constexpr u32 SamplerTypesNum = 9;
+	namespace ESamplerType
+	{
+		enum Enum : u32
+		{
+			PointClamp = 0,
+			PointWrap,
+			BilinearClamp,
+			BilinearWrap,
+			TrilinearClamp,
+			TrilinearWrap,
+			AnisotropyClamp,
+			AnisotropyWrap,
+			CompareDepth,
 		};
 	}
 

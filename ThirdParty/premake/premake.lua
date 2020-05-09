@@ -24,10 +24,12 @@ GRAPHICS_API			= _ARGS[2]
 SOLUTION_NAME			= "FluentEngine"
 EDITOR_NAME			= "Editor"
 RUNTIME_NAME			= "Runtime"
+SHADER_NAME			= "Shader"
 TARGET_NAME			= "FluentEngine" -- Name of executable
 DEBUG_FORMAT			= "c7"
 EDITOR_DIR			= ROOT_DIR .. "/Source/" .. EDITOR_NAME
 RUNTIME_DIR			= ROOT_DIR .. "/Source/" .. RUNTIME_NAME
+SHADER_DIR			= ROOT_DIR .. "/Shaders/"
 INTERMEDIATE_DIR			= ROOT_DIR .. "/Intermediate"
 PROJECT_DIR			= INTERMEDIATE_DIR .. "/Projects"
 TARGET_DIR_RELEASE  		= ROOT_DIR .. "/Binaries/Release"
@@ -73,7 +75,7 @@ project (RUNTIME_NAME)
 		RUNTIME_DIR .. "/**.h",
 		RUNTIME_DIR .. "/**.cpp",
 		RUNTIME_DIR .. "/**.hpp",
-		RUNTIME_DIR .. "/**.inl"
+		RUNTIME_DIR .. "/**.inl",
 	}
 
 	-- Includes
@@ -135,3 +137,20 @@ project (EDITOR_NAME)
 	filter "configurations:Release"
 		targetdir (TARGET_DIR_RELEASE)
 		debugdir (TARGET_DIR_RELEASE)
+
+-- Shader
+project (SHADER_NAME)
+	location (PROJECT_DIR)
+	objdir (INTERMEDIATE_DIR)
+	kind "None"
+
+	-- Files
+	files { SHADER_DIR .."/**.hlsl" }
+
+	-- Includes
+	includedirs { (SHADER_DIR) }
+	includedirs { (SHADER_DIR) .. "/Public" }
+
+	-- exclude files
+	filter "files:/**.hlsl"
+  		flags { "ExcludeFromBuild" }

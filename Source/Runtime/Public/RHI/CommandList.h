@@ -21,10 +21,12 @@ namespace Fluent
 	public:
 
 		explicit CommandList(const std::shared_ptr<Device>& device) noexcept;
-		~CommandList() = default;
+		virtual ~CommandList() noexcept;
 
 
 		void Execute();
+
+		void ClearRenderTargetAndDepth(std::vector<Vector4>& clearColor, f32 clearDepth) const;
 
 		void Draw(u32 vertexCount, u32 vertexOffset = 0) const;
 		void DrawIndexed(u32 indexCount, u32 indexOffset = 0, u32 vertexOffset = 0) const;

@@ -49,6 +49,11 @@ namespace Fluent
 		static Vector4 Normalize(const Vector4 & other);
 		void Normalize();
 
+		static const Vector4 Zero;
+		static const Vector4 OneX;
+		static const Vector4 OneY;
+		static const Vector4 OneZ;
+
 	};
 
 }

@@ -6,6 +6,10 @@
 namespace Fluent
 {
 
+	const Vector2 Vector2::Zero = Vector2(0.0f, 0.0f);
+	const Vector2 Vector2::OneX = Vector2(1.0f, 0.0f);
+	const Vector2 Vector2::OneY = Vector2(0.0f, 1.0f);
+	
 	Vector2 Vector2::operator+(const Vector2& other) const
 	{
 		const f32 tempX = mX + other.mX;

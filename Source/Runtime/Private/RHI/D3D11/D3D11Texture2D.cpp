@@ -48,20 +48,9 @@ namespace Fluent
 
 	Texture2D::~Texture2D() noexcept
 	{
-		if (mShaderResourceView)
-		{
-			D3D11Release(mShaderResourceView);
-		}
-
-		if (mRenderTargetView)
-		{
-			D3D11Release(mRenderTargetView);
-		}
-
-		if (mDepthStencilView)
-		{
-			D3D11Release(mDepthStencilView);
-		}
+		D3D11Release(mShaderResourceView);
+		D3D11Release(mRenderTargetView);
+		D3D11Release(mDepthStencilView);
 	}
 
 	bool Texture2D::CreateTexture(const std::vector<std::vector<u8>>& data, u32 arraySize)
