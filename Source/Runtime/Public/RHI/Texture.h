@@ -46,8 +46,8 @@ namespace Fluent
 		
 	protected:
 
-		virtual bool CreateTexture(const std::vector<std::vector<u8>>& data, u32 arraySize) { return false; }
-		virtual bool CreateEmptyTexture() { return false; }
+		virtual void CreateTexture(const std::vector<std::vector<u8>>& data, u32 arraySize) = 0;
+		virtual void CreateEmptyTexture() = 0;
 
 	protected:
 

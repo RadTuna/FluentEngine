@@ -10,6 +10,9 @@
 #define TXT(String) String
 #endif
 
+#define LOG_CONSOLE_STRING(String) printf("%s\n", String.c_str())
+#define LOG_CONSOLE_FORMAT(Format, ...) printf(Format, __VA_ARGS__)
+
 #define REFLECTION_CLASS(Class, SuperClass) \
 	public: \
 		using Super = SuperClass; \

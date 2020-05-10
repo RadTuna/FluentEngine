@@ -15,6 +15,7 @@
 #include "RHI/BlendState.h"
 #include "RHI/CommandList.h"
 #include "RHI/Sampler.h"
+#include "Rendering/GeometryGenerator.h"
 
 // temp include
 #include "Math/Vector.h"
@@ -47,6 +48,7 @@ namespace Fluent
 			return false;
 		}
 
+		// Creation resources
 		CreateConstantBuffers();
 		CreateShaders();
 		CreateDepthStencilStates();
@@ -55,7 +57,11 @@ namespace Fluent
 		CreateBlendState();
 		CreateSampler();
 		CreateCommandLists();
+		CreateRenderResource();
 
+		// Pre-setup render states
+		SetupGlobalConstantBufferAndSampler();
+		
 		if (!mbIsInitialized)
 		{
 			mbIsInitialized = true;
@@ -80,9 +86,9 @@ namespace Fluent
 
 		UpdateViewport();
 		UpdateFrameBuffer(commandList);
-		PassGBuffer(commandList);
-		PassComposition(commandList);
-		
+		PassSimpleQuad(commandList);
+		// PassComposition(commandList);
+
 		mSwapChain->Present();
 
 		mbIsRendering = false;
@@ -92,29 +98,32 @@ namespace Fluent
 	void Renderer::CreateConstantBuffers()
 	{
 		mConstantBuffers.resize(ConstantBufferTypesNum);
-		
+
+		bool result = true;
 		mConstantBuffers[EConstantBufferType::FrameBuffer] = std::make_shared<ConstantBuffer>(mDevice);
-		mConstantBuffers[EConstantBufferType::FrameBuffer]->CreateBuffer<BufferFrame>();
+		result &= mConstantBuffers[EConstantBufferType::FrameBuffer]->CreateBuffer<BufferFrame>();
+
+		Assert(result);
 	}
 
 	void Renderer::CreateShaders()
 	{
 		mShaders.resize(RenderShaderTypesNum);
 
-		mShaders[ERenderShaderType::VS_Common] = std::make_shared<Shader>(mDevice, EShaderType::Vertex);
-		mShaders[ERenderShaderType::VS_Common]->Compile<VertexPos>("TempPath");
+		mShaders[ERenderShaderType::VS_Quad] = std::make_shared<Shader>(mDevice, EShaderType::Vertex);
+		mShaders[ERenderShaderType::VS_Quad]->Compile<VertexPosTex>("../../Shaders/Quad.hlsl");
 
-		mShaders[ERenderShaderType::PS_Common] = std::make_shared<Shader>(mDevice, EShaderType::Pixel);
-		mShaders[ERenderShaderType::PS_Common]->Compile<VertexPos>("TempPath");
+		mShaders[ERenderShaderType::PS_Quad] = std::make_shared<Shader>(mDevice, EShaderType::Pixel);
+		mShaders[ERenderShaderType::PS_Quad]->Compile<VertexPosTex>("../../Shaders/Quad.hlsl");
 	}
 
 	void Renderer::CreateDepthStencilStates()
 	{
 		mDepthStencilStates.resize(DepthStencilStateTypesNum);
-
-		mDepthStencilStates[EDepthStencilStateType::Enable_Write] = std::make_shared<DepthStencilState>(mDevice, true, true, false);
-		mDepthStencilStates[EDepthStencilStateType::Enable_NoWrite] = std::make_shared<DepthStencilState>(mDevice, true, false, false);
-		mDepthStencilStates[EDepthStencilStateType::Disable] = std::make_shared<DepthStencilState>(mDevice, false, false, false);
+		
+		mDepthStencilStates[EDepthStencilStateType::Enable_Write] = std::make_shared<DepthStencilState>(mDevice, true, true, EComparisonFunction::LessEqual, false);
+		mDepthStencilStates[EDepthStencilStateType::Enable_NoWrite] = std::make_shared<DepthStencilState>(mDevice, true, false, EComparisonFunction::LessEqual, false);
+		mDepthStencilStates[EDepthStencilStateType::Disable] = std::make_shared<DepthStencilState>(mDevice, false, false, EComparisonFunction::LessEqual, false);
 	}
 
 	void Renderer::CreateRasterizerStates()
@@ -159,10 +168,7 @@ namespace Fluent
 		mRenderTargets[ERenderTargetType::Albedo] =
 			std::make_shared<Texture2D>(mDevice, width, height, EPixelFormat::R8G8B8A8_Unorm);
 		
-		mRenderTargets[ERenderTargetType::Diffuse] =
-			std::make_shared<Texture2D>(mDevice, width, height, EPixelFormat::R8G8B8A8_Unorm);
-		
-		mRenderTargets[ERenderTargetType::Specular] =
+		mRenderTargets[ERenderTargetType::Material] =
 			std::make_shared<Texture2D>(mDevice, width, height, EPixelFormat::R8G8B8A8_Unorm);
 		
 		mRenderTargets[ERenderTargetType::Normal] =
@@ -199,39 +205,39 @@ namespace Fluent
 
 		mSamplers[ESamplerType::PointClamp] = std::make_shared<Sampler>(mDevice,
 			ESamplerFilter::Point, ESamplerFilter::Point, ESamplerFilter::Point,
-			ESamplerAddressMode::Clamp, ESamplerComparisonFunction::Always, false, false);
+			ESamplerAddressMode::Clamp, EComparisonFunction::Always, false, false);
 
 		mSamplers[ESamplerType::PointWrap] = std::make_shared<Sampler>(mDevice,
 			ESamplerFilter::Point, ESamplerFilter::Point, ESamplerFilter::Point,
-			ESamplerAddressMode::Wrap, ESamplerComparisonFunction::Always, false, false);
+			ESamplerAddressMode::Wrap, EComparisonFunction::Always, false, false);
 
 		mSamplers[ESamplerType::BilinearClamp] = std::make_shared<Sampler>(mDevice,
 			ESamplerFilter::Linear, ESamplerFilter::Linear, ESamplerFilter::Point,
-			ESamplerAddressMode::Clamp, ESamplerComparisonFunction::Always, false, false);
+			ESamplerAddressMode::Clamp, EComparisonFunction::Always, false, false);
 
 		mSamplers[ESamplerType::BilinearWrap] = std::make_shared<Sampler>(mDevice,
 			ESamplerFilter::Linear, ESamplerFilter::Linear, ESamplerFilter::Point,
-			ESamplerAddressMode::Wrap, ESamplerComparisonFunction::Always, false, false);
+			ESamplerAddressMode::Wrap, EComparisonFunction::Always, false, false);
 
 		mSamplers[ESamplerType::TrilinearClamp] = std::make_shared<Sampler>(mDevice,
 			ESamplerFilter::Linear, ESamplerFilter::Linear, ESamplerFilter::Linear,
-			ESamplerAddressMode::Clamp, ESamplerComparisonFunction::Always, false, false);
+			ESamplerAddressMode::Clamp, EComparisonFunction::Always, false, false);
 
 		mSamplers[ESamplerType::TrilinearWrap] = std::make_shared<Sampler>(mDevice,
 			ESamplerFilter::Linear, ESamplerFilter::Linear, ESamplerFilter::Linear,
-			ESamplerAddressMode::Wrap, ESamplerComparisonFunction::Always, false, false);
+			ESamplerAddressMode::Wrap, EComparisonFunction::Always, false, false);
 
 		mSamplers[ESamplerType::AnisotropyClamp] = std::make_shared<Sampler>(mDevice,
 			ESamplerFilter::Linear, ESamplerFilter::Linear, ESamplerFilter::Linear,
-			ESamplerAddressMode::Clamp, ESamplerComparisonFunction::Always, true, false);
+			ESamplerAddressMode::Clamp, EComparisonFunction::Always, true, false);
 
 		mSamplers[ESamplerType::AnisotropyWrap] = std::make_shared<Sampler>(mDevice,
 			ESamplerFilter::Linear, ESamplerFilter::Linear, ESamplerFilter::Linear,
-			ESamplerAddressMode::Wrap, ESamplerComparisonFunction::Always, true, false);
+			ESamplerAddressMode::Wrap, EComparisonFunction::Always, true, false);
 
 		mSamplers[ESamplerType::CompareDepth] = std::make_shared<Sampler>(mDevice,
 			ESamplerFilter::Linear, ESamplerFilter::Linear, ESamplerFilter::Point,
-			ESamplerAddressMode::Clamp, ESamplerComparisonFunction::Greater, false, true);
+			ESamplerAddressMode::Clamp, EComparisonFunction::Greater, false, true);
 	}
 
 	void Renderer::CreateCommandLists()
@@ -239,6 +245,31 @@ namespace Fluent
 		// temp // only single thread
 		std::shared_ptr<CommandList> newCommandList = std::make_shared<CommandList>(mDevice);
 		mCommandLists.emplace_back(newCommandList);
+	}
+
+	void Renderer::CreateRenderResource()
+	{
+		const f32 screenWidth = static_cast<f32>(mStorage->mWindowData.ScreenWidth);
+		const f32 screenHeight = static_cast<f32>(mStorage->mWindowData.ScreenHeight);
+		
+		mQuadMesh = GeometryGenerator::CreateQuad(0.0f, 0.0f, screenWidth, screenHeight, 0.0f);
+	}
+
+	void Renderer::SetupGlobalConstantBufferAndSampler()
+	{
+		// temp
+		mCommandLists[MAIN_THREAD_INDEX]->SetConstantBuffer(0, EShaderType::Vertex, mConstantBuffers[EConstantBufferType::FrameBuffer]);
+		mCommandLists[MAIN_THREAD_INDEX]->SetConstantBuffer(0, EShaderType::Pixel, mConstantBuffers[EConstantBufferType::FrameBuffer]);
+
+		mCommandLists[MAIN_THREAD_INDEX]->SetSampler(0, mSamplers[ESamplerType::PointClamp]);
+		mCommandLists[MAIN_THREAD_INDEX]->SetSampler(1, mSamplers[ESamplerType::PointWrap]);
+		mCommandLists[MAIN_THREAD_INDEX]->SetSampler(2, mSamplers[ESamplerType::BilinearClamp]);
+		mCommandLists[MAIN_THREAD_INDEX]->SetSampler(3, mSamplers[ESamplerType::BilinearWrap]);
+		mCommandLists[MAIN_THREAD_INDEX]->SetSampler(4, mSamplers[ESamplerType::TrilinearClamp]);
+		mCommandLists[MAIN_THREAD_INDEX]->SetSampler(5, mSamplers[ESamplerType::TrilinearWrap]);
+		mCommandLists[MAIN_THREAD_INDEX]->SetSampler(6, mSamplers[ESamplerType::AnisotropyClamp]);
+		mCommandLists[MAIN_THREAD_INDEX]->SetSampler(7, mSamplers[ESamplerType::AnisotropyWrap]);
+		mCommandLists[MAIN_THREAD_INDEX]->SetSampler(8, mSamplers[ESamplerType::CompareDepth]);
 	}
 
 	void Renderer::UpdateViewport()
@@ -283,27 +314,38 @@ namespace Fluent
 		mConstantBuffers[EConstantBufferType::FrameBuffer]->Unmap();
 	}
 
-	void Renderer::PassGBuffer(const std::shared_ptr<CommandList>& commandList)
+	void Renderer::PassSimpleQuad(const std::shared_ptr<CommandList>& commandList)
 	{
 		// Set render state
-		commandList->SetVertexShader(mShaders[ERenderShaderType::VS_Common]);
-		commandList->SetPixelShader(mShaders[ERenderShaderType::PS_Common]);
+		commandList->SetVertexShader(mShaders[ERenderShaderType::VS_Quad]);
+		commandList->SetPixelShader(mShaders[ERenderShaderType::PS_Quad]);
 		commandList->SetBlendState(mBlendStates[EBlendStateType::Disable]);
 		commandList->SetRasterizerState(mRasterizerStates[ERasterizerStateType::CullBack_Solid]);
 		commandList->SetDepthStencilState(mDepthStencilStates[EDepthStencilStateType::Enable_Write]);
-		commandList->SetRenderTarget(mRenderTargets, mDepthStencil);
+		// commandList->SetRenderTargets(mRenderTargets, mDepthStencil);
+		commandList->SetSwapChainBuffer(mSwapChain, mDepthStencil);
 		commandList->SetViewport(mViewport);
 		commandList->SetPrimitiveTopology(EPrimitiveTopology::TriangleList);
 
 		// Clear render targets and depth-stencil
-		enum { RENDER_TARGET_CLEAR_CAPACITY = 4 };
 		std::vector<Vector4> renderTargetClear;
-		renderTargetClear.reserve(RENDER_TARGET_CLEAR_CAPACITY);
-		for (u32 index = 0; index < RENDER_TARGET_CLEAR_CAPACITY; ++index)
+		renderTargetClear.reserve(RenderTargetTypesNum);
+		for (u32 index = 0; index < RenderTargetTypesNum; ++index)
 		{
-			renderTargetClear.emplace_back(Vector4::Zero);
+			renderTargetClear.emplace_back(Vector4::OneZ);
 		}
 		commandList->ClearRenderTargetAndDepth(renderTargetClear, 1.0f);
+
+
+		std::shared_ptr<VertexBuffer> tempVertexBuffer = std::make_shared<VertexBuffer>(mDevice);
+		std::shared_ptr<IndexBuffer> tempIndexBuffer = std::make_shared<IndexBuffer>(mDevice);
+		tempVertexBuffer->CreateBuffer(mQuadMesh.GetVertices());
+		tempIndexBuffer->CreateBuffer(mQuadMesh.GetVertices());
+		
+		commandList->SetVertexBuffer(tempVertexBuffer);
+		commandList->SetIndexBuffer(tempIndexBuffer);
+		commandList->DrawIndexed(mQuadMesh.GetIndicesNum());
+		commandList->Execute();
 	}
 
 	void Renderer::PassComposition(const std::shared_ptr<CommandList>& commandList)

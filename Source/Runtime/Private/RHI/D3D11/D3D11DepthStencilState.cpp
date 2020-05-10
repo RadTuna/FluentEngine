@@ -15,6 +15,7 @@ namespace Fluent
 		const std::shared_ptr<Device>& device,
 		bool bUseDepthTest,
 		bool bUseDepthWrite,
+		EComparisonFunction depthComparison,
 		bool bUseStencil) noexcept
 	{
 		Assert(device && device->IsInitialized());
@@ -28,6 +29,7 @@ namespace Fluent
 		depthDesc.DepthEnable = mbUseDepthTest;
 		depthDesc.DepthWriteMask = mbUseDepthWrite ? D3D11_DEPTH_WRITE_MASK_ALL : D3D11_DEPTH_WRITE_MASK_ZERO;
 		depthDesc.StencilEnable = mbUseStencil;
+		depthDesc.DepthFunc = ToD3D11ComparisonFunction(depthComparison);
 		depthDesc.StencilReadMask = D3D11_DEFAULT_STENCIL_READ_MASK;
 		depthDesc.StencilWriteMask = D3D11_DEFAULT_STENCIL_WRITE_MASK;
 		depthDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_KEEP;

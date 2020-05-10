@@ -22,6 +22,7 @@ namespace Fluent
 			const std::shared_ptr<Device>& device,
 			bool bUseDepthTest,
 			bool bUseDepthWrite,
+			EComparisonFunction depthComparison,
 			bool bUseStencil
 			) noexcept;
 
@@ -39,6 +40,8 @@ namespace Fluent
 		bool mbUseDepthTest = true;
 		bool mbUseDepthWrite = true;
 		bool mbUseStencil = false;
+		EComparisonFunction mDepthComparisonFunction = EComparisonFunction::LessEqual;
+		
 		
 	};
 	

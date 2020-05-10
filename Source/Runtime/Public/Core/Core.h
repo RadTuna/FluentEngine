@@ -5,6 +5,7 @@
 #include <string>
 #include <utility>
 #include <cstdint>
+#include <cstdio>
 
 // Engine Include
 #include "TypeDefinition.h"

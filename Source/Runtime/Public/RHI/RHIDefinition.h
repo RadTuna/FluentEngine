@@ -24,7 +24,6 @@ namespace Fluent
 	class Texture;
 	class Texture2D;
 	class Texture3D;
-	class Vertex;
 	class VertexBuffer;
 	class PipelineState;
 	class BlendState;
@@ -136,7 +135,7 @@ namespace Fluent
 		MirrorOnce
 	};
 
-	enum class ESamplerComparisonFunction : u32
+	enum class EComparisonFunction : u32
 	{
 		Never = 0,
 		Less,

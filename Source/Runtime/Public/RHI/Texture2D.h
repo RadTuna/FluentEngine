@@ -27,8 +27,8 @@ namespace Fluent
 		virtual ~Texture2D() noexcept;
 
 		
-		bool CreateTexture(const std::vector<std::vector<u8>>& data, u32 arraySize) override;
-		bool CreateEmptyTexture() override;
+		void CreateTexture(const std::vector<std::vector<u8>>& data, u32 arraySize) override;
+		void CreateEmptyTexture() override;
 
 	private:
 		

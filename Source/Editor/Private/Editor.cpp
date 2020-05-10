@@ -1,5 +1,7 @@
 
 #include "Editor.h"
+#include "Core/Core.h"
+
 
 namespace Fluent
 {
@@ -15,7 +17,7 @@ namespace Fluent
 
 			mEditorInitialized = true;
 		}
-
+		
 		mRuntime->SetWindowData(windowData);
 	}
 

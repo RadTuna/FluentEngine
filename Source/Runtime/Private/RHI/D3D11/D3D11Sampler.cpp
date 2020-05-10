@@ -17,7 +17,7 @@ namespace Fluent
 		ESamplerFilter magFilter, 
 		ESamplerFilter mipFilter, 
 		ESamplerAddressMode addressMode, 
-		ESamplerComparisonFunction comparison, 
+		EComparisonFunction comparison, 
 		bool bEnableAnisotropy, 
 		bool bEnableComparison) noexcept
 	{

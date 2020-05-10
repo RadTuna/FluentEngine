@@ -24,7 +24,7 @@ namespace Fluent
 			ESamplerFilter magFilter,
 			ESamplerFilter mipFilter,
 			ESamplerAddressMode addressMode,
-			ESamplerComparisonFunction comparison,
+			EComparisonFunction comparison,
 			bool bEnableAnisotropy,
 			bool bEnableComparison) noexcept;
 
@@ -44,7 +44,7 @@ namespace Fluent
 		ESamplerAddressMode GetAddressMode() const { return mAddressMode; }
 
 		[[nodiscard]]
-		ESamplerComparisonFunction GetComparison() const { return mComparisonFunction; }
+		EComparisonFunction GetComparison() const { return mComparisonFunction; }
 
 		[[nodiscard]]
 		bool IsEnableAnisotropy() const { return mbEnableAnisotropy; }
@@ -58,7 +58,7 @@ namespace Fluent
 		ESamplerFilter mMagFilter = ESamplerFilter::Point;
 		ESamplerFilter mMipFilter = ESamplerFilter::Point;
 		ESamplerAddressMode mAddressMode = ESamplerAddressMode::Wrap;
-		ESamplerComparisonFunction mComparisonFunction = ESamplerComparisonFunction::Always;
+		EComparisonFunction mComparisonFunction = EComparisonFunction::Always;
 		bool mbEnableAnisotropy = false;
 		bool mbEnableComparison = false;
 		

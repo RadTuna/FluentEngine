@@ -27,12 +27,12 @@ namespace Fluent
 		D3D11Release(mConstantBuffer);
 		
 		D3D11_BUFFER_DESC bufferDesc = {};
-		bufferDesc.ByteWidth = static_cast<UINT>(mSize);
+		bufferDesc.ByteWidth = mSize;
 		bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 		bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 		bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 		bufferDesc.MiscFlags = 0;
-		bufferDesc.StructureByteStride = 0;
+		//bufferDesc.StructureByteStride = 0;
 
 		const HRESULT result = mDevice->CreateBuffer(&bufferDesc, nullptr, &mConstantBuffer);
 		if (FAILED(result))

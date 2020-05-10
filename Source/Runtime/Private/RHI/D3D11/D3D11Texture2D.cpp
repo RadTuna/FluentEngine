@@ -53,7 +53,7 @@ namespace Fluent
 		D3D11Release(mDepthStencilView);
 	}
 
-	bool Texture2D::CreateTexture(const std::vector<std::vector<u8>>& data, u32 arraySize)
+	void Texture2D::CreateTexture(const std::vector<std::vector<u8>>& data, u32 arraySize)
 	{
 		DXGI_FORMAT renderTargetFormat = ToDxgiFormat(mFormat); // RTV = Render Target View
 		DXGI_FORMAT depthStencilFormat = ToDxgiFormat(mFormat); // DSV = Depth Stencil View
@@ -75,10 +75,12 @@ namespace Fluent
 		texDesc.Height = static_cast<u32>(mHeight);
 		texDesc.MipLevels = static_cast<u32>(mMipLevel);
 		texDesc.ArraySize = static_cast<UINT>(mTextureArraySize);
-		texDesc.Format = ToDxgiFormat(mFormat);
+		texDesc.Format = renderTargetFormat;
 		texDesc.SampleDesc.Count = 1;
 		texDesc.SampleDesc.Quality = 0;
-		texDesc.Usage = (bindFlags & D3D11_BIND_RENDER_TARGET) || (bindFlags & D3D11_BIND_DEPTH_STENCIL) ? D3D11_USAGE_DEFAULT : D3D11_USAGE_IMMUTABLE;
+		texDesc.Usage = 
+			(bindFlags & D3D11_BIND_RENDER_TARGET) != 0 || (bindFlags & D3D11_BIND_DEPTH_STENCIL) != 0 ? 
+			D3D11_USAGE_DEFAULT : D3D11_USAGE_IMMUTABLE;
 		texDesc.BindFlags = bindFlags;
 		texDesc.MiscFlags = 0;
 		texDesc.CPUAccessFlags = 0;
@@ -91,7 +93,7 @@ namespace Fluent
 			{
 				if (data[index].empty())
 				{
-					return false;
+					break;
 				}
 
 				D3D11_SUBRESOURCE_DATA subResource = {};
@@ -105,41 +107,34 @@ namespace Fluent
 
 		ID3D11Texture2D* texture = nullptr;
 		const HRESULT result = mDevice->CreateTexture2D(&texDesc, subResourcePtr, &texture);
-		if (FAILED(result))
+		Assert(SUCCEEDED(result));
+
+		if ((mViewFlags & ETextureViewFlags::RenderTarget) != 0)
 		{
-			return false;
+			CreateRenderTargetView(texture, renderTargetFormat, mTextureArraySize, mDevice);
 		}
 
-		bool resultRTV = false;
-		if (bindFlags & ETextureViewFlags::RenderTarget)
+		if ((mViewFlags & ETextureViewFlags::DepthStencil) != 0)
 		{
-			resultRTV = CreateRenderTargetView(texture, renderTargetFormat, mTextureArraySize, mDevice);
+			CreateDepthStencilView(texture, depthStencilFormat, mTextureArraySize, mDevice);
 		}
 
-		bool resultDSV = false;
-		if (bindFlags & ETextureViewFlags::DepthStencil)
+		if ((mViewFlags & ETextureViewFlags::ShaderSampled) != 0)
 		{
-			resultDSV = CreateDepthStencilView(texture, depthStencilFormat, mTextureArraySize, mDevice);
-		}
-
-		bool resultSRV = false;
-		if (bindFlags & ETextureViewFlags::ShaderSampled)
-		{
-			resultSRV = CreateShaderResourceView(texture, shaderResourceFormat, mTextureArraySize, mMipLevel, mDevice);
+			CreateShaderResourceView(texture, shaderResourceFormat, mTextureArraySize, mMipLevel, mDevice);
 		}
 
 		D3D11Release(texture);
-		return resultRTV && resultDSV && resultSRV;
 	}
 
-	bool Texture2D::CreateEmptyTexture()
+	void Texture2D::CreateEmptyTexture()
 	{
 		std::vector<std::vector<u8>> emptyVector;
 		emptyVector.reserve(0);
-		return CreateTexture(emptyVector, 1);
+		CreateTexture(emptyVector, 1);
 	}
 
-	bool D3D11Texture2D::CreateDepthStencilView(ID3D11Texture2D* texture, DXGI_FORMAT format, u32 arraySize, ID3D11Device* device)
+	void D3D11Texture2D::CreateDepthStencilView(ID3D11Texture2D* texture, DXGI_FORMAT format, u32 arraySize, ID3D11Device* device)
 	{
 		D3D11_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
 		dsvDesc.Format = format;
@@ -149,17 +144,10 @@ namespace Fluent
 		dsvDesc.Texture2DArray.FirstArraySlice = 0;
 
 		const HRESULT result = device->CreateDepthStencilView(texture, &dsvDesc, &mDepthStencilView);
-		if (FAILED(result))
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		Assert(SUCCEEDED(result));
 	}
 
-	bool D3D11Texture2D::CreateRenderTargetView(ID3D11Texture2D* texture, DXGI_FORMAT format, u32 arraySize, ID3D11Device* device)
+	void D3D11Texture2D::CreateRenderTargetView(ID3D11Texture2D* texture, DXGI_FORMAT format, u32 arraySize, ID3D11Device* device)
 	{
 		D3D11_RENDER_TARGET_VIEW_DESC rtvDesc = {};
 		rtvDesc.Format = format;
@@ -169,17 +157,10 @@ namespace Fluent
 		rtvDesc.Texture2DArray.FirstArraySlice = 0;
 
 		const HRESULT result = device->CreateRenderTargetView(texture, &rtvDesc, &mRenderTargetView);
-		if (FAILED(result))
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		Assert(SUCCEEDED(result));
 	}
 
-	bool D3D11Texture2D::CreateShaderResourceView(ID3D11Texture2D* texture, DXGI_FORMAT format, u32 arraySize, u32 mipLevel, ID3D11Device* device)
+	void D3D11Texture2D::CreateShaderResourceView(ID3D11Texture2D* texture, DXGI_FORMAT format, u32 arraySize, u32 mipLevel, ID3D11Device* device)
 	{
 		D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
 		srvDesc.Format = format;
@@ -190,14 +171,7 @@ namespace Fluent
 		srvDesc.Texture2DArray.ArraySize = arraySize;
 
 		const HRESULT result = device->CreateShaderResourceView(texture, &srvDesc, &mShaderResourceView);
-		if (FAILED(result))
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		Assert(SUCCEEDED(result));
 	}
 	
 }

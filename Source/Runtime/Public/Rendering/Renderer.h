@@ -9,11 +9,14 @@
 #include "Core/ISubModule.h"
 #include "RendererDefinition.h"
 #include "RHI/RHIDefinition.h"
+#include "Rendering/Mesh.h"
 
 
 namespace Fluent
 {
 
+	constexpr u32 MAIN_THREAD_INDEX = 0;
+	
 	class Renderer final : public ISubModule
 	{
 	public:
@@ -40,6 +43,10 @@ namespace Fluent
 		void CreateBlendState();
 		void CreateSampler();
 		void CreateCommandLists();
+		void CreateRenderResource();
+
+		// Pre-setup state
+		void SetupGlobalConstantBufferAndSampler();
 
 		// Update current viewport
 		void UpdateViewport();
@@ -48,7 +55,7 @@ namespace Fluent
 		void UpdateFrameBuffer(const std::shared_ptr<CommandList>& commandList);
 		
 		// Render passes
-		void PassGBuffer(const std::shared_ptr<CommandList>& commandList);
+		void PassSimpleQuad(const std::shared_ptr<CommandList>& commandList);
 		void PassComposition(const std::shared_ptr<CommandList>& commandList);
 		
 	private:
@@ -74,8 +81,10 @@ namespace Fluent
 
 		// Other
 		bool mbIsInitialized = false;
-
 		bool mbIsRendering = false;
+
+		Mesh mQuadMesh;
+		
 	};
 
 }

@@ -167,7 +167,7 @@ namespace Fluent
 		D3D11_COMPARISON_GREATER_EQUAL,
 		D3D11_COMPARISON_ALWAYS
 	};
-	inline D3D11_COMPARISON_FUNC ToD3D11ComparisonFunction(ESamplerComparisonFunction comparison)
+	inline D3D11_COMPARISON_FUNC ToD3D11ComparisonFunction(EComparisonFunction comparison)
 	{
 		const u32 index = static_cast<u32>(comparison);
 		return ComparisonFunctionMap[index];

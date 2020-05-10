@@ -6,6 +6,7 @@
 
 // External Include
 #include <d3dcompiler.h>
+#include <sstream>
 
 // Engine Include
 #include "RHI/Device.h"
@@ -46,9 +47,9 @@ namespace Fluent
 
 		for (const ShaderDefine& uniDefine : mDefines)
 		{
-			D3D_SHADER_MACRO tempMacro{ uniDefine.Macro.c_str(), uniDefine.Value.c_str() };
-			shaderDefines.emplace_back(tempMacro);
+			shaderDefines.emplace_back(D3D_SHADER_MACRO { uniDefine.Macro.c_str(), uniDefine.Value.c_str() });
 		}
+		shaderDefines.emplace_back(D3D_SHADER_MACRO { nullptr, nullptr });
 
 		
 		ID3DBlob* errorBlob = nullptr;
@@ -73,8 +74,13 @@ namespace Fluent
 
 		if (errorBlob)
 		{
-			// something error message
-
+			std::stringstream stringStream(static_cast<i8*>(errorBlob->GetBufferPointer()));
+			std::string stringLine;
+			while (std::getline(stringStream, stringLine, '\n'))
+			{
+				LOG_CONSOLE_STRING(stringLine);
+			}
+			
 			errorBlob->Release();
 			errorBlob = nullptr;
 			return;
@@ -82,7 +88,15 @@ namespace Fluent
 
 		if (FAILED(result))
 		{
-			// something error message
+			if (result == HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND))
+			{
+				LOG_CONSOLE_FORMAT("Failed to find shader with path \"%s\".", shaderPath.c_str());
+			}
+			else
+			{
+				LOG_CONSOLE_FORMAT("An error occurred when trying to load and compile \"%s\"", shaderPath.c_str());
+			}
+			
 			return;
 		}
 
@@ -92,14 +106,14 @@ namespace Fluent
 			{
 				case EShaderType::Vertex:
 				{
-					ID3D11VertexShader* vertexShader = GetVertexShader();
-					D3D11Release(vertexShader);
+					D3D11Release(mVertexShader);
 						
 					result = mDevice->CreateVertexShader(
 						shaderBlob->GetBufferPointer(),
 						shaderBlob->GetBufferSize(),
 						nullptr,
-						&vertexShader);
+						&mVertexShader);
+					Assert(SUCCEEDED(result));
 
 					std::vector<D3D11_INPUT_ELEMENT_DESC> inputDescs;
 					ToD3D11InputDesc(inputDescs, vertexType);
@@ -111,32 +125,37 @@ namespace Fluent
 						shaderBlob->GetBufferPointer(), 
 						shaderBlob->GetBufferSize(), 
 						&mInputLayout);
+					Assert(SUCCEEDED(result));
+					break;
 				}
 				case EShaderType::Pixel:
 				{
-					ID3D11PixelShader* pixelShader = GetPixelShader();
-					D3D11Release(pixelShader);
+					D3D11Release(mPixelShader);
 						
 					result = mDevice->CreatePixelShader(
 						shaderBlob->GetBufferPointer(),
 						shaderBlob->GetBufferSize(),
 						nullptr,
-						&pixelShader);
+						&mPixelShader);
+					Assert(SUCCEEDED(result));
+					break;
 				}
 				case EShaderType::Compute:
 				{
-					ID3D11ComputeShader* computeShader = GetComputeShader();
-					D3D11Release(computeShader);
+					D3D11Release(mComputeShader);
 						
 					result = mDevice->CreateComputeShader(
 						shaderBlob->GetBufferPointer(),
 						shaderBlob->GetBufferSize(),
 						nullptr,
-						&computeShader);
+						&mComputeShader);
+					Assert(SUCCEEDED(result));
+					break;
 				}
 				default:
 				{
 					Assert(false);
+					break;
 				}
 			}
 		}

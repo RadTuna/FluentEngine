@@ -14,6 +14,8 @@
 #include "RHI/DepthStencilState.h"
 #include "RHI/RasterizerState.h"
 #include "RHI/BlendState.h"
+#include "RHI/Sampler.h"
+#include "RHI/SwapChain.h"
 #include "Math/Vector4.h"
 
 
@@ -49,7 +51,7 @@ namespace Fluent
 		const u32 searchNum = static_cast<u32>(clearColor.size());
 
 		std::vector<ID3D11RenderTargetView*> renderTargets;
-		renderTargets.reserve(searchNum);
+		renderTargets.resize(searchNum);
 		ID3D11DepthStencilView* depthStencil;
 		
 		mDeferredContext->OMGetRenderTargets(searchNum, renderTargets.data(), &depthStencil);
@@ -134,10 +136,11 @@ namespace Fluent
 		mDeferredContext->IASetPrimitiveTopology(d3dTopology);
 	}
 
-	void CommandList::SetRenderTarget(const std::vector<std::shared_ptr<Texture2D>>& renderTargets,
+	void CommandList::SetRenderTargets(const std::vector<std::shared_ptr<Texture2D>>& renderTargets,
 		const std::shared_ptr<Texture2D>& depthStencil) const
 	{
 		Assert(depthStencil->GetDepthStencilView() != nullptr);
+		Assert(renderTargets.size() <= D3D11_SIMULTANEOUS_RENDER_TARGET_COUNT);
 		
 		const u32 renderTargetNum = static_cast<u32>(renderTargets.size());
 		std::vector<ID3D11RenderTargetView*> d3dRenderTargets;
@@ -149,8 +152,17 @@ namespace Fluent
 			
 			d3dRenderTargets.emplace_back(tempRTV);
 		}
-		
 		mDeferredContext->OMSetRenderTargets(renderTargetNum, d3dRenderTargets.data(), depthStencil->GetDepthStencilView());
+	}
+
+	void CommandList::SetSwapChainBuffer(const std::shared_ptr<SwapChain>& swapChain,
+		const std::shared_ptr<Texture2D>& depthStencil) const
+	{
+		Assert(swapChain->GetRenderTargetView() != nullptr);
+		Assert(depthStencil->GetDepthStencilView() != nullptr);
+
+		ID3D11RenderTargetView* backBuffer = swapChain->GetRenderTargetView();
+		mDeferredContext->OMSetRenderTargets(1, &backBuffer, depthStencil->GetDepthStencilView());
 	}
 
 	void CommandList::SetScissorRectangle(const Rectangle& rectangle) const
@@ -168,7 +180,8 @@ namespace Fluent
 
 		ID3D11Buffer* tempVertexBuffer = vertexBuffer->GetVertexBuffer();
 		const u32 stride = vertexBuffer->GetStride();
-		mDeferredContext->IASetVertexBuffers(0, 1, &tempVertexBuffer, &stride, nullptr);
+		const u32 offset = 0;
+		mDeferredContext->IASetVertexBuffers(0, 1, &tempVertexBuffer, &stride, &offset);
 	}
 
 	void CommandList::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) const
@@ -176,22 +189,7 @@ namespace Fluent
 		Assert(indexBuffer->GetIndexBuffer() != nullptr);
 
 		const u32 stride = indexBuffer->GetStride();
-		DXGI_FORMAT indexBufferFormat = DXGI_FORMAT_R32_UINT;
-		switch (stride) 
-		{
-		case 8:
-			indexBufferFormat = DXGI_FORMAT_R8_UINT;
-			break;
-		case 16:
-			indexBufferFormat = DXGI_FORMAT_R16_UINT;
-			break;
-		case 32:
-			indexBufferFormat = DXGI_FORMAT_R32_UINT;
-			break;
-		default:
-			Assert(false);
-			break;
-		}
+		const DXGI_FORMAT indexBufferFormat = DXGI_FORMAT_R32_UINT;
 
 		mDeferredContext->IASetIndexBuffer(indexBuffer->GetIndexBuffer(), indexBufferFormat, 0);
 	}
@@ -240,7 +238,14 @@ namespace Fluent
 			mDeferredContext->PSSetShaderResources(slot, 1, &tempSRV);
 		}
 	}
-	
+
+	void CommandList::SetSampler(u32 slot, const std::shared_ptr<Sampler>& sampler) const
+	{
+		Assert(sampler->GetSamplerState() != nullptr);
+
+		ID3D11SamplerState* samplerState = sampler->GetSamplerState();
+		mDeferredContext->PSSetSamplers(slot, 1, &samplerState);
+	}
 }
 
 #endif

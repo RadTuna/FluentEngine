@@ -20,7 +20,7 @@ namespace Fluent
 	}
 
 	bool Engine::Initialize()
-	{
+	{	
 		if (mStorage == nullptr || mTimeCounter == nullptr)
 		{
 			return false;

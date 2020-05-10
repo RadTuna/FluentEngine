@@ -14,6 +14,8 @@ namespace Fluent
 
 		f32 CameraNear;
 		f32 CameraFar;
+
+		f32 padding[2];
 	};
 
 }

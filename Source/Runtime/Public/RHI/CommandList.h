@@ -37,13 +37,15 @@ namespace Fluent
 		void SetRasterizerState(const std::shared_ptr<RasterizerState>& rasterizerState) const;
 		void SetBlendState(const std::shared_ptr<BlendState>& blendState) const;
 		void SetPrimitiveTopology(EPrimitiveTopology topology) const;
-		void SetRenderTarget(const std::vector<std::shared_ptr<Texture2D>>& renderTargets, const std::shared_ptr<Texture2D>& depthStencil) const;
+		void SetRenderTargets(const std::vector<std::shared_ptr<Texture2D>>& renderTargets, const std::shared_ptr<Texture2D>& depthStencil) const;
+		void SetSwapChainBuffer(const std::shared_ptr<SwapChain>& swapChain, const std::shared_ptr<Texture2D>& depthStencil) const;
 		void SetScissorRectangle(const Rectangle& rectangle) const;
 		void SetVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer) const;
 		void SetIndexBuffer(const std::shared_ptr<IndexBuffer>& indexBuffer) const;
 		void SetConstantBuffer(u32 slot, EShaderType shaderType, const std::shared_ptr<ConstantBuffer>& constantBuffer) const;
 		void SetViewport(const Viewport& viewport) const;
 		void SetTexture(u32 slot, EShaderType shaderType, const std::shared_ptr<Texture2D>& texture) const;
+		void SetSampler(u32 slot, const std::shared_ptr<Sampler>& sampler) const;
 
 	private:
 

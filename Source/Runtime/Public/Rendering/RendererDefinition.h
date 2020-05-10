@@ -9,15 +9,14 @@ namespace Fluent
 
 	// ========== Renderer enumerate declaration ==========
 
-	constexpr u32 RenderTargetTypesNum = 4;
+	constexpr u32 RenderTargetTypesNum = 3;
 	namespace ERenderTargetType
 	{
 		enum Enum : u32
 		{
-			Albedo = 0,
-			Diffuse = 1,
-			Specular = 2,
-			Normal = 3,
+			Albedo = 0, // R8G8B8A8 : unlit color
+			Material = 1, // R8 : metallic, G8 : roughness, B8A8 : padding
+			Normal = 2 // R16G16B16 : normal vector, A16 : padding
 		};
 	}
 
@@ -26,8 +25,8 @@ namespace Fluent
 	{
 		enum Enum : u32
 		{
-			VS_Common = 0,
-			PS_Common = 1
+			VS_Quad = 0,
+			PS_Quad = 1
 		};
 	}
 
