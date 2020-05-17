@@ -43,7 +43,7 @@ namespace Fluent
 
 		static Matrix SIMD_CALL CreateLookAtLH(Vector cameraPosition, Vector targetPosition, Vector upVector);
 		static Matrix SIMD_CALL CreateOrthographicLH(f32 width, f32 height, f32 near, f32 far);
-		static Matrix SIMD_CALL CreatePerspectiveLH(f32 width, f32 height, f32 near, f32 far);
+		static Matrix SIMD_CALL CreatePerspectiveLH(f32 nearWidth, f32 nearHeight, f32 near, f32 far);
 		static Matrix SIMD_CALL CreatePerspectiveFovLH(f32 fov, f32 aspectRatio, f32 near, f32 far);
 
 		static Matrix SIMD_CALL LoadMatrix4X4(const class Matrix4x4& inMatrix);

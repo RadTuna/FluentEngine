@@ -144,9 +144,9 @@ namespace Fluent
 		const __m128 tempRow4 = _mm_unpackhi_ps(mRow3, mRow4);
 
 		mRow1 = _mm_movelh_ps(tempRow1, tempRow2);
-		mRow2 = _mm_movehl_ps(tempRow1, tempRow2);
+		mRow2 = _mm_movehl_ps(tempRow2, tempRow1);
 		mRow3 = _mm_movelh_ps(tempRow3, tempRow4);
-		mRow4 = _mm_movehl_ps(tempRow3, tempRow4);
+		mRow4 = _mm_movehl_ps(tempRow4, tempRow3);
 	}
 
 	Matrix SIMD_CALL Matrix::CreateLookAtLH(Vector cameraPosition, Vector targetPosition, Vector upVector)
@@ -154,11 +154,10 @@ namespace Fluent
 		const Vector zAxis = Vector::Normalize(targetPosition - cameraPosition);
 		const Vector xAxis = Vector::Normalize(Vector::CrossProduct(upVector, zAxis));
 		const Vector yAxis = Vector::Normalize(Vector::CrossProduct(zAxis, xAxis));
-		
 		const Vector exAxis = Vector::SetVector4(
-			-Vector::DotProduct(xAxis, cameraPosition),
-			-Vector::DotProduct(yAxis, cameraPosition),
-			-Vector::DotProduct(zAxis, cameraPosition),
+			-Vector::DotProduct(xAxis, cameraPosition), 
+			-Vector::DotProduct(yAxis, cameraPosition), 
+			-Vector::DotProduct(zAxis, cameraPosition), 
 			1.0f);
 		
 		Matrix outMatrix(xAxis, yAxis, zAxis, exAxis);
@@ -176,25 +175,29 @@ namespace Fluent
 		return Matrix(row1, row2, row3, row4);
 	}
 
-	Matrix SIMD_CALL Matrix::CreatePerspectiveLH(f32 width, f32 height, f32 near, f32 far)
+	Matrix SIMD_CALL Matrix::CreatePerspectiveLH(f32 nearWidth, f32 nearHeight, f32 near, f32 far)
 	{
-		const f32 aspectRatio = height / width;
-		const f32 fov = std::atan2f(height * 0.5f, near) * 2.0f;
+		const f32 aspectRatio = nearWidth / nearHeight;
+		const f32 fov = std::atan2f(nearHeight * 0.5f, near) * 2.0f;
 
 		return CreatePerspectiveFovLH(fov, aspectRatio, near, far);
 	}
 
 	Matrix SIMD_CALL Matrix::CreatePerspectiveFovLH(f32 fov, f32 aspectRatio, f32 near, f32 far)
 	{
-		const f32 yScale = 1.0f / (fov * 0.5f);
+		const f32 yScale = 1.0f / std::tanf(fov * 0.5f);
 		const f32 xScale = yScale / aspectRatio;
 
+		const f32 zScale = far / (far - near);
+		const f32 zMove = -near * zScale;
+		
 		const __m128 row1 = _mm_setr_ps(xScale, 0.0f, 0.0f, 0.0f);
 		const __m128 row2 = _mm_setr_ps(0.0f, yScale, 0.0f, 0.0f);
-		const __m128 row3 = _mm_setr_ps(0.0f, 0.0f, far / (far - near), 1.0f);
-		const __m128 row4 = _mm_setr_ps(0.0f, 0.0f, -near * far / (far - near), 0.0f);
+		const __m128 row3 = _mm_setr_ps(0.0f, 0.0f, zScale, zMove);
+		const __m128 row4 = _mm_setr_ps(0.0f, 0.0f, 1.0f, 0.0f);
 
-		return Matrix(row1, row2, row3, row4);
+		Matrix outMatrix(row1, row2, row3, row4);
+		return outMatrix;
 	}
 
 	Matrix SIMD_CALL Matrix::LoadMatrix4X4(const Matrix4x4& inMatrix)

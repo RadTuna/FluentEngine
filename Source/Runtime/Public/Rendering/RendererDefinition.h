@@ -52,18 +52,19 @@ namespace Fluent
 		};
 	}
 
-	constexpr u32 RasterizerStateTypesNum = 7;
+	constexpr u32 RasterizerStateTypesNum = 8;
 	namespace ERasterizerStateType
 	{
 		enum Enum : u32
 		{
-			CullBack_Solid = 0,
-			CullBack_Solid_NoClip = 1,
-			CullFront_Solid = 2,
-			CullNone_Solid = 3,
-			CullBack_WireFrame = 4,
-			CullFront_WireFrame = 5,
-			CullNone_WireFrame = 6
+			CullBackSolid = 0,
+			CullBackSolidNoClip = 1,
+			CullFrontSolid = 2,
+			CullNoneSolid = 3,
+			CullNoneSolidNoClip = 4,
+			CullBackWireFrame = 5,
+			CullFrontWireFrame = 6,
+			CullNoneWireFrame = 7
 		};
 	}
 

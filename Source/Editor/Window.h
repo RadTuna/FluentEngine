@@ -60,8 +60,10 @@ namespace Window
 
 		if (msg == WM_DISPLAYCHANGE || msg == WM_SIZE)
 		{
-			windowData.ScreenWidth = static_cast<u32>(lParam & 0xffff);
-			windowData.ScreenHeight = static_cast<u32>((lParam >> 16) & 0xffff);
+			if (gWindowMessage.IsValid())
+			{
+				gWindowMessage(windowData);
+			}
 		}
 		else if (msg == WM_CLOSE)
 		{
@@ -84,8 +86,10 @@ namespace Window
 	{
 		gInstance = instance;
 		tchar* windowTitle = TEXT("FluentEngine");
-		const int windowWidth = GetSystemMetrics(SM_CXSCREEN);
-		const int windowHeight = GetSystemMetrics(SM_CYSCREEN);
+		const u32 windowWidth = 1920; // GetSystemMetrics(SM_CXSCREEN);
+		const u32 windowHeight = 1080; // GetSystemMetrics(SM_CYSCREEN);
+		const u32 posX = (GetSystemMetrics(SM_CXSCREEN) - windowWidth) / 2;
+		const u32 posY = (GetSystemMetrics(SM_CYSCREEN) - windowHeight) / 2;
 		LPCWSTR className = L"myWindowClass";
 
 		// Register the Window Class
@@ -116,7 +120,7 @@ namespace Window
 			className,
 			windowTitle,
 			WS_OVERLAPPEDWINDOW,
-			CW_USEDEFAULT, CW_USEDEFAULT, windowWidth, windowHeight,
+			posX, posY, windowWidth, windowHeight,
 			nullptr, nullptr, gInstance, nullptr
 		);
 
@@ -131,7 +135,7 @@ namespace Window
 
 	inline void Show()
 	{
-		ShowWindow(gHandle, SW_MAXIMIZE);
+		ShowWindow(gHandle, SW_SHOW);
 		UpdateWindow(gHandle);
 		SetFocus(gHandle);
 	}

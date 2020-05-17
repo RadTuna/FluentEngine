@@ -58,9 +58,7 @@ namespace Fluent
 		CreateSampler();
 		CreateCommandLists();
 		CreateRenderResource();
-
-		// Pre-setup render states
-		SetupGlobalConstantBufferAndSampler();
+		
 		
 		if (!mbIsInitialized)
 		{
@@ -84,13 +82,16 @@ namespace Fluent
 		// Start rendering
 		mbIsRendering = true;
 
+		// Pre-setup render states
+		SetupGlobalConstantBufferAndSampler();
+
 		UpdateViewport();
-		UpdateFrameBuffer(commandList);
+		UpdateFrameBuffer();
 		PassSimpleQuad(commandList);
 		// PassComposition(commandList);
-
+		
 		mSwapChain->Present();
-
+		
 		mbIsRendering = false;
 		// End rendering
 	}
@@ -130,26 +131,29 @@ namespace Fluent
 	{
 		mRasterizerStates.resize(RasterizerStateTypesNum);
 
-		mRasterizerStates[ERasterizerStateType::CullBack_Solid] =
-			std::make_shared<RasterizerState>(mDevice, ERenderCullMode::Back, ERenderFillMode::Solid, false, false, false, false);
-
-		mRasterizerStates[ERasterizerStateType::CullBack_Solid_NoClip] =
+		mRasterizerStates[ERasterizerStateType::CullBackSolid] =
 			std::make_shared<RasterizerState>(mDevice, ERenderCullMode::Back, ERenderFillMode::Solid, true, false, false, false);
 
-		mRasterizerStates[ERasterizerStateType::CullFront_Solid] =
-			std::make_shared<RasterizerState>(mDevice, ERenderCullMode::Front, ERenderFillMode::Solid, false, false, false, false);
+		mRasterizerStates[ERasterizerStateType::CullBackSolidNoClip] =
+			std::make_shared<RasterizerState>(mDevice, ERenderCullMode::Back, ERenderFillMode::Solid, false, false, false, false);
 
-		mRasterizerStates[ERasterizerStateType::CullNone_Solid] =
+		mRasterizerStates[ERasterizerStateType::CullFrontSolid] =
+			std::make_shared<RasterizerState>(mDevice, ERenderCullMode::Front, ERenderFillMode::Solid, true, false, false, false);
+
+		mRasterizerStates[ERasterizerStateType::CullNoneSolid] =
+			std::make_shared<RasterizerState>(mDevice, ERenderCullMode::None, ERenderFillMode::Solid, true, false, false, false);
+
+		mRasterizerStates[ERasterizerStateType::CullNoneSolidNoClip] =
 			std::make_shared<RasterizerState>(mDevice, ERenderCullMode::None, ERenderFillMode::Solid, false, false, false, false);
 
-		mRasterizerStates[ERasterizerStateType::CullBack_WireFrame] =
-			std::make_shared<RasterizerState>(mDevice, ERenderCullMode::Back, ERenderFillMode::WireFrame, false, false, false, true);
+		mRasterizerStates[ERasterizerStateType::CullBackWireFrame] =
+			std::make_shared<RasterizerState>(mDevice, ERenderCullMode::Back, ERenderFillMode::WireFrame, true, false, false, true);
 
-		mRasterizerStates[ERasterizerStateType::CullFront_WireFrame] =
-			std::make_shared<RasterizerState>(mDevice, ERenderCullMode::Front, ERenderFillMode::WireFrame, false, false, false, true);
+		mRasterizerStates[ERasterizerStateType::CullFrontWireFrame] =
+			std::make_shared<RasterizerState>(mDevice, ERenderCullMode::Front, ERenderFillMode::WireFrame, true, false, false, true);
 
-		mRasterizerStates[ERasterizerStateType::CullNone_WireFrame] =
-			std::make_shared<RasterizerState>(mDevice, ERenderCullMode::None, ERenderFillMode::WireFrame, false, false, false, true);
+		mRasterizerStates[ERasterizerStateType::CullNoneWireFrame] =
+			std::make_shared<RasterizerState>(mDevice, ERenderCullMode::None, ERenderFillMode::WireFrame, true, false, false, true);
 	}
 
 	void Renderer::CreateRenderTargets()
@@ -252,7 +256,12 @@ namespace Fluent
 		const f32 screenWidth = static_cast<f32>(mStorage->mWindowData.ScreenWidth);
 		const f32 screenHeight = static_cast<f32>(mStorage->mWindowData.ScreenHeight);
 		
-		mQuadMesh = GeometryGenerator::CreateQuad(0.0f, 0.0f, screenWidth, screenHeight, 0.0f);
+		//mQuadMesh = GeometryGenerator::CreateQuad(0.0f, 0.0f, screenWidth, screenHeight, 0.0f);
+		mQuadMesh = GeometryGenerator::CreateBox(10.0f, 10.0f, 10.0f);
+
+		// temp
+		mQuadMesh.CreateBuffers(mDevice);
+		// temp
 	}
 
 	void Renderer::SetupGlobalConstantBufferAndSampler()
@@ -277,30 +286,28 @@ namespace Fluent
 		// temp
 		mViewport.X = 0.0f;
 		mViewport.Y = 0.0f;
-		mViewport.Width = 1920.0f;
-		mViewport.Height = 1080.0f;
-		mViewport.Near = 1.0f;
-		mViewport.Far = 1000.0f;
+		mViewport.Width = static_cast<f32>(mStorage->mWindowData.ScreenWidth);
+		mViewport.Height = static_cast<f32>(mStorage->mWindowData.ScreenHeight);
+		mViewport.Near = 0.0f;
+		mViewport.Far = 1.0f;
 		// temp
 	}
 
-	void Renderer::UpdateFrameBuffer(const std::shared_ptr<CommandList>& commandList)
+	void Renderer::UpdateFrameBuffer()
 	{
 		// Map
 		BufferFrame* bufferFrame = reinterpret_cast<Fluent::BufferFrame*>(mConstantBuffers[EConstantBufferType::FrameBuffer]->Map());
 		Assert(bufferFrame != nullptr);
 
 		// temp
+		const f32 aspectRatio = static_cast<f32>(mStorage->mWindowData.ScreenWidth) / static_cast<f32>(mStorage->mWindowData.ScreenHeight);
 		const f32 cameraNear = 1.0f;
 		const f32 cameraFar = 1000.0f;
-		const Vector cameraPosition = Vector::SetVector4(0.0f, 0.0f, 0.0f, 0.0f);
-		const Vector targetPosition = Vector::SetVector4(0.0f, 0.0f, 1.0f, 0.0f);
+		const Vector cameraPosition = Vector::SetVector4(0.0f, 0.0f, -50.0f, 0.0f);
+		const Vector targetPosition = Vector::SetVector4(0.0f, 0.0f, 0.0f, 0.0f);
 		const Vector upVector = Vector::SetVector4(0.0f, 1.0f, 0.0f, 0.0f);
 		const Matrix viewMatrix = Matrix::CreateLookAtLH(cameraPosition, targetPosition, upVector);
-		const Matrix projMatrix = Matrix::CreatePerspectiveLH(
-			static_cast<f32>(mStorage->mWindowData.ScreenWidth),
-			static_cast<f32>(mStorage->mWindowData.ScreenHeight),
-			cameraNear, cameraFar);
+		const Matrix projMatrix = Matrix::CreatePerspectiveFovLH(Math::Deg2Rad(60.0f), aspectRatio, cameraNear, cameraFar);
 		// temp
 
 		// Apply frame buffer data
@@ -315,35 +322,29 @@ namespace Fluent
 	}
 
 	void Renderer::PassSimpleQuad(const std::shared_ptr<CommandList>& commandList)
-	{
+	{	
 		// Set render state
 		commandList->SetVertexShader(mShaders[ERenderShaderType::VS_Quad]);
 		commandList->SetPixelShader(mShaders[ERenderShaderType::PS_Quad]);
 		commandList->SetBlendState(mBlendStates[EBlendStateType::Disable]);
-		commandList->SetRasterizerState(mRasterizerStates[ERasterizerStateType::CullBack_Solid]);
+		commandList->SetRasterizerState(mRasterizerStates[ERasterizerStateType::CullBackSolid]);
 		commandList->SetDepthStencilState(mDepthStencilStates[EDepthStencilStateType::Enable_Write]);
-		// commandList->SetRenderTargets(mRenderTargets, mDepthStencil);
+		//commandList->SetRenderTargets(mRenderTargets, mDepthStencil);
 		commandList->SetSwapChainBuffer(mSwapChain, mDepthStencil);
 		commandList->SetViewport(mViewport);
 		commandList->SetPrimitiveTopology(EPrimitiveTopology::TriangleList);
 
 		// Clear render targets and depth-stencil
 		std::vector<Vector4> renderTargetClear;
-		renderTargetClear.reserve(RenderTargetTypesNum);
-		for (u32 index = 0; index < RenderTargetTypesNum; ++index)
+		renderTargetClear.reserve(1 /*RenderTargetTypesNum*/);
+		for (u32 index = 0; index < 1 /*RenderTargetTypesNum*/; ++index)
 		{
-			renderTargetClear.emplace_back(Vector4::OneZ);
+			renderTargetClear.emplace_back(Vector4::Zero);
 		}
 		commandList->ClearRenderTargetAndDepth(renderTargetClear, 1.0f);
 
-
-		std::shared_ptr<VertexBuffer> tempVertexBuffer = std::make_shared<VertexBuffer>(mDevice);
-		std::shared_ptr<IndexBuffer> tempIndexBuffer = std::make_shared<IndexBuffer>(mDevice);
-		tempVertexBuffer->CreateBuffer(mQuadMesh.GetVertices());
-		tempIndexBuffer->CreateBuffer(mQuadMesh.GetVertices());
-		
-		commandList->SetVertexBuffer(tempVertexBuffer);
-		commandList->SetIndexBuffer(tempIndexBuffer);
+		commandList->SetVertexBuffer(mQuadMesh.GetVertexBuffer());
+		commandList->SetIndexBuffer(mQuadMesh.GetIndexBuffer());
 		commandList->DrawIndexed(mQuadMesh.GetIndicesNum());
 		commandList->Execute();
 	}

@@ -6,12 +6,12 @@
 
 struct VertexPos
 {
-    float4 Position : POSITION0;
+    float4 Position : POSITION;
 };
 
 struct VertexPosTex
 {
-    float4 Position : POSITION0;
+    float4 Position : POSITION;
     float2 UV : TEXCOORD0;
 };
 
@@ -29,7 +29,7 @@ struct PixelPosTex
 
 // Constant buffers
  
-cbuffer BufferFrame
+cbuffer BufferFrame : register(b0)
 {
     matrix gWorldMatrix;
     matrix gViewMatrix;
@@ -44,13 +44,13 @@ cbuffer BufferFrame
 
 // samplers
 
-SamplerComparisonState gSamplerCompareDepth;
-SamplerState gSamplerPointClamp;
-SamplerState gSamplerPointWrap;
-SamplerState gSamplerBilinearClamp;
-SamplerState gSamplerBilinearWrap;
-SamplerState gSamplerTrilinearClamp;
-SamplerState gSamplerTrilinearWrap;
-SamplerState gSamplerAnisotropyClamp;
-SamplerState gSamplerAnisotropyWrap;
+//SamplerComparisonState gSamplerCompareDepth;
+//SamplerState gSamplerPointClamp;
+//SamplerState gSamplerPointWrap;
+//SamplerState gSamplerBilinearClamp;
+//SamplerState gSamplerBilinearWrap;
+//SamplerState gSamplerTrilinearClamp;
+//SamplerState gSamplerTrilinearWrap;
+//SamplerState gSamplerAnisotropyClamp;
+//SamplerState gSamplerAnisotropyWrap;
 

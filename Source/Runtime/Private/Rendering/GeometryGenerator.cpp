@@ -12,45 +12,45 @@ namespace Fluent
 		enum { VERTICES_NUM = 24, INDICES_NUM = 36 };
 		VertexPosTex vertices[VERTICES_NUM] = {};
 		
-		float w2 = 0.5f * width;
-		float h2 = 0.5f * height;
-		float d2 = 0.5f * depth;
+		const f32 halfWidth = 0.5f * width;
+		const f32 halfHeight = 0.5f * height;
+		const f32 halfDepth = 0.5f * depth;
 
 		// Fill in the front face vertex data.
-		vertices[0] = { Vector4(-w2, -h2, -d2, 1.0f), Vector2(0.0f, 1.0f) };
-		vertices[1] = { Vector4(-w2, +h2, -d2, 1.0f), Vector2 (0.0f, 0.0f) };
-		vertices[2] = { Vector4(+w2, +h2, -d2, 1.0f), Vector2(1.0f, 0.0f) };
-		vertices[3] = { Vector4(+w2, -h2, -d2, 1.0f), Vector2(1.0f, 1.0f) };
+		vertices[0] = { Vector4(-halfWidth, -halfHeight, -halfDepth, 1.0f), Vector2(0.0f, 1.0f) };
+		vertices[1] = { Vector4(-halfWidth, +halfHeight, -halfDepth, 1.0f), Vector2 (0.0f, 0.0f) };
+		vertices[2] = { Vector4(+halfWidth, +halfHeight, -halfDepth, 1.0f), Vector2(1.0f, 0.0f) };
+		vertices[3] = { Vector4(+halfWidth, -halfHeight, -halfDepth, 1.0f), Vector2(1.0f, 1.0f) };
 
 		// Fill in the back face vertex data.
-		vertices[4] = { Vector4(-w2, -h2, +d2, 1.0f), Vector2(1.0f, 1.0f) };
-		vertices[5] = { Vector4(+w2, -h2, +d2, 1.0f), Vector2(0.0f, 1.0f) };
-		vertices[6] = { Vector4(+w2, +h2, +d2, 1.0f), Vector2(0.0f, 0.0f) };
-		vertices[7] = { Vector4(-w2, +h2, +d2, 1.0f), Vector2(1.0f, 0.0f) };
+		vertices[4] = { Vector4(-halfWidth, -halfHeight, +halfDepth, 1.0f), Vector2(1.0f, 1.0f) };
+		vertices[5] = { Vector4(+halfWidth, -halfHeight, +halfDepth, 1.0f), Vector2(0.0f, 1.0f) };
+		vertices[6] = { Vector4(+halfWidth, +halfHeight, +halfDepth, 1.0f), Vector2(0.0f, 0.0f) };
+		vertices[7] = { Vector4(-halfWidth, +halfHeight, +halfDepth, 1.0f), Vector2(1.0f, 0.0f) };
 
 		// Fill in the top face vertex data.
-		vertices[8] = { Vector4(-w2, +h2, -d2, 1.0f), Vector2(0.0f, 1.0f) };
-		vertices[9] = { Vector4(-w2, +h2, +d2, 1.0f), Vector2(0.0f, 0.0f) };
-		vertices[10] = { Vector4(+w2, +h2, +d2, 1.0f), Vector2(1.0f, 0.0f) };
-		vertices[11] = { Vector4(+w2, +h2, -d2, 1.0f), Vector2(1.0f, 1.0f) };
+		vertices[8] = { Vector4(-halfWidth, +halfHeight, -halfDepth, 1.0f), Vector2(0.0f, 1.0f) };
+		vertices[9] = { Vector4(-halfWidth, +halfHeight, +halfDepth, 1.0f), Vector2(0.0f, 0.0f) };
+		vertices[10] = { Vector4(+halfWidth, +halfHeight, +halfDepth, 1.0f), Vector2(1.0f, 0.0f) };
+		vertices[11] = { Vector4(+halfWidth, +halfHeight, -halfDepth, 1.0f), Vector2(1.0f, 1.0f) };
 
 		// Fill in the bottom face vertex data.
-		vertices[12] = { Vector4(-w2, -h2, -d2, 1.0f), Vector2(1.0f, 1.0f) };
-		vertices[13] = { Vector4(+w2, -h2, -d2, 1.0f), Vector2(0.0f, 1.0f) };
-		vertices[14] = { Vector4(+w2, -h2, +d2, 1.0f), Vector2(0.0f, 0.0f) };
-		vertices[15] = { Vector4(-w2, -h2, +d2, 1.0f), Vector2(1.0f, 0.0f) };
+		vertices[12] = { Vector4(-halfWidth, -halfHeight, -halfDepth, 1.0f), Vector2(1.0f, 1.0f) };
+		vertices[13] = { Vector4(+halfWidth, -halfHeight, -halfDepth, 1.0f), Vector2(0.0f, 1.0f) };
+		vertices[14] = { Vector4(+halfWidth, -halfHeight, +halfDepth, 1.0f), Vector2(0.0f, 0.0f) };
+		vertices[15] = { Vector4(-halfWidth, -halfHeight, +halfDepth, 1.0f), Vector2(1.0f, 0.0f) };
 
 		// Fill in the left face vertex data.
-		vertices[16] = { Vector4(-w2, -h2, +d2, 1.0f), Vector2(0.0f, 1.0f) };
-		vertices[17] = { Vector4(-w2, +h2, +d2, 1.0f), Vector2(0.0f, 0.0f) };
-		vertices[18] = { Vector4(-w2, +h2, -d2, 1.0f), Vector2(1.0f, 0.0f) };
-		vertices[19] = { Vector4(-w2, -h2, -d2, 1.0f), Vector2(1.0f, 1.0f) };
+		vertices[16] = { Vector4(-halfWidth, -halfHeight, +halfDepth, 1.0f), Vector2(0.0f, 1.0f) };
+		vertices[17] = { Vector4(-halfWidth, +halfHeight, +halfDepth, 1.0f), Vector2(0.0f, 0.0f) };
+		vertices[18] = { Vector4(-halfWidth, +halfHeight, -halfDepth, 1.0f), Vector2(1.0f, 0.0f) };
+		vertices[19] = { Vector4(-halfWidth, -halfHeight, -halfDepth, 1.0f), Vector2(1.0f, 1.0f) };
 
 		// Fill in the right face vertex data.
-		vertices[20] = { Vector4(+w2, -h2, -d2, 1.0f), Vector2(0.0f, 1.0f) };
-		vertices[21] = { Vector4(+w2, +h2, -d2, 1.0f), Vector2(0.0f, 0.0f) };
-		vertices[22] = { Vector4(+w2, +h2, +d2, 1.0f), Vector2(1.0f, 0.0f) };
-		vertices[23] = { Vector4(+w2, -h2, +d2, 1.0f), Vector2(1.0f, 1.0f) };
+		vertices[20] = { Vector4(+halfWidth, -halfHeight, -halfDepth, 1.0f), Vector2(0.0f, 1.0f) };
+		vertices[21] = { Vector4(+halfWidth, +halfHeight, -halfDepth, 1.0f), Vector2(0.0f, 0.0f) };
+		vertices[22] = { Vector4(+halfWidth, +halfHeight, +halfDepth, 1.0f), Vector2(1.0f, 0.0f) };
+		vertices[23] = { Vector4(+halfWidth, -halfHeight, +halfDepth, 1.0f), Vector2(1.0f, 1.0f) };
 
 
 		u32 indices[INDICES_NUM] = { 0, };

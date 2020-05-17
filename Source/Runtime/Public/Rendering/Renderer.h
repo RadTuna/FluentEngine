@@ -52,7 +52,7 @@ namespace Fluent
 		void UpdateViewport();
 		
 		// Update constant buffers
-		void UpdateFrameBuffer(const std::shared_ptr<CommandList>& commandList);
+		void UpdateFrameBuffer();
 		
 		// Render passes
 		void PassSimpleQuad(const std::shared_ptr<CommandList>& commandList);

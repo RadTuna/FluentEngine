@@ -32,7 +32,7 @@ namespace Fluent
 	};
 	static const InputLayout VertexPosInputLayout[InputLayoutMapsNum[0]] =
 	{
-		{ "POSITION", 0, EPixelFormat::R32G32B32_Float, 0, 0, 0 }
+		{ "POSITION", 0, EPixelFormat::R32G32B32A32_Float, 0, 0, 0 }
 	};
 
 	
@@ -43,8 +43,8 @@ namespace Fluent
 	};
 	static const InputLayout VertexPosTexInputLayout[InputLayoutMapsNum[1]] =
 	{
-		{ "POSITION", 0, EPixelFormat::R32G32B32_Float, 0, 0, 0 },
-		{ "TEXCOORD", 0, EPixelFormat::R32G32B32_Float, 1, 0, 0 }
+		{ "POSITION", 0, EPixelFormat::R32G32B32A32_Float, 0, 0, 0 },
+		{ "TEXCOORD", 0, EPixelFormat::R32G32_Float, 0, sizeof(VertexPosTex::Position), 0 }
 	};
 
 	

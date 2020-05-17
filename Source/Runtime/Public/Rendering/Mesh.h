@@ -42,12 +42,23 @@ namespace Fluent
 		
 		[[nodiscard]]
 		u32 GetIndicesNum() const { return static_cast<u32>(mIndices.size()); }
+
+		// temp
+		void CreateBuffers(std::shared_ptr<Device>& device);
+		const std::shared_ptr<VertexBuffer>& GetVertexBuffer() const { return mVertexBuffer; }
+		const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const { return mIndexBuffer; }
+		// temp
 		
 	private:
 
 		std::vector<VertexPosTex> mVertices;
 		std::vector<u32> mIndices;
 
+		// temp
+		std::shared_ptr<VertexBuffer> mVertexBuffer;
+		std::shared_ptr<IndexBuffer> mIndexBuffer;
+		// temp
+		
 	};
 
 }

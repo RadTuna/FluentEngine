@@ -29,7 +29,7 @@ namespace Fluent
 
 		D3D11_BUFFER_DESC bufferDesc = {};
 		bufferDesc.ByteWidth = static_cast<UINT>(mSize);
-		bufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
+		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 		bufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 		bufferDesc.CPUAccessFlags = 0;
 		bufferDesc.MiscFlags = 0;
