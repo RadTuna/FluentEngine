@@ -24,16 +24,5 @@ namespace Fluent
 		mIndices.assign(&indices[0], &indices[indexCount]);
 
 	}
-
-	void Mesh::CreateBuffers(std::shared_ptr<Device>& device)
-	{
-		Assert(mVertices.empty() == false);
-		Assert(mIndices.empty() == false);
-
-		mVertexBuffer = std::make_shared<VertexBuffer>(device);
-		mIndexBuffer = std::make_shared<IndexBuffer>(device);
-		
-		mVertexBuffer->CreateBuffer(mVertices);
-		mIndexBuffer->CreateBuffer(mIndices);
-	}
+	
 }

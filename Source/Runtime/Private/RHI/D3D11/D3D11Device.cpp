@@ -107,7 +107,7 @@ namespace Fluent
 					const u32 tempHeight = displayModes[index].Height;
 					const u32 tempNumerator = displayModes[index].RefreshRate.Numerator;
 					const u32 tempDenominator = displayModes[index].RefreshRate.Denominator;
-					const double tempRefreshRate = static_cast<double>(tempNumerator) / static_cast<double>(tempDenominator);
+					const f64 tempRefreshRate = static_cast<f64>(tempNumerator) / static_cast<f64>(tempDenominator);
 
 					mDisplayData.emplace_back(tempWidth, tempHeight, tempNumerator, tempDenominator, tempRefreshRate);
 				}
