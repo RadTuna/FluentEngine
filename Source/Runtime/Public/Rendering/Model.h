@@ -24,13 +24,17 @@ namespace Fluent
 		bool SaveToFile(const std::string& savePath) override;
 		bool LoadFromFile(const std::string& loadPath) override;
 
-		void CreateModel();
-
+		void CreateModel(const std::vector<VertexPosTexNorTan>& vertices, const std::vector<u32>& indices);
+		
 		[[nodiscard]]
 		const std::shared_ptr<VertexBuffer>& GetVertexBuffer() const { return mVertexBuffer; }
 
 		[[nodiscard]]
 		const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const { return mIndexBuffer; }
+
+	private:
+
+		void CreateBuffer();
 		
 	private:
 

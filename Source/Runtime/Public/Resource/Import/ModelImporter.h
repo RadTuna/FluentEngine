@@ -5,6 +5,7 @@
 #include "Rendering/Model.h"
 
 // External Include
+#include <memory>
 #include <vector>
 
 struct aiScene;
@@ -23,7 +24,7 @@ namespace Fluent
 	{
 	public:
 
-		explicit ModelImporter() = default;
+		explicit ModelImporter(const std::shared_ptr<Device>& device) noexcept;
 		~ModelImporter() = default;
 
 		bool Load(const std::string& destPath, const std::string& srcPath);
@@ -37,6 +38,7 @@ namespace Fluent
 	private:
 
 		std::vector<Model> mModels;
+		std::shared_ptr<Device> mDevice;
 		
 	};
 }

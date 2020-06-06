@@ -10,6 +10,10 @@
 
 namespace Fluent
 {
+	ModelImporter::ModelImporter(const std::shared_ptr<Device>& device) noexcept
+		: mDevice(device)
+	{
+	}
 
 	bool ModelImporter::Load(const std::string& destPath, const std::string& srcPath)
 	{
@@ -46,6 +50,11 @@ namespace Fluent
 			ParseNode(scene, scene->mRootNode);
 		}
 
+		for (Model& model : mModels)
+		{
+			model.SaveToFile(destPath);
+		}
+		
 		importer.FreeScene();
 		return scene != nullptr;
 	}
@@ -62,7 +71,7 @@ namespace Fluent
 
 	void ModelImporter::ParseNodeMeshes(const aiScene* scene, const aiNode* node)
 	{
-		for (u32 i = 0; i < node->mMeshes; ++i)
+		for (u32 i = 0; i < node->mNumMeshes; ++i)
 		{
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 			LoadMesh(mesh);
@@ -74,9 +83,64 @@ namespace Fluent
 		const u32 vertexCount = mesh->mNumVertices;
 		const u32 indexCount = mesh->mNumFaces * 3;
 
-		std::vector<VertexPosTex>
+		std::vector<VertexPosTexNorTan> vertices;
+		vertices.resize(vertexCount);
+		for (u32 i = 0; i < vertexCount; ++i)
+		{
+			VertexPosTexNorTan& vertex = vertices[i];
+			
+			if (mesh->HasPositions())
+			{
+				aiVector3D& position = mesh->mVertices[i];
+				vertex.Position.mX = position.x;
+				vertex.Position.mY = position.y;
+				vertex.Position.mZ = position.z;
+				vertex.Position.mW = 1.0f;
+			}
+
+			if (mesh->HasNormals())
+			{
+				aiVector3D& normal = mesh->mNormals[i];
+				vertex.Normal.mX = normal.x;
+				vertex.Normal.mY = normal.y;
+				vertex.Normal.mZ = normal.z;
+			}
+
+			if (mesh->HasTangentsAndBitangents())
+			{
+				aiVector3D& tangent = mesh->mTangents[i];
+				vertex.Tangent.mX = tangent.x;
+				vertex.Tangent.mY = tangent.y;
+				vertex.Tangent.mZ = tangent.z;
+
+				aiVector3D& biTangent = mesh->mBitangents[i];
+				vertex.BiTangent.mX = biTangent.x;
+				vertex.BiTangent.mY = biTangent.y;
+				vertex.BiTangent.mZ = biTangent.z;
+			}
+
+			const u32 uvChannelsNum = 0;
+			if (mesh->HasTextureCoords(uvChannelsNum))
+			{
+				aiVector3D& texCoord = mesh->mTextureCoords[uvChannelsNum][i];
+				vertex.TexCoord.mX = texCoord.x;
+				vertex.TexCoord.mY = texCoord.y;
+			}
+		}
+
+		std::vector<u32> indices;
+		indices.resize(indexCount);
+		for (u32 i = 0; i < mesh->mNumFaces; ++i)
+		{
+			aiFace& face = mesh->mFaces[i];
+			const u32 currentIndex = i * 3;
+			indices[currentIndex + 0] = face.mIndices[0];
+			indices[currentIndex + 1] = face.mIndices[1];
+			indices[currentIndex + 2] = face.mIndices[2];
+		}
+
+		Model& model = mModels.emplace_back(mDevice);
+		model.CreateModel(vertices, indices);
 	}
-
-
 
 }

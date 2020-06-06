@@ -19,7 +19,18 @@ namespace Fluent
 	{
 	}
 
-	void Model::CreateModel()
+	void Model::CreateModel(const std::vector<VertexPosTexNorTan>& vertices, const std::vector<u32>& indices)
 	{
+		mMesh->CreateMesh(vertices, indices);
+		CreateBuffer();
+	}
+
+	void Model::CreateBuffer()
+	{
+		mVertexBuffer = std::make_shared<VertexBuffer>(mDevice);
+		mVertexBuffer->CreateBuffer(mMesh->GetVertices());
+
+		mIndexBuffer = std::make_shared<IndexBuffer>(mDevice);
+		mIndexBuffer->CreateBuffer(mMesh->GetIndices());
 	}
 }

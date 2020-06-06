@@ -6,7 +6,7 @@
 namespace Fluent
 {
 	
-	void Mesh::CreateMesh(const std::vector<VertexPosTex>& vertices, const std::vector<u32>& indices)
+	void Mesh::CreateMesh(const std::vector<VertexPosTexNorTan>& vertices, const std::vector<u32>& indices)
 	{
 		mVertices = vertices;
 		mIndices = indices;
@@ -22,7 +22,6 @@ namespace Fluent
 		mIndices.clear();
 		mIndices.reserve(indexCount);
 		mIndices.assign(&indices[0], &indices[indexCount]);
-
 	}
 	
 }
