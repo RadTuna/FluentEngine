@@ -22,8 +22,8 @@ namespace Fluent
 		u32 ByteOffset;
 		u32 InstanceStepRate;
 	};
-	constexpr u32 VertexTypesNum = 2;
-	constexpr u32 InputLayoutMapsNum[VertexTypesNum] = { 1, 2 };
+	constexpr u32 VertexTypesNum = 3;
+	constexpr u32 InputLayoutMapsNum[VertexTypesNum] = { 1, 2, 4 };
 
 	
 	struct VertexPos
@@ -32,7 +32,7 @@ namespace Fluent
 	};
 	static const InputLayout VertexPosInputLayout[InputLayoutMapsNum[0]] =
 	{
-		{ "POSITION", 0, EPixelFormat::R32G32B32A32_Float, 0, 0, 0 }
+		{ "POSITION", 0, EPixelFormat::R32G32B32A32_Float, 0, offsetof(VertexPos, Position), 0 }
 	};
 
 	
@@ -43,8 +43,24 @@ namespace Fluent
 	};
 	static const InputLayout VertexPosTexInputLayout[InputLayoutMapsNum[1]] =
 	{
-		{ "POSITION", 0, EPixelFormat::R32G32B32A32_Float, 0, 0, 0 },
-		{ "TEXCOORD", 0, EPixelFormat::R32G32_Float, 0, sizeof(VertexPosTex::Position), 0 }
+		{ "POSITION", 0, EPixelFormat::R32G32B32A32_Float, 0, offsetof(VertexPosTex, Position), 0 },
+		{ "TEXCOORD", 0, EPixelFormat::R32G32_Float, 0, offsetof(VertexPosTex, TexCoord), 0 }
+	};
+
+
+	struct VertexPosTexNorTan
+	{
+		Vector4 Position;
+		Vector2 TexCoord;
+		Vector3 Normal;
+		Vector3 Tangent;
+	};
+	static const InputLayout VertexPosTexNorTanInputLayout[InputLayoutMapsNum[2]] =
+	{
+		{ "POSITION", 0, EPixelFormat::R32G32B32A32_Float, 0, offsetof(VertexPosTexNorTan, Position), 0 },
+		{ "TEXCOORD", 0, EPixelFormat::R32G32_Float, 0, offsetof(VertexPosTexNorTan, TexCoord), 0 },
+		{ "NORMAL", 0, EPixelFormat::R32G32B32_Float, 0, offsetof(VertexPosTexNorTan, Normal), 0 },
+		{ "TANGENT", 0, EPixelFormat::R32G32B32_Float, 0, offsetof(VertexPosTexNorTan, Tangent), 0 }
 	};
 
 	

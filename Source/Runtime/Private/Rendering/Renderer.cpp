@@ -15,7 +15,7 @@
 #include "RHI/BlendState.h"
 #include "RHI/CommandList.h"
 #include "RHI/Sampler.h"
-#include "Rendering/GeometryGenerator.h"
+#include "Resource/GeometryGenerator.h"
 
 // temp include
 #include "Math/Vector.h"

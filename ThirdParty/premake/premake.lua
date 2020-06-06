@@ -19,21 +19,26 @@
 
 
 -- Variables declear
-ROOT_DIR			= _ARGS[1]
+ROOT_DIR				= _ARGS[1]
 GRAPHICS_API			= _ARGS[2]
 SOLUTION_NAME			= "FluentEngine"
-EDITOR_NAME			= "Editor"
+EDITOR_NAME				= "Editor"
 RUNTIME_NAME			= "Runtime"
-SHADER_NAME			= "Shader"
-TARGET_NAME			= "FluentEngine" -- Name of executable
+SHADER_NAME				= "Shader"
+TARGET_NAME				= "FluentEngine" -- Name of executable
 DEBUG_FORMAT			= "c7"
-EDITOR_DIR			= ROOT_DIR .. "/Source/" .. EDITOR_NAME
-RUNTIME_DIR			= ROOT_DIR .. "/Source/" .. RUNTIME_NAME
-SHADER_DIR			= ROOT_DIR .. "/Shaders/"
-INTERMEDIATE_DIR			= ROOT_DIR .. "/Intermediate"
-PROJECT_DIR			= INTERMEDIATE_DIR .. "/Projects"
-TARGET_DIR_RELEASE  		= ROOT_DIR .. "/Binaries/Release"
+EDITOR_DIR				= ROOT_DIR .. "/Source/" .. EDITOR_NAME
+RUNTIME_DIR				= ROOT_DIR .. "/Source/" .. RUNTIME_NAME
+SHADER_DIR				= ROOT_DIR .. "/Shaders"
+INTERMEDIATE_DIR		= ROOT_DIR .. "/Intermediate"
+PROJECT_DIR				= INTERMEDIATE_DIR .. "/Projects"
+TARGET_DIR_RELEASE  	= ROOT_DIR .. "/Binaries/Release"
 TARGET_DIR_DEBUG   		= ROOT_DIR .. "/Binaries/Debug"
+
+-- ThirdParty variables declear
+THIRDPARTY_DIR			= ROOT_DIR .. "/ThirdParty"
+FREEIMAGE_DIR			= THIRDPARTY_DIR .. "/FreeImage"
+ASSIMP_DIR 				= THIRDPARTY_DIR .. "/Assimp"
 
 -- Solution
 solution (SOLUTION_NAME)
@@ -70,17 +75,20 @@ project (RUNTIME_NAME)
 	staticruntime "On"
 	
 	-- Files
-	files 
-	{ 
+	files { 
 		RUNTIME_DIR .. "/**.h",
 		RUNTIME_DIR .. "/**.cpp",
 		RUNTIME_DIR .. "/**.hpp",
-		RUNTIME_DIR .. "/**.inl",
+		RUNTIME_DIR .. "/**.inl" 
 	}
 
 	-- Includes
-	includedirs { (RUNTIME_DIR) }
-	includedirs { (RUNTIME_DIR) .. "/Public" }
+	includedirs { 
+		RUNTIME_DIR,
+		RUNTIME_DIR .. "/Public",
+		FREEIMAGE_DIR .. "/Include",
+		ASSIMP_DIR .. "/Include"
+	}
 	
 	-- Libraries
 	libdirs (LIBRARY_DIR)
@@ -90,12 +98,20 @@ project (RUNTIME_NAME)
 		targetdir (TARGET_DIR_DEBUG)
 		debugdir (TARGET_DIR_DEBUG)
 		debugformat (DEBUG_FORMAT)
+		libdirs {
+			FREEIMAGE_DIR .. "/Lib/Debug",
+			ASSIMP_DIR .. "/Lib/Debug"
+		}
 
 			
 	-- Release
 	filter "configurations:Release"
 		targetdir (TARGET_DIR_RELEASE)
 		debugdir (TARGET_DIR_RELEASE)
+		libdirs {
+			FREEIMAGE_DIR .. "/Lib/Release",
+			ASSIMP_DIR .. "/Lib/Release"
+		}
 
 
 -- Editor
@@ -109,20 +125,21 @@ project (EDITOR_NAME)
 	staticruntime "On"
 
 	-- Files
-	files 
-	{ 
+	files { 
 		EDITOR_DIR .. "/**.rc",
 		EDITOR_DIR .. "/**.h",
 		EDITOR_DIR .. "/**.cpp",
 		EDITOR_DIR .. "/**.hpp",
-		EDITOR_DIR .. "/**.inl"
+		EDITOR_DIR .. "/**.inl" 
 	}
 	
 	-- Includes
-	includedirs { (EDITOR_DIR) }
-	includedirs { (EDITOR_DIR) .. "/Public" }
-	includedirs { (RUNTIME_DIR) }
-	includedirs { (RUNTIME_DIR) .. "/Public" }
+	includedirs { 
+		EDITOR_DIR,
+		EDITOR_DIR .. "/Public",
+		RUNTIME_DIR,
+		RUNTIME_DIR .. "/Public" 
+	}
 	
 	-- Libraries
 	libdirs (LIBRARY_DIR)

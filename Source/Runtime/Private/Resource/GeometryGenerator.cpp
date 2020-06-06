@@ -1,6 +1,6 @@
 
 // Primary Include
-#include "Rendering/GeometryGenerator.h"
+#include "Resource/GeometryGenerator.h"
 
 
 namespace Fluent
