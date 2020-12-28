@@ -7,21 +7,23 @@
 // Engine Include
 #include "Core/Core.h"
 #include "RHI/RHIDefinition.h"
+#include "Resource/IResource.h"
 
 
 namespace Fluent
 {
 	
-	class Texture
+	class Texture : public IResource
 	{
 	public:
-
-		explicit Texture() = default;
+		explicit Texture() noexcept;
 		virtual ~Texture() = default;
 
+		// IResource interface implementation
+		bool SaveToFile(const std::string& savePath) override;
+		bool LoadFromFile(const std::string& loadPath) override;
 
 		// Getters
-		
 		[[nodiscard]]
 		u32 GetBitPerPixel() const { return mBpp; }
 		[[nodiscard]]
@@ -40,17 +42,14 @@ namespace Fluent
 		bool IsTransparent() const { return mbIsTransparent; }
 
 		// Other functions
-
 		[[nodiscard]]
 		u32 GetChannelCountFromFormat(EPixelFormat format) const;
 		
 	protected:
-
 		virtual void CreateTexture(const std::vector<std::vector<u8>>& data, u32 arraySize) = 0;
 		virtual void CreateEmptyTexture() = 0;
 
 	protected:
-
 		u32 mBpp = 0;
 		u32 mBpc = 0;
 		u32 mWidth = 0;

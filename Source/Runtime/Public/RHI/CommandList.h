@@ -19,10 +19,8 @@ namespace Fluent
 #endif
 	{
 	public:
-
 		explicit CommandList(const std::shared_ptr<Device>& device) noexcept;
 		virtual ~CommandList() noexcept;
-
 
 		void Execute();
 
@@ -48,7 +46,6 @@ namespace Fluent
 		void SetSampler(u32 slot, const std::shared_ptr<Sampler>& sampler) const;
 
 	private:
-
 		bool mbIsInitialized = false;
 		
 	};

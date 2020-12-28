@@ -4,6 +4,7 @@
 
 #define SIMD_CALL __vectorcall
 
+#undef TEXT
 #ifdef UNICODE
 #define TXT(String) L##String
 #elif
@@ -13,56 +14,5 @@
 #define LOG_CONSOLE_STRING(String) printf("%s\n", String.c_str())
 #define LOG_CONSOLE_FORMAT(Format, ...) printf(Format, __VA_ARGS__)
 
-#define REFLECTION_CLASS(Class, SuperClass) \
-	public: \
-		using Super = SuperClass; \
-		using ThisClass = Class; \
-		inline static ReflectionClass* GetClass() \
-		{ \
-			static ReflectionClass* refClass = nullptr; \
-			if (!refClass) \
-			{ \
-				refClass = NewStack<ReflectionClass>( \
-					gStackAllocator, \
-					Super::GetClass(), \
-					GenerateFID(), \
-					TXT(#Class), \
-					sizeof(Class)); \
-			} \
-			return refClass; \
-		} \
-	private: \
-
-#define REFLECTION_CLASS_NO_SUPER(Class) \
-	public: \
-		using ThisClass = Class; \
-		inline static ReflectionClass* GetClass() \
-		{ \
-			static ReflectionClass* refClass = nullptr; \
-			if (!refClass) \
-			{ \
-				refClass = NewStack<ReflectionClass>( \
-					gStackAllocator, \
-					nullptr, \
-					GenerateFID(), \
-					TXT(#Class), \
-					sizeof(Class)); \
-			} \
-			return refClass; \
-		} \
-	private: \
-
-
-#define REFLECTION_PROPERTY (Type, Name) \
-	static ReflectionProperty* refProperty_##Name = nullptr; \
-	if (!refProperty_##Name) \
-	{ \
-		refProperty_##Name = NewStack<ReflectionProperty>( \
-			gStackAllocator, \
-			TXT(#Type), \
-			TXT(#Name), \
-			sizeof(Type));\
-		refClass->AddProperty(refProperty_##Name); \
-	} \
-
+#define ARRAY_SIZE(array) sizeof((array)) / sizeof((array[0]))
 

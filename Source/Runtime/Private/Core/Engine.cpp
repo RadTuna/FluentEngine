@@ -1,5 +1,8 @@
 
+// Primary Include
 #include "Core/Engine.h"
+
+// Engine Include
 #include "Engine/World.h"
 #include "Rendering/Renderer.h"
 
@@ -9,8 +12,8 @@ namespace Fluent
 
 	Engine::Engine(const WindowData& windowData) noexcept
 	{
-		mStorage = std::make_shared<EngineStorage>();
-		mStorage->mWindowData = windowData;
+		mStorage = std::make_shared<SystemStorage>();
+		mStorage->SetWindowData(windowData);
 
 		mTimeCounter = std::make_unique<TimeCounter>(mStorage);
 
@@ -53,7 +56,11 @@ namespace Fluent
 
 	void Engine::SetWindowData(const WindowData& windowData)
 	{
-		mStorage->mWindowData = windowData;
+		mStorage->SetWindowData(windowData);
 	}
 
+    void Engine::SetWindowMessage(const WindowMsg& windowMsg)
+    {
+		mStorage->SetWindowMessage(windowMsg);
+    }
 }

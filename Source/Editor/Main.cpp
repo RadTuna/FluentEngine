@@ -12,26 +12,31 @@
 #endif
 
 
+static Fluent::Editor gEditor;
+
+void MessageCallback(const Fluent::WindowMsg& windowMsg)
+{
+    gEditor.OnWindowMessage(windowMsg);
+}
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
     using namespace Fluent;
-	
-    // Create editor
-    Editor editor;
 
     // Create window
-    Window::Create(hInstance, TEXT("FluentEngine"));
+    WindowData windowData;
+    Window::Create(&windowData, hInstance, TXT("FluentEngine"));
     Window::Show();
-	
-    Window::gWindowMessage = [&editor](const WindowData& windowData) -> void
-    {
-        editor.OnWindowMessage(windowData);
-    };
-	
+
+    // initialize editor
+    gEditor.Initialize(windowData);
+
+    Window::gMsgCallback = MessageCallback;
+
     // Tick
     while (Window::Tick())
     {
-        editor.Update();
+        gEditor.Update();
     }
 
     // Exit

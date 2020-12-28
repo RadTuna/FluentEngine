@@ -1,12 +1,28 @@
 
 // Primary Include
-#include "RHI/Texture.h"
+#include "Resource/Texture.h"
 
 
 namespace Fluent
 {
+    Texture::Texture() noexcept
+		: IResource(EResourceType::Texture)
+    {
+    }
 
-	u32 Texture::GetChannelCountFromFormat(EPixelFormat format) const
+    bool Texture::SaveToFile(const std::string& savePath)
+    {
+		// pass
+		return false;
+    }
+
+    bool Texture::LoadFromFile(const std::string& loadPath)
+    {
+		// pass
+		return false;
+    }
+
+    u32 Texture::GetChannelCountFromFormat(EPixelFormat format) const
 	{
 		switch (format)
 		{

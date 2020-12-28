@@ -12,11 +12,9 @@ namespace Fluent
 	class D3D11Shader
 	{
 	public:
-
 		explicit D3D11Shader() = default;
 		virtual ~D3D11Shader() = default;
 
-		
 		[[nodiscard]]
 		ID3D11VertexShader* GetVertexShader() const { return mVertexShader; }
 
@@ -30,7 +28,6 @@ namespace Fluent
 		ID3D11InputLayout* GetInputLayout() const { return mInputLayout; }
 		
 	protected:
-
 		ID3D11Device* mDevice = nullptr;
 		
 		ID3D11VertexShader* mVertexShader = nullptr;

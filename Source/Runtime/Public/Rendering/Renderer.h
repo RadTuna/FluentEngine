@@ -9,7 +9,7 @@
 #include "Core/ISubModule.h"
 #include "RendererDefinition.h"
 #include "RHI/RHIDefinition.h"
-#include "Rendering/Mesh.h"
+#include "Rendering/Model.h"
 
 
 namespace Fluent
@@ -21,7 +21,7 @@ namespace Fluent
 	{
 	public:
 		
-		explicit Renderer(const std::shared_ptr<EngineStorage>& inStorage) noexcept;
+		explicit Renderer(const std::shared_ptr<SystemStorage>& inStorage) noexcept;
 		virtual ~Renderer() noexcept;
 
 		
@@ -83,7 +83,7 @@ namespace Fluent
 		bool mbIsInitialized = false;
 		bool mbIsRendering = false;
 
-		Mesh mQuadMesh;
+		std::unique_ptr<Model> mQuadModel;
 		
 	};
 

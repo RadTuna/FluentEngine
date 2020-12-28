@@ -2,21 +2,17 @@
 // Primary Include
 #include "Rendering/Model.h"
 
+// Engine Include
+#include "RHI/VertexBuffer.h"
+#include "RHI/IndexBuffer.h"
+
 
 namespace Fluent
 {
 	Model::Model(const std::shared_ptr<Device>& device) noexcept
-		: IResource(EResourceType::Model)
-		, mDevice(device)
+		: mDevice(device)
 	{
-	}
-
-	bool Model::SaveToFile(const std::string& savePath)
-	{
-	}
-
-	bool Model::LoadFromFile(const std::string& loadPath)
-	{
+		mMesh = std::make_shared<Mesh>();
 	}
 
 	void Model::CreateModel(const std::vector<VertexPosTexNorTan>& vertices, const std::vector<u32>& indices)
@@ -33,4 +29,5 @@ namespace Fluent
 		mIndexBuffer = std::make_shared<IndexBuffer>(mDevice);
 		mIndexBuffer->CreateBuffer(mMesh->GetIndices());
 	}
+
 }

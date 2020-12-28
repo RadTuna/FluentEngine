@@ -20,7 +20,7 @@
 
 -- Variables declear
 ROOT_DIR				= _ARGS[1]
-GRAPHICS_API			= _ARGS[2]
+API_GRAPHICS			= _ARGS[2]
 SOLUTION_NAME			= "FluentEngine"
 EDITOR_NAME				= "Editor"
 RUNTIME_NAME			= "Runtime"
@@ -40,6 +40,15 @@ THIRDPARTY_DIR			= ROOT_DIR .. "/ThirdParty"
 FREEIMAGE_DIR			= THIRDPARTY_DIR .. "/FreeImage"
 ASSIMP_DIR 				= THIRDPARTY_DIR .. "/Assimp"
 
+-- Graphics api variables declear
+if API_GRAPHICS == "d3d11" then
+	API_GRAPHICS 	= "API_GRAPHICS_D3D11"
+	TARGET_NAME 	= TARGET_NAME .. "_D3D11"
+elseif API_GRAPHICS == "d3d12" then
+	API_GRAPHICS	= "API_GRAPHICS_D3D12"
+	TARGET_NAME		= TARGET_NAME .. "_D3D12"
+end
+
 -- Solution
 solution (SOLUTION_NAME)
 	location (ROOT_DIR)
@@ -56,13 +65,13 @@ solution (SOLUTION_NAME)
 		
 	-- Debug
 	filter "configurations:Debug"
-		defines { "DEBUG", GRAPHICS_API }
+		defines { "DEBUG", API_GRAPHICS	}
 		flags { "MultiProcessorCompile", "LinkTimeOptimization" }
 		symbols "On"				
 		
 	-- Release	
 	filter "configurations:Release"
-		defines { "NDEBUG", GRAPHICS_API }
+		defines { "NDEBUG", API_GRAPHICS }
 		flags { "MultiProcessorCompile" }
 		symbols "Off"	
 		optimize "Full"

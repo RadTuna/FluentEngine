@@ -76,13 +76,15 @@ namespace Fluent
 	{
 		Unknown = static_cast<u32>(-1),
 		Pos = 0,
-		PosTex = 1
+		PosTex = 1,
+		PosTexNorTan = 2
 	};
 
 	template<typename T>
-	EVertexType VertexTypeToEnum() { return EVertexType::Unknown; }
+	inline EVertexType VertexTypeToEnum() { return EVertexType::Unknown; }
 
 	template<> inline EVertexType VertexTypeToEnum<VertexPos>() { return EVertexType::Pos; }
 	template<> inline EVertexType VertexTypeToEnum<VertexPosTex>() { return EVertexType::PosTex; }
+	template<> inline EVertexType VertexTypeToEnum<VertexPosTexNorTan>() { return EVertexType::PosTexNorTan; }
 	
 }

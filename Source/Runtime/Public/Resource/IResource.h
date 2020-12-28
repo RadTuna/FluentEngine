@@ -9,7 +9,8 @@ namespace Fluent
 	enum class EResourceType
 	{
 		Unknown,
-		Model
+		Mesh,
+		Texture,
 	};
 
 	enum class EResourceLoadState
@@ -21,9 +22,7 @@ namespace Fluent
 	};
 
 	class IResource
-	{
-		REFLECTION_CLASS_NO_SUPER(IResource)
-		
+	{	
 	public:
 
 		explicit IResource(EResourceType resourceType) noexcept : mResourceType(resourceType) {}

@@ -3,7 +3,7 @@
 #include "Rendering/Renderer.h"
 
 // Engine Include
-#include "Core/EngineStorage.h"
+#include "Core/SystemStorage.h"
 #include "Rendering/ConstantBufferTypes.h"
 #include "RHI/Device.h"
 #include "RHI/SwapChain.h"
@@ -25,7 +25,7 @@
 namespace Fluent
 {
 
-	Renderer::Renderer(const std::shared_ptr<EngineStorage>& inStorage) noexcept
+	Renderer::Renderer(const std::shared_ptr<SystemStorage>& inStorage) noexcept
 		: ISubModule(inStorage)
 	{
 	}
@@ -42,7 +42,7 @@ namespace Fluent
 			return false;
 		}
 
-		mSwapChain = std::make_shared<SwapChain>(mDevice, mStorage->mWindowData);
+		mSwapChain = std::make_shared<SwapChain>(mDevice, mStorage->GetWindowData());
 		if (!mSwapChain->IsInitialized())
 		{
 			return false;
@@ -158,8 +158,8 @@ namespace Fluent
 
 	void Renderer::CreateRenderTargets()
 	{
-		const u32 width = mStorage->mWindowData.ScreenWidth;
-		const u32 height = mStorage->mWindowData.ScreenHeight;
+		const u32 width = mStorage->GetWindowData().ScreenWidth;
+		const u32 height = mStorage->GetWindowData().ScreenHeight;
 
 		if ((width / 4) == 0 || (height / 4) == 0)
 		{
@@ -253,14 +253,13 @@ namespace Fluent
 
 	void Renderer::CreateRenderResource()
 	{
-		const f32 screenWidth = static_cast<f32>(mStorage->mWindowData.ScreenWidth);
-		const f32 screenHeight = static_cast<f32>(mStorage->mWindowData.ScreenHeight);
-		
-		//mQuadMesh = GeometryGenerator::CreateQuad(0.0f, 0.0f, screenWidth, screenHeight, 0.0f);
-		mQuadMesh = GeometryGenerator::CreateBox(10.0f, 10.0f, 10.0f);
+		const f32 screenWidth = static_cast<f32>(mStorage->GetWindowData().ScreenWidth);
+		const f32 screenHeight = static_cast<f32>(mStorage->GetWindowData().ScreenHeight);
 
 		// temp
-		mQuadMesh.CreateBuffers(mDevice);
+		Mesh quadMesh = GeometryGenerator::CreateQuad(0.0f, 0.0f, screenWidth, screenHeight, 0.0f);
+		mQuadModel = std::make_unique<Model>(mDevice);
+		mQuadModel->CreateModel(quadMesh.GetVertices(), quadMesh.GetIndices());
 		// temp
 	}
 
@@ -286,8 +285,8 @@ namespace Fluent
 		// temp
 		mViewport.X = 0.0f;
 		mViewport.Y = 0.0f;
-		mViewport.Width = static_cast<f32>(mStorage->mWindowData.ScreenWidth);
-		mViewport.Height = static_cast<f32>(mStorage->mWindowData.ScreenHeight);
+		mViewport.Width = static_cast<f32>(mStorage->GetWindowData().ScreenWidth);
+		mViewport.Height = static_cast<f32>(mStorage->GetWindowData().ScreenHeight);
 		mViewport.Near = 0.0f;
 		mViewport.Far = 1.0f;
 		// temp
@@ -300,7 +299,7 @@ namespace Fluent
 		Assert(bufferFrame != nullptr);
 
 		// temp
-		const f32 aspectRatio = static_cast<f32>(mStorage->mWindowData.ScreenWidth) / static_cast<f32>(mStorage->mWindowData.ScreenHeight);
+		const f32 aspectRatio = static_cast<f32>(mStorage->GetWindowData().ScreenWidth) / static_cast<f32>(mStorage->GetWindowData().ScreenHeight);
 		const f32 cameraNear = 1.0f;
 		const f32 cameraFar = 1000.0f;
 		const Vector cameraPosition = Vector::SetVector4(0.0f, 0.0f, -50.0f, 0.0f);
@@ -343,9 +342,9 @@ namespace Fluent
 		}
 		commandList->ClearRenderTargetAndDepth(renderTargetClear, 1.0f);
 
-		commandList->SetVertexBuffer(mQuadMesh.GetVertexBuffer());
-		commandList->SetIndexBuffer(mQuadMesh.GetIndexBuffer());
-		commandList->DrawIndexed(mQuadMesh.GetIndicesNum());
+		commandList->SetVertexBuffer(mQuadModel->GetVertexBuffer());
+		commandList->SetIndexBuffer(mQuadModel->GetIndexBuffer());
+		commandList->DrawIndexed(mQuadModel->GetMesh()->GetIndicesNum());
 		commandList->Execute();
 	}
 

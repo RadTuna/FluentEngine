@@ -1,7 +1,7 @@
 #pragma once
 
 // Engine Include
-#include "Texture.h"
+#include "Resource/Texture.h"
 #include "D3D11/D3D11Texture2D.h"
 
 

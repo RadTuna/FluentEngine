@@ -10,7 +10,8 @@ namespace Fluent
 		Mesh outMesh;
 
 		enum { VERTICES_NUM = 24, INDICES_NUM = 36 };
-		VertexPosTex vertices[VERTICES_NUM] = {};
+		VertexPosTexNorTan vertices[VERTICES_NUM];
+		MemSet(vertices, 0, ARRAY_SIZE(vertices));
 		
 		const f32 halfWidth = 0.5f * width;
 		const f32 halfHeight = 0.5f * height;
@@ -89,7 +90,8 @@ namespace Fluent
 		Mesh outMesh;
 		
 		enum { VERTICES_NUM = 4, INDICES_NUM = 6 };
-		VertexPosTex vertices[VERTICES_NUM] = {};
+		VertexPosTexNorTan vertices[VERTICES_NUM];
+		MemSet(vertices, 0, ARRAY_SIZE(vertices));
 
 		vertices[0] = { Vector4(x, y - height, depth, 1.0f), Vector2(0.0f, 1.0f) };
 		vertices[1] = { Vector4(x, y, depth, 1.0f), Vector2(0.0f, 0.0f) };

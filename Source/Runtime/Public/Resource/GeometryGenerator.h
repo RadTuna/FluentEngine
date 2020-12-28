@@ -2,7 +2,7 @@
 
 // Engine Include
 #include "Core/Core.h"
-#include "Rendering/Mesh.h"
+#include "Resource/Mesh.h"
 
 
 namespace Fluent

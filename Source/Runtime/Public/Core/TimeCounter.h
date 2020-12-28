@@ -15,16 +15,15 @@ namespace Fluent
 	{
 	public:
 
-		explicit TimeCounter(const std::shared_ptr<EngineStorage>& inStorage) noexcept;
+		explicit TimeCounter(const std::shared_ptr<SystemStorage>& inStorage) noexcept;
 		virtual ~TimeCounter() = default;
 
 		bool Initialize() override;
 		void Update(f32 prevDeltaTime) override;
 
 	private:
-
-		__int64 mFrequency = 0;
-		__int64 mStartTime = 0;
+		i64 mFrequency = 0;
+		i64 mStartTime = 0;
 		f32 mTickPerMs = 0.0f;
 		f32 mFrameTime = 0.0f;
 		f32 mFramePerSecond = 0.0f;

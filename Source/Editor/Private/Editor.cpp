@@ -5,10 +5,9 @@
 
 namespace Fluent
 {
-
-	void Editor::OnWindowMessage(const WindowData& windowData)
-	{
-		if (!mEditorInitialized)
+    void Editor::Initialize(const WindowData& windowData)
+    {
+        if (!mEditorInitialized)
 		{
 			mRuntime = std::make_unique<Engine>(windowData);
 
@@ -17,8 +16,11 @@ namespace Fluent
 
 			mEditorInitialized = true;
 		}
-		
-		mRuntime->SetWindowData(windowData);
+    }
+
+	void Editor::OnWindowMessage(const WindowMsg& windowMsg) const
+	{	
+		mRuntime->SetWindowMessage(windowMsg);
 	}
 
 	void Editor::Update()

@@ -7,13 +7,13 @@
 
 namespace Fluent
 {
-	class EngineStorage;
+	class SystemStorage;
 	
 	class ISubModule
 	{
 	public:
 		
-		explicit ISubModule(const std::shared_ptr<EngineStorage>& inStorage)
+		explicit ISubModule(const std::shared_ptr<SystemStorage>& inStorage)
 		{
 			mStorage = inStorage;
 		}
@@ -25,7 +25,7 @@ namespace Fluent
 
 	protected:
 
-		std::shared_ptr<EngineStorage> mStorage;
+		std::shared_ptr<SystemStorage> mStorage;
 
 	};
 

@@ -19,7 +19,8 @@ namespace Fluent
 		Editor() = default;
 		~Editor() = default;
 
-		void OnWindowMessage(const WindowData& windowData);
+		void Initialize(const WindowData& windowData);
+		void OnWindowMessage(const WindowMsg& windowMsg) const;
 		void Update();
 
 	private:

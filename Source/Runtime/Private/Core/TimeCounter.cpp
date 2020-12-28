@@ -5,7 +5,7 @@
 namespace Fluent
 {
 
-	TimeCounter::TimeCounter(const std::shared_ptr<EngineStorage>& inStorage) noexcept
+	TimeCounter::TimeCounter(const std::shared_ptr<SystemStorage>& inStorage) noexcept
 		: ISubModule(inStorage)
 	{
 	}
@@ -28,7 +28,7 @@ namespace Fluent
 
 	void TimeCounter::Update(float prevDeltaTime)
 	{
-		__int64 currentTime;
+		i64 currentTime;
 		float timeDifference;
 
 		QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&currentTime));
